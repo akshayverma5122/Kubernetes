@@ -13,4 +13,10 @@ curl -LO "https://dl.k8s.io/v1.23.1/bin/linux/amd64/kube-apiserver.sha256"
 
 echo "$(cat kube-apiserver.sha256)  kube-apiserver" | shasum -a 256 --check
 
-4. 
+4. Now download the SHA256 file for the kube-apiserver version 1.26.1. The following command downloads the file for version 1.26.1'
+
+curl -LO "https://dl.k8s.io/v1.26.1/bin/linux/amd64/kube-apiserver.sha256"
+
+5. Comparing the binary file with the checksum file and it will be successfully verified. 
+
+echo "$(cat kube-apiserver.sha256)  kube-apiserver" | shasum -a 256 --check
