@@ -1,0 +1,16 @@
+
+Download the binary file of the API server with version 1.26.1 on Linux AMD64. Download the SH256 checksum file for the API-server executable of version 1.23.1. Run the OS-specific verification tool and observe the result.
+
+1. Download the API server binary with the following command:
+
+curl -LO "https://dl.k8s.io/v1.26.1/bin/linux/amd64/kube-apiserver"
+
+2. download the SHA256 file for the same binary but a different version. The following command downloads the file for version 1.23.1'
+
+curl -LO "https://dl.k8s.io/v1.23.1/bin/linux/amd64/kube-apiserver.sha256"
+
+3. Comparing the binary file with the checksum file results in a failure, because the versions do not match:
+
+echo "$(cat kube-apiserver.sha256)  kube-apiserver" | shasum -a 256 --check
+
+4. 
