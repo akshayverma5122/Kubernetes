@@ -1,5 +1,8 @@
+Exercise 1 : - 
 
 Download the binary file of the API server with version 1.26.1 on Linux AMD64. Download the SH256 checksum file for the API-server executable of version 1.23.1. Run the OS-specific verification tool and observe the result.
+
+Solution : - 
 
 1. Download the API server binary with the following command:
 
