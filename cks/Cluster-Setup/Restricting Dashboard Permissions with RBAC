@@ -1,0 +1,7 @@
+Exercise: - 
+
+Install the Kubernetes Dashboard or make sure that it is already installed. In the namespace kubernetes-dashboard, create a ServiceAccount named observer-user. Moreover, create the corresponding ClusterRole and ClusterRoleBinding. The ServiceAccount should only be allowed to view Deployments. All other operations should be denied. As an example, create the Deployment named deploy in the default namespace with the following command: kubectl create deployment deploy --image=nginx --replicas=3.
+Create a token for the ServiceAccount named observer-user that will never expire. Log into the Dashboard using the token. Ensure that only Deployments can be viewed and not any other type of resource.
+
+Solution: - 
+
