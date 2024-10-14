@@ -9,3 +9,43 @@ Solution: -
 
  kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.6.0/aio/deploy/recommended.yaml
 
+2. create the service account for admin access of dashboard. 
+
+kubectl create sa admin-user -n kubernetes-dashboard
+
+3. find the details of cluster-admin clusterrole in the cluster.
+
+ kubectl get clusterrole | grep -w 'cluster-admin'
+
+4. create the clusterrolebinding to bind the cluster-admin role with serviceaccount admin-user. 
+
+vi clusterrolebinding.yaml 
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-user
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: admin-user
+  namespace: kubernetes-dashboard
+
+kubectl create -f clusterrolebinding.yaml 
+
+5. create the token using below command to sign in the kubernetes-dashboard. 
+
+kubectl create token admin-user -n kubernetes-dashboard 
+
+6. execute the below command and access the url. 
+
+kubectl proxy 
+
+http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy
+
+7. login in the  dashboard using token which we got from step 5. 
+
+
