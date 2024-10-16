@@ -33,10 +33,10 @@ spec:
 
 kubectl create -f  deny-egress-external.yaml
 
-3. create the pod with app=frontend labels which does not match the label with network policy label. 
+3. create the pod with app=frontend labels which does not match the label with network policy label and try to access the http://google.com. we can access because networkpolicy is not applied to this pod. 
 
 kubectl run web --image=busybox:1.36.0 -l app=frontend --port=80 -it --rm --restart=Never -- wget http://google.com --timeout=5 --tries=1
 
-4. create the one more pod with app=backend labels which wil match the label with network policy label. 
+4. create the one more pod with app=backend labels which wil match the label with network policy label and try to access the http://google.com. we can not access because networkpolicy is applied to this pod. 
 
 kubectl run web --image=busybox:1.36.0 -l app=backend --port=80 -it --rm --restart=Never -- wget http://google.com --timeout=5 --tries=1
