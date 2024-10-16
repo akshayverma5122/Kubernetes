@@ -1,0 +1,37 @@
+1. clone the nginx repo. 
+
+git clone https://github.com/nginxinc/kubernetes-ingress.git --branch v3.7.0
+
+2. Create a namespace and a service account.
+
+kubectl apply -f deployments/common/ns-and-sa.yaml
+
+3. Create a cluster role and binding for the service account. 
+
+kubectl apply -f deployments/rbac/rbac.yaml
+
+4. Create a secret for the default NGINX server’s TLS certificate and key.
+
+kubectl apply -f examples/shared-examples/default-server-secret/default-server-secret.yaml
+
+5. Create a ConfigMap to customize your NGINX settings. 
+
+kubectl apply -f deployments/common/nginx-config.yaml
+
+6. Create an IngressClass resource. NGINX Ingress Controller won’t start without an IngressClass resource.
+
+kubectl apply -f deployments/common/ingress-class.yaml
+
+7. disable the custom resource definition requirenment by setting the below command-line argument in deployments/deployment/nginx-ingress.yaml file.
+
+-enable-custom-resources=false
+
+8. deploy the nginx-controller. 
+
+kubectl apply -f deployments/deployment/nginx-ingress.yaml
+
+9. check the nginx-controller pod status. 
+
+kubectl get po -n nginx-ingress
+
+
