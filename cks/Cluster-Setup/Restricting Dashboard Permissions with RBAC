@@ -9,15 +9,90 @@ Solution: -
 
  kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.6.0/aio/deploy/recommended.yaml
 
-2. create the service account for admin access of dashboard. 
+RESTRICTED ACCESS :-
+-------------------
+
+1. create the observer-user service account using below manifest file. 
+
+vi restricted-user-serviceaccount.yaml
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: observer-user
+  namespace: kubernetes-dashboard
+
+kubectl create -f restricted-user-serviceaccount.yaml
+
+2. create the cluster role for observer-user with below manifest file. 
+
+vi restricted-user-clusterrole.yaml
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+    rbac.authorization.kubernetes.io/autoupdate: "true"
+  name: cluster-developer
+rules:
+- apiGroups:
+  - '*'
+  resources:
+  - '*'
+  verbs:
+  - get
+  - list
+  - watch
+- nonResourceURLs:
+  - '*'
+  verbs:
+  - get
+  - list
+  - watch
+
+kubectl create -f restricted-user-clusterrole.yaml
+
+3. create the cluster role binding. 
+
+vi restricted-user-clusterrolebinding.yaml
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: developer-user
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-developer
+subjects:
+- kind: ServiceAccount
+  name: observer-user
+  namespace: kubernetes-dashboard
+
+kubectl create -f restricted-user-clusterrolebinding.yaml
+
+4. Generate the bearer token with below command for observer-user. 
+
+kubectl create token observer-user -n kubernetes-dashboard
+
+5. execute the below command and login the kubernetes-dashboard using the token which is received from step4. 
+
+kubectl proxy
+http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy
+
+ADMIN ACCESS :- 
+--------------
+
+
+1. create the service account for admin access of dashboard. 
 
 kubectl create sa admin-user -n kubernetes-dashboard
 
-3. find the details of cluster-admin clusterrole in the cluster.
+2. find the details of cluster-admin clusterrole in the cluster.
 
  kubectl get clusterrole | grep -w 'cluster-admin'
 
-4. create the clusterrolebinding to bind the cluster-admin role with serviceaccount admin-user. 
+3. create the clusterrolebinding to bind the cluster-admin role with serviceaccount admin-user. 
 
 vi clusterrolebinding.yaml 
 
@@ -36,16 +111,16 @@ subjects:
 
 kubectl create -f clusterrolebinding.yaml 
 
-5. create the token using below command to sign in the kubernetes-dashboard. 
+4. create the token using below command to sign in the kubernetes-dashboard. 
 
 kubectl create token admin-user -n kubernetes-dashboard 
 
-6. execute the below command and access the url. 
+5. execute the below command and access the url. 
 
 kubectl proxy 
 
 http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy
 
-7. login in the  dashboard using token which we got from step 5. 
+6. login in the  dashboard using token which we got from step 5. 
 
 
