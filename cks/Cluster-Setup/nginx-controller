@@ -34,4 +34,10 @@ kubectl apply -f deployments/deployment/nginx-ingress.yaml
 
 kubectl get po -n nginx-ingress
 
+10. To create a service of type NodePort, run:
+
+kubectl create -f deployments/service/nodeport.yaml
+
+
+
 
