@@ -1,0 +1,80 @@
+Excersice : - 
+
+Create the user developer and assign the limited permission. 
+
+solution : - 
+
+1. create the private key for user developer. 
+
+openssl genrsa -out developer.key 2048
+
+2. create the certificate signing request using the below command for developer user. 
+
+openssl req -new -key developer.key  -out developer.csr
+
+3. Retrieve the base64-encoded value of the CSR file content with the following command.
+
+cat developer.csr | base64 | tr -d "\n"
+
+4. create the certificate signing request object with below manifest file. 
+
+vi csr.yaml 
+
+apiVersion: certificates.k8s.io/v1
+kind: CertificateSigningRequest
+metadata:
+  name: johndoe
+spec:
+  request: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURSBSRVFVRVNULS0tL...
+  signerName: kubernetes.io/kube-apiserver-client
+  expirationSeconds: 86400
+  usages:
+  - client auth
+
+kubectl create -f csr.yaml
+
+5. verify the certificate signing request using below command. 
+
+kubectl get csr 
+
+6. approve the certificate signing request using the below command. 
+
+kubectl certificate approve developer
+
+7. export the issued certificate from the approved CertificateSigningRequest object. 
+
+kubectl get csr developer -o jsonpath={.status.certificate} | base64 -d > developer.crt
+
+8. create the role for developer user. 
+
+kubectl create role developer-user --verb=create --verb=get --verb=list --verb=update --verb=delete --resource=pods
+
+9. create the rolebinding to bind the developer user and role. 
+
+ kubectl create rolebinding developer-role-binding --role=developer-user --user=developer
+
+10. add the user to the kubeconfig file and create the context for a user.
+
+kubectl config set-credentials developer --client-key=developer.key --client-certificate=developer.crt  --embed-certs=true
+
+11. set the cluster and context for the user. set the path for new kubeconfig file.  
+
+export KUBECONFIG=~/.kube/new-kubeconfig
+kubectl config set-cluster kubernetes --server=https://172.16.0.10:6443 --certificate-authority=/etc/kubernetes/pki/ca.crt --embed-certs=true
+kubectl config set-context developer --cluster=kubernetes --user=developer
+
+12. switched to user context named developer. 
+
+kubectl config use-context developer 
+
+13. verify the permission by list the pods in default namespace and it will get success. and also verify by listing the namespace and it will get failed. 
+kubectl get pods 
+kubectl get ns 
+
+14. copy the new config file using below command and share with the user. 
+
+cp -prv  ~./kube/new-kubeconfig  developer-config
+
+15. Finally switch to admin context. 
+
+kubectl config use-config kubernetes-admin 
