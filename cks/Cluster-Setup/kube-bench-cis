@@ -1,0 +1,11 @@
+1. create the job for kube-bench. 
+
+kubectl apply -f https://raw.githubusercontent.com/aquasecurity/kube-bench/ain/job-master.yaml
+
+2. check the status of pods. 
+
+kubectl get pods
+
+3. check the logs of pods for cis rule configuration checks. 
+
+kubectl logs kube-bench-master-8f6qh
