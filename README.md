@@ -1,2 +1,2 @@
-# Kubernetes-
+# Kubernetes
 Kubernetes Related Learning Resources 
