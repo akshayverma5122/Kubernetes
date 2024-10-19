@@ -1,0 +1,114 @@
+Security Context Demonstration :- 
+-------------------------------
+
+1. Deploy the nginx pods with below manifest file. 
+
+container-non-root-user-error.yaml
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: non-root-error
+spec:
+  containers:
+  - image: nginx:1.23.1
+    name: nginx
+    securityContext:
+      runAsNonRoot: true
+
+kubectl create -f container-non-root-user-error.yaml
+kubectl describe pod non-root-error
+
+Note:- The container will fail during the startup process with the status CreateContainer​Confi⁠gError because nginx:1.23.1 image must be run with root privileges. 
+
+2. Now deploy the bitnami/nginx:1.23.1 image with non root user. Now pod will up and running because images is built to run with non root user. 
+
+vi container-non-root-user-success.yaml
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: non-root-success
+spec:
+  containers:
+  - image: bitnami/nginx:1.23.1
+    name: nginx
+    securityContext:
+      runAsNonRoot: true
+kubectl create -f container-non-root-user-success.yaml
+kubectl get pod non-root-success
+
+3. check the user id and group id of pods by login in the pods. 
+
+kubectl exec non-root-success -it -- /bin/sh
+id 
+
+Running the container with a specific user and group ID :- 
+-------------------------------------------------------
+
+1. deploy the pods with below manifest file and check the user and group id of pods. 
+
+vi container-user-id.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: user-id
+spec:
+  containers:
+  - image: busybox:1.35.0
+    name: busybox
+    command: ["sh", "-c", "sleep 1h"]
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 3000
+      
+kubectl create -f container-user-id.yaml  
+kubectl exec user-id -it -- /bin/sh
+id
+
+non-privileged and Privileged container :-
+---------------------------------------
+
+1. deploy the non-privileged container with below manifest file. 
+
+vi non-privileged.yaml
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: non-privileged
+spec:
+  containers:
+  - image: busybox:1.35.0
+    name: busybox
+    command: ["sh", "-c", "sleep 1h"]
+
+kubectl create -f non-privileged.yaml 
+
+2. execute the privileged command by login in the pod. it will throw the error. 
+
+kubectl exec non-privileged -it -- /bin/sh
+sysctl kernel.hostname=test
+
+3. deploy the privileged container with below manifest file. 
+
+vi privileged.yaml
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: privileged
+spec:
+  containers:
+  - image: busybox:1.35.0
+    name: busybox
+    command: ["sh", "-c", "sleep 1h"]
+    securityContext:
+      privileged: true
+
+kubectl create -f privileged.yaml
+
+4. execute the privileged command by login in the pod. it will get success. 
+
+kubectl exec privileged -it -- /bin/sh
+sysctl kernel.hostname=test
