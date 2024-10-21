@@ -1,0 +1,90 @@
+installation of gatekeeper :-
+---------------------------
+
+1. Install the gatekeeper using below command. 
+
+kubectl apply -f https://raw.githubusercontent.com/open-policy-agent/gatekeeper/master/deploy/gatekeeper.yaml
+
+2. verify using the below command. 
+
+kubectl get all -n gatekeeper-system
+
+for more information on installations, please visit url :- https://open-policy-agent.github.io/gatekeeper/website/docs/install/
+
+3. create an OPA constraint template requiring the definition of at least a single label. 
+
+vi constraint-template-labels.yaml
+
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: k8srequiredlabels
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sRequiredLabels 
+      validation:
+        openAPIV3Schema: 
+          type: object
+          properties:
+            labels:
+              type: array
+              items:
+                type: string
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: | 
+        package k8srequiredlabels
+
+        violation[{"msg": msg, "details": {"missing_labels": missing}}] {
+          provided := {label | input.review.object.metadata.labels[label]}
+          required := {label | label := input.parameters.labels[_]}
+          missing := required - provided
+          count(missing) > 0
+          msg := sprintf("you must provide labels: %v", [missing])
+        }
+
+kubectl create -f constraint-template-labels.yaml
+kubectl get ConstraintTemplate
+
+4. create an OPA constraint that defines the “data” for the policy. it will define that if namespace does not have label app then namespace creation will get rejected. 
+
+vi constraint-ns-labels.yaml
+
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sRequiredLabels 
+metadata:
+  name: ns-must-have-app-label-key
+spec:
+  match: 
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Namespace"]
+  parameters: 
+    labels: ["app"]
+
+kubectl create -f  constraint-ns-labels.yaml
+kubectl get K8sRequiredLabels
+
+5. create the namespace with no app labels assignment. it will get rejected. 
+
+kubectl create ns governed-ns
+
+6. create the namespace with expected label. it will get successfull. 
+
+vi namespace-app-label.yaml
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    app: orion
+  name: governed-ns
+
+kubectl create -f namespace-app-label.yaml
+
+for more examples, please visit url :- https://open-policy-agent.github.io/gatekeeper-library/website/
+similar tool is Kyverno, please visit url :- https://kyverno.io/
+
+
