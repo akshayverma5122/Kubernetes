@@ -1,1 +1,65 @@
+Enforcing Pod Security Standards for a Namespace
 
+1. create the namespace enforcing the highest level of security standards. 
+
+vi psa.yaml 
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: psa
+  labels:
+    pod-security.kubernetes.io/enforce: restricted
+
+kubectl create -f psa.yaml 
+
+2. create the pods using below manifest file that will violate the PSA restrictions. 
+
+vi psa-violating-pod.yaml
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox
+  namespace: psa
+spec:
+  containers:
+  - image: busybox:1.35.0
+    name: busybox
+    command: ["sh", "-c", "sleep 1h"]
+
+kubectl create -f psa-violating-pod.yaml
+
+please make note that pods will not get created because it is violating the PSA. execute the below command for verification.
+
+kubectl get po -n psa
+
+3. create a pod using below file. it will follow the PSS. 
+
+vi psa-non-violating-pod.yaml
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox
+  namespace: psa
+spec:
+  containers:
+  - image: busybox:1.35.0
+    name: busybox
+    command: ["sh", "-c", "sleep 1h"]
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop: ["ALL"]
+      runAsNonRoot: true
+      runAsUser: 2000
+      runAsGroup: 3000
+      seccompProfile:
+        type: RuntimeDefault
+
+kubectl create -f psa-non-violating-pod.yaml
+
+please make note that pod will get created because it follow the PSS. execute below command for verification.
+
+kubectl get po -n psa
