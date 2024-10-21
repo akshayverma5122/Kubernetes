@@ -63,3 +63,5 @@ kubectl create -f psa-non-violating-pod.yaml
 please make note that pod will get created because it follow the PSS. execute below command for verification.
 
 kubectl get po -n psa
+
+For more information, please visit the url :- https://kubernetes.io/docs/concepts/security/pod-security-standards/
