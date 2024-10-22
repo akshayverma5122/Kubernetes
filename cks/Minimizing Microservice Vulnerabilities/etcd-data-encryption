@@ -1,1 +1,80 @@
+Excersize :-
 
+Encrypt the secret data in etcd database. 
+
+soution :-
+
+1. create the secret using below command. 
+
+kubectl create secret generic app-config --from-literal=password=passwd123
+
+2. check the secret data which is stored in etcd. 
+
+ sudo ETCDCTL_API=3 etcdctl --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key get /registry/secrets/default/app-config | hexdump -C
+
+3. Generate a 32-byte random key and base64-encode it. The value is needed to configure a so-called provider in the encryption configuration.
+
+head -c 32 /dev/urandom | base64
+
+4. create the EncryptionConfiguration object using below manifest file. 
+
+vi /etc/kubernetes/enc/enc.yaml
+
+apiVersion: apiserver.config.k8s.io/v1
+kind: EncryptionConfiguration
+resources:
+  - resources:
+      - secrets 
+    providers:
+      - aescbc:
+          keys:
+            - name: key1
+              secret: W68xlPT/VXcOSEZJvWeIvkGJnGfQNFpvZYfT9e+ZYuY= 
+      - identity: {}
+
+
+5. Edit the manifest at /etc/kubernetes/manifests/kube-apiserver.yaml, the YAML manifest that defines how to run an API server in a Pod. Add the parameter --encryption-provider-config, and define the Volume and its mountpath for the configuration file as the following shows.
+
+sudo vim /etc/kubernetes/manifests/kube-apiserver.yaml
+
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    kubeadm.kubernetes.io/kube-apiserver.advertise-address.endpoint: \
+    192.168.56.10:6443
+  creationTimestamp: null
+  labels:
+    component: kube-apiserver
+    tier: control-plane
+  name: kube-apiserver
+  namespace: kube-system
+spec:
+  containers:
+  - command:
+    - kube-apiserver
+    - --encryption-provider-config=/etc/kubernetes/enc/enc.yaml
+    volumeMounts:
+    ...
+    - name: enc
+      mountPath: /etc/kubernetes/enc
+      readonly: true
+  volumes:
+  ...
+  - name: enc
+    hostPath:
+      path: /etc/kubernetes/enc
+      type: DirectoryOrCreate
+...
+
+kube-api server will get restarted after changing the file. please check the pods. 
+
+kubectl get pods -n kube-system
+
+6. New Secrets will be encrypted automatically. Existing Secrets need to be updated. You can run the following command to perform an update on Secrets across all namespaces. This includes the Secret named app-config in the default namespace. 
+
+kubectl get secrets --all-namespaces -o json | kubectl replace -f -
+
+7. Running the etcdctl command we used before will reveal that the aescbc provider has been used to encrypt the data. The password value cannot be read in plain text anymore. 
+
+sudo ETCDCTL_API=3 etcdctl --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key get /registry/secrets/default/app-config | hexdump -C
