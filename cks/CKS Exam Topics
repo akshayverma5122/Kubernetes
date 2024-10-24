@@ -1,3 +1,26 @@
 CKS Exam :- 
 
-1. 
+Cluster-Setup :- 
+
+1. Network Policy
+2. Ingress & Ingress Controller
+3. RBAC 
+4. Kubernetes Dashboard
+5. Binary Verification
+6. Kubernetes Hardening, Kube-bench, CIS Benchmark
+
+Cluster-Hardening :-
+
+1. Service Account & RBAC
+2. User Creation. 
+
+Minimizing Microservices Vulnerability
+
+1. Security Context
+2. Open Policy Agent & Gatekeeper
+3. etcd data encryption.
+4. Pod Security Admission.
+5. Container Runtime Sandbox
+
+
+
