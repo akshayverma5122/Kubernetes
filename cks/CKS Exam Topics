@@ -22,5 +22,13 @@ Minimizing Microservices Vulnerability
 4. Pod Security Admission.
 5. Container Runtime Sandbox
 
+supply Chain Security 
+
+1. Minimizing the base image footprint. 
+      A. Using a Multi-Stage Approach for Building Container Images
+2. Securing the Supply Chain
+      A. Signing Container Images
+      B. Whitelisting Allowed Image Registries with OPA GateKeeper
+
 
 
