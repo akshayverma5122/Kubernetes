@@ -14,7 +14,7 @@ Cluster-Hardening :-
 1. Service Account & RBAC
 2. User Creation. 
 
-Minimizing Microservices Vulnerability
+Minimizing Microservices Vulnerability :- 
 
 1. Security Context
 2. Open Policy Agent & Gatekeeper
@@ -22,13 +22,19 @@ Minimizing Microservices Vulnerability
 4. Pod Security Admission.
 5. Container Runtime Sandbox
 
-supply Chain Security 
+supply Chain Security :-
 
 1. Minimizing the base image footprint. 
       A. Using a Multi-Stage Approach for Building Container Images
 2. Securing the Supply Chain
       A. Signing Container Images
       B. Whitelisting Allowed Image Registries with OPA GateKeeper
+      C. Whitelisting Allowed Image Registries with the ImagePolicyWebhook Admission Controller Plugin
+3. Static Analysis of Workload
+      A. Using Hadolint for Analyzing Dockerfiles
+      B. Using Kubesec for Analyzing Kubernetes Manifests
+4. Scanning Images for Known Vulnerabilities
+      A. Use Trivy 
 
 
 
