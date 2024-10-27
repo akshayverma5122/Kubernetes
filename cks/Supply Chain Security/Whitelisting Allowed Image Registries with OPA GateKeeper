@@ -1,1 +1,46 @@
+Whitelisting Allowed Image Registries with OPA GateKeeper :- 
+-----------------------------------------------------------
+
+1.  Create an OPA Gatekeeper constraint template for enforcing container registries using the below command. 
+
+kubectl apply -f https://raw.githubusercontent.com/open-policy-agent/gatekeeper-library/master/library/general/allowedrepos/template.yaml
+
+kubectl get ConstraintTemplate
+2. Create an OPA Gatekeeper constraint assigning Google Cloud registry as trusted repository using the below command. 
+
+vi constraint.yaml 
+
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sAllowedRepos
+metadata:
+  name: repo-is-openpolicyagent
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+    namespaces:
+      - "default"
+  parameters:
+    repos:
+      - "gcr.io//"
+
+kubectl create -f constraint.yaml 
+kubectl get K8sAllowedRepos
+
+3. create the pods with below command and it will get rejected because we have not provided the allowed registry. 
+
+kubectl run nginx --image=nginx:1.23.3
+
+4. create the pods with below command and it will get successful because we have provided the allowed registry. 
+
+kubectl run busybox --image=gcr.io/google-containers/busybox:1.27.2
+kubectl get pods
+
+For more Gatekeeper Policy, please visit the policy library URL - https://open-policy-agent.github.io/gatekeeper-library/website/
+
+================================================================================================================================
+
+Whitelisting Allowed Image Registries with the ImagePolicyWebhook Admission Controller Plugin :-
+----------------------------------------------------------------------------------------------
 
