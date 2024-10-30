@@ -1,5 +1,47 @@
-Signing Container Images
+Signing Container Images:-
+-------------------------
 
 Solution :- 
 
-1. 
+1. Download the unsigned the images.
+
+docker pull alpine
+
+2. Generate a delegation key pair using the generate command. 
+
+docker trust key generate csbbank
+
+3. Now add the delegation public key to the registry. 
+
+docker trust signer add --key csbbank.pub  csbbank akshayverma5122/dctrep
+
+4. create signed tag for the image
+
+docker image tag 91ef0af61f39  akshayverma5122/dctrepo:alpine1
+
+5. Now sign the image using below command. 
+
+docker trust sign akshayverma5122/dctrepo:alpine1
+
+6. push the images to the repository. 
+
+docker push akshayverma5122/dctrepo:alpine1
+
+7. Enable DCT on the host for the session by setting the environment variable. This should be done for every new session.
+
+export DOCKER_CONTENT_TRUST=1
+
+8. Now if you try to pull unsigned image from the repo you will get the below error. 
+
+docker pull  akshayverma5122/dctrepo:unsigned
+
+erros : - No valid trust data for unsigned. 
+
+but you will be able to pull the signed images.
+
+docker pull akshayverma5122/dctrepo:alpine1
+
+
+
+
+
