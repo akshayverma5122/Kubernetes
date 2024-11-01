@@ -1,2 +1,4 @@
 # Kubernetes
 Kubernetes Related Learning Resources 
+
+https://medium.com/@muppedaanvesh/a-hands-on-guide-to-kubernetes-endpoints-endpointslices-%EF%B8%8F-1375dfc9075c  - A Hands-On Guide to Kubernetes Endpoints & EndpointSlices 
