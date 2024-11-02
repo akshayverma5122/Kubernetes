@@ -38,4 +38,15 @@ supply Chain Security :-
       A. Use Trivy 
 
 
+Monitoring, Logging and Runtime Security :-
+
+1. Performing behavious analytics
+     A. Falco 
+2. Ensuring Container Immutability
+     A. Using the Secret and ConfigMap for Environment specific.
+     B. Using a Distroless Container Image
+     C. Using Read-Only Container Root Filesystem
+3. 
+
+
 
