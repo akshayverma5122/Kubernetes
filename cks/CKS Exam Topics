@@ -46,7 +46,8 @@ Monitoring, Logging and Runtime Security :-
      A. Using the Secret and ConfigMap for Environment specific.
      B. Using a Distroless Container Image
      C. Using Read-Only Container Root Filesystem
-3. 
+3. Using Audit Logs to Monitor Access
+     A. enabling audit logging for the API server process using kubernetes in-built audit policy. 
 
 
 
