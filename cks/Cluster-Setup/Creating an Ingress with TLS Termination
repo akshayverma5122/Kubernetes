@@ -66,9 +66,7 @@ kubectl create secret tls accounting-secret --cert=accounting.crt --key=accounti
 
 7. Creating the Ingress
 
-kubectl create ingress accounting-ingress \
-  --rule="accounting.internal.acme.com/*=accounting-service:80, \
-  tls=accounting-secret" -n t75
+kubectl create ingress accounting-ingress --rule="accounting.internal.acme.com/*=accounting-service:80,tls=accounting-secret" -n t75
 
 8. verify the ingress. 
 
