@@ -53,15 +53,15 @@ kubectl create role developer-user --verb=create --verb=get --verb=list --verb=u
 
  kubectl create rolebinding developer-role-binding --role=developer-user --user=developer
 
-10. add the user to the kubeconfig file and create the context for a user.
+10. add the user to the kubeconfig file and create the context for a user. set the path for new kubeconfig file.
 
+export KUBECONFIG=~/root/user_creation/kubeconfig
 kubectl config set-credentials developer --client-key=developer.key --client-certificate=developer.crt  --embed-certs=true
 
-11. set the cluster and context for the user. set the path for new kubeconfig file.  
+11. set the cluster and context for the user.  
 
-export KUBECONFIG=~/.kube/new-kubeconfig
 kubectl config set-cluster kubernetes --server=https://172.16.0.10:6443 --certificate-authority=/etc/kubernetes/pki/ca.crt --embed-certs=true
-kubectl config set-context developer --cluster=kubernetes --user=developer
+kubectl config set-context developer --cluster=kubernetes --user=developer --namespace=t75
 
 12. switched to user context named developer. 
 
@@ -71,10 +71,7 @@ kubectl config use-context developer
 kubectl get pods 
 kubectl get ns 
 
-14. copy the new config file using below command and share with the user. 
 
-cp -prv  ~./kube/new-kubeconfig  developer-config
-
-15. Finally switch to admin context. 
+14. Finally switch to admin context. 
 
 kubectl config use-config kubernetes-admin 
