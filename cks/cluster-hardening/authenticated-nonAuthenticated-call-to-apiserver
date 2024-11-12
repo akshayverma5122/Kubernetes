@@ -12,10 +12,10 @@
 
 4. extract the ca certificate, user certificate, user certificate key from kubeconfig file and decode it using base64 decoder. 
 
-  echo LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tL... | base64 -d > ca
-  echo LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tL... | base64 -d > kubernetes-admin.crt
-  echo LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktL... | base64 - d > kubernetes-admin.key
+  echo "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tL..." | base64 -d > ca
+  echo "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tL..." | base64 -d > kubernetes-admin.crt
+  echo "LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktL..." | base64 - d > kubernetes-admin.key
 
 5. make the call to towards kube-apiserver using below command. 
   
-  url --cacert ca.crt --cert kubernetes-admin.crt --key kubernetes-admin.key https://172.16.0.10:6443/api/v1/namespaces
+  curl --cacert ca.crt --cert kubernetes-admin.crt --key kubernetes-admin.key https://172.16.0.10:6443/api/v1/namespaces
