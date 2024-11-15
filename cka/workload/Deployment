@@ -1,1 +1,32 @@
+Deployment creation and deletion :- 
+----------------------------------
 
+1. Creating the Deployments using below command. 
+
+ kubectl create deploy app-cache --image=nginx --replicas=nginx 
+
+2. Listing Deployments and Their Pods using below command.
+
+kubectl get deploy,po,rs 
+
+3. Rendering Deployment Details
+
+kubectl describe deploy app-cache
+
+4. Deleting a Deployment
+
+kubectl delete deploy app-cache
+
+Performing Rolling Updates and Rollbacks :-
+-----------------------------------------
+1. Rolling Out a New Revision
+
+kubectl set image deployment app-cache nginx=1.26.2-alpine-perl 
+
+2. check the rolling out status. 
+
+kubectl rollout status deployment app-cache
+
+3. check the rollout history. 
+
+kubectl rollout history deployment app-cache 
