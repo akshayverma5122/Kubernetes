@@ -1,1 +1,21 @@
+################ Creating the ETCD Database backup and restoring using etcdctl command ###########################################
 
+1. Download the etcdctl binary for your os distribution. Below is for the ubuntu server. 
+
+wget https://github.com/etcd-io/etcd/releases/download/v3.5.17/etcd-v3.5.17-linux-amd64.tar.gz
+tar -xvf etcd-v3.5.17-linux-amd64.tar.gz
+cd etcd-v3.5.17-linux-amd64/
+mv etcdctl /usr/local/bin
+
+2. check the version of etcd client. 
+etcdctl version
+
+3. create the etcd database backup using below command. 
+
+sudo ETCDCTL_API=3 etcdctl --cacert=/etc/kubernetes/pki/ca.crt --cert=/etc/kubernetes/pki/apiserver-etcd-client.crt --key=/etc/kubernetes/pki/apiserver-etcd-client.key snapshot save /opt/etcd-backup.d
+
+4. check whether the etcd database backup has been take successfully or not.
+
+ETCDCTL_API=3 etcdctl --write-out=table snapshot status /opt/etcd-backup.db
+
+5. 
