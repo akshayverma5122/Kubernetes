@@ -30,3 +30,19 @@ kubectl rollout status deployment app-cache
 3. check the rollout history. 
 
 kubectl rollout history deployment app-cache 
+
+4. check the rollout history of specific version. 
+
+kubectl rollout history deployment app-cache --revision=2
+
+5. Rolling Back to a Previous Revision
+
+kubectl rollout undo deploy app-cache --to-revision=1
+
+6. check the rollout history of deployment. 
+
+kubectl rollout history deploy app-cache
+
+7. manually scale the deployment with 10 replicas. 
+
+kubectl scale deploy app-cache --replicas=10
