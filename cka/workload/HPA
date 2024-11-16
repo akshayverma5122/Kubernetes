@@ -1,0 +1,17 @@
+Deploy Metrics Server:-
+
+
+
+
+Horizontal Pod Autoscalers:-
+
+1. Creating the hpa using below command for the deployment. 
+
+kubectl autoscale deployment app-cache --cpu-percent=80 --min=3 --max=5
+kubectl get hpa
+
+2. Rendering Horizontal Pod Autoscaler Details
+
+kubectl describe hpa app-cache 
+
+3. 
