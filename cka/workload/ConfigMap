@@ -1,1 +1,80 @@
+ConfigMap :-
+
+1. --from-literal=locale=en_US  - Literal values, which are key-value pairs as plain text
+2. --from-env-file=config.env - A file that contains key-value pairs and expects them to be environment variables
+3. --from-file=app-config.json  - A file with arbitrary contents
+4. -from-file=config-dir  - A directory with one or many files
+
+Consuming ConfigMap as environment variable. 
+
+1. Creating the ConfigMap using below command. 
+
+kubectl create configmap db-config --from-literal=DB_HOST=mysql-service  --from-literal=DB_USER=backend
+
+2. using the created ConfigMap as env. 
+cm.yaml 
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: backend
+spec:
+  containers:
+  - image: bmuschko/web-app:1.0.1
+    name: backend
+    envFrom:
+    - configMapRef:
+        name: db-config
+
+kubectl create cm.yaml 
+
+3. execute the below command for verification. 
+
+ kubectl exec backend -- env
+
+Mounting a ConfigMap as a Volume
+--------------------------------
+
+1. Below is the JSON file used for configuring database information. This file will be used to create the ConfigMap. 
+
+{
+    "db": {
+      "host": "mysql-service",
+      "user": "backend"
+    }
+}
+
+2. Create the ConfigMap using below command. we are using the file to create the config map this time. 
+
+kubectl create cm db-config2 --from-file=db.json
+
+3. Consume the ConfigMap by creating the below pod.
+
+vi cm2.yaml 
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: backend2
+spec:
+  containers:
+  - image: bmuschko/web-app:1.0.1
+    name: backend
+    volumeMounts:
+    - name: db-config-volume
+      mountPath: /etc/config
+  volumes:
+  - name: db-config-volume
+    configMap:
+      name: db-config2
+
+kubectl create -f cm2.yaml 
+
+4. Execute the below command for verification.
+
+kubectl exec backend2 -- /bin/bash
+cd /etc/config
+cat db.json 
+
+
 
