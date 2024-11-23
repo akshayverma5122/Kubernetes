@@ -1,2 +1,74 @@
 Kustomize:-
 
+kubectl kustomize <target>
+kubectl apply -k <target>
+
+// Composing Manifests:- //
+-------------------
+
+
+1. create the kustomize directory. 
+
+mkdir kustomize
+cd kustomize
+
+2. create the below deployment and service file inside kustomize folder.
+
+nano service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+  labels:
+    app: nginx
+spec:
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80          # Port exposed by the service
+      targetPort: 80     # Port exposed by the container
+  type: ClusterIP
+
+nano nginx-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "25m"
+          limits:
+            memory: "256Mi"
+            cpu: "50m"
+
+
+3. create the kustomization.yaml file as below. 
+
+nano kustomization.yaml 
+resources:
+- nginx-deployment.yaml
+- service.yaml
+
+4. execute the below command to compose the manifest files.
+
+kubectl kustomize ./
+
