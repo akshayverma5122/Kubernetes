@@ -3,7 +3,7 @@ Kustomize:-
 kubectl kustomize <target>
 kubectl apply -k <target>
 
-// Composing Manifests:- //
+Composing Manifests:-
 -------------------
 
 
@@ -71,4 +71,6 @@ resources:
 4. execute the below command to compose the manifest files.
 
 kubectl kustomize ./
+
+
 
