@@ -1,0 +1,7 @@
+CSI node
+CSI drivers
+storage class
+pv
+pvc
+
+kubectl get csinode
