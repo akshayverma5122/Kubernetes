@@ -4,4 +4,5 @@ Services:-
 2. NodePort
 3. External Name
 4. Load Balancer
+5. Ingress Controller
 
