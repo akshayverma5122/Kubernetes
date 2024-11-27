@@ -29,6 +29,14 @@ Workload
      A. Consuming a Secret as Environment Variables
      B. Mounting a Secret as a Volume
 
+Scheduling and Tooling
+
+1.  Resource Requests and Limits
+2.  Kustomize
+      A. Composing Manifests
+      B. Generating manifests from other sources
+
+
 
 
 
