@@ -134,6 +134,146 @@ kubect apply -k ./
 cd kustomize
 kubectl delete -k ./
 
+Adding common configuration across multiple manifests :-
+-----------------------------------------------------
+
+1. Create the kustomization file using a common field. 
+
+nano kustomization.yaml
+namespace: persistence
+commonLabels:
+  team: helix
+resources:
+- web-app-deployment.yaml
+- web-app-service.yaml
+
+2. Create the resource file. 
+
+nano web-app-deployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-app-deployment
+  labels:
+    app: web-app-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web-app
+  template:
+    metadata:
+      labels:
+        app: web-app
+    spec:
+      containers:
+      - image: bmuschko/web-app:1.0.1
+        name: web-app
+        env:
+        - name: DB_HOST
+          value: mysql-service
+        - name: DB_USER
+          value: root
+        - name: DB_PASSWORD
+          value: password
+        ports:
+        - containerPort: 3000
+
+nano web-app-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: web-app-service
+  name: web-app-service
+spec:
+  ports:
+  - name: web-app-port
+    port: 3000
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    app: web-app
+  type: NodePort
+
+3. apply the changes using below commands. 
+
+kubectl create ns persistence
+kubectl create -k ./ 
+kubectl kustomize  ./
+
+4. Verify that common label team: helix will be appended in deployment and services objects.
+
+kubectl get po -n persistence --show-labels
+kubectl get svc -n persistence --show-labels
+
+
+Customizing a collection of manifests:-
+-------------------------------------
+
+1. Creating the files as below - 
+
+nano kustomization.yaml
+
+resources:
+- nginx-deployment.yaml
+patchesStrategicMerge:
+- security-context.yaml
+
+nginx-deployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+
+nano security-context.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  template:
+    spec:
+      containers:
+      - name: nginx
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 3000
+
+
+2. patching the files using below command. 
+
+kubectl kustomize ./
+kubectl create -k ./
+
+
+
+
+
+
+
+
+
 
 
 
