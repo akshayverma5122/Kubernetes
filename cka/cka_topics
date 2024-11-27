@@ -22,6 +22,7 @@ Workload
 3. Scaling Workloads
      A. Manual Scaling
      B. Automatic Scaling - HPA
+     C. Deploying Metrics Server
 4. ConfigMap 
      A. Consuming a ConfigMap as Environment Variables
      B. Mounting a ConfigMap as a Volume
