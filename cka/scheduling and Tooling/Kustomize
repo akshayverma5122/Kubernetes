@@ -72,5 +72,8 @@ resources:
 
 kubectl kustomize ./
 
+Generating manifests from other sources:-
+---------------------------------------
+
 
 
