@@ -1,4 +1,5 @@
 Cluster Architecture, Installation, and Configuration
+
 1. RBAC
      A. Roles & RoleBinding 
      B. ClusterRole & ClusterRolebinding
@@ -13,6 +14,21 @@ Cluster Architecture, Installation, and Configuration
 3. Backing Up and Restoring etcd
      A. Backing Up etcd
      B. Restoring etcd
+
+Workload 
+
+1. Deployment
+2. Performing Rolling Updates and Rollbacks in Deployment
+3. Scaling Workloads
+     A. Manual Scaling
+     B. Automatic Scaling - HPA
+4. ConfigMap 
+     A. Consuming a ConfigMap as Environment Variables
+     B. Mounting a ConfigMap as a Volume
+5. Secret
+     A. Consuming a Secret as Environment Variables
+     B. Mounting a Secret as a Volume
+
 
 
 
