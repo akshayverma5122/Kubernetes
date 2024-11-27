@@ -1,1 +1,19 @@
+Cluster Architecture, Installation, and Configuration
+1. RBAC
+     A. Roles & RoleBinding 
+     B. ClusterRole & ClusterRolebinding
+     C. ServiceAccount, User, Group
+     D. Aggregating RBAC Rules
+     E. Assigning a ServiceAccount to a Pod
+     F. User Cration
+2. Creating and Managing a Kubernetes Cluster
+     A. cluster Installation 
+     B. cluster Upgradation
+     C. cluster installation in HA. 
+3. Backing Up and Restoring etcd
+     A. Backing Up etcd
+     B. Restoring etcd
+
+
+
 
