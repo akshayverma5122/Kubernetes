@@ -1,0 +1,60 @@
+Helm Repo Hub :- https://artifacthub.io/packages/search?kind=0
+
+1. Create the directory as below. 
+
+├── Chart.yaml
+├── templates
+│   ├── web-app-pod-template.yaml
+│   └── web-app-service-template.yaml
+├── values.yaml
+
+2. Edit these file with below contents. 
+
+nano Chart.yaml
+
+apiVersion: 1.0.0
+name: web-app
+version: 2.5.4
+
+nano values.yaml
+
+db_host: mysql-service
+db_user: root
+db_password: password
+service_port: 3000
+
+nano web-app-pod-template.yaml
+
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: web-app
+  name: web-app
+spec:
+  containers:
+  - image: bmuschko/web-app:1.0.1
+    name: web-app
+    env:
+    - name: DB_HOST
+      value: {{ .Values.db_host }}
+    - name: DB_USER
+     value: {{ .Values.db_user }}
+    - name: DB_PASSWORD
+      value: {{ .Values.db_password }}
+    ports:
+    - containerPort: 3000
+      protocol: TCP
+  restartPolicy: Always
+
+3. Compose the yaml file. 
+
+helm template .
+
+4. bundle the template files into a chart archive file using below commands.
+
+helm package .
+
+5. it will create the file like below. 
+
+web-app-2.5.4.tgz
