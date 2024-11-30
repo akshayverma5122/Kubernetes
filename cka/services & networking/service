@@ -20,47 +20,13 @@ Note :- When you create a service, you can specify a service type, but if you do
 Using DNS to resolve services:-
 -----------------------------
 
-1. Create the deployment using below manifest file in database namespace.
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    run: nginx-frontend
-  name: nginx-frontend
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      run: nginx-frontend
-  template:
-    metadata:
-      labels:
-        run: nginx-frontend
-    spec:
-      containers:
-      - image: bitnami/nginx
-        name: nginx-frontend
+1. Create the deployment using below command in database namespace.
 
-2. create the services using below manifest files in database namespace.
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    run: nginx-frontend
-  name: nginx-frontend
-spec:
-  selector:
-    run: nginx-frontend
-  ports:
-  - name: http
-    port: 80
-    protocol: TCP
-    targetPort: 80
-  - name: https
-    port: 443
-    protocol: TCP
-    targetPort: 443
-  type: ClusterIP
+kubectl create -f https://raw.githubusercontent.com/akshayverma5122/Kubernetes/refs/heads/master/cka/services%20%26%20networking/nginx-deployments.yaml -n database
+
+2. create the services using below command in database namespace.
+
+kubectl create -f https://raw.githubusercontent.com/akshayverma5122/Kubernetes/refs/heads/master/cka/services%20%26%20networking/ClusterIP.yaml -n database
 
 3. list the service, endpoint and endpoint slices using below commands.
 
