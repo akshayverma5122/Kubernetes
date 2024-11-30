@@ -15,6 +15,8 @@ There are four different types of services in Kubernetes.
 4. ExternalName - Creates a service that does not target an endpoint in the cluster. Instead, it is used to provide a service name that targets any external DNS name as an endpoint.
 5. Headless - A Kubernetes Headless Service is a service type that enables direct communication with individual pods instead of distributing traffic across them like other services. It is created by specifying none for the clusterIP spec in the Service definition.
 
+Note :- When you create a service, you can specify a service type, but if you do not specify a type, the ClusterIP type will be used by default.
+
 Using DNS to resolve services:-
 -----------------------------
 
