@@ -71,6 +71,57 @@ Name:   nginx-frontend.database.svc.cluster.local
 Address: 10.96.80.163
 
 
+###################################################################### nip.io ########################################################################
+
+
+1. Create the deployment of nginx server using below command. 
+
+kubectl create deploy webserver1 --replicas=3 --image=nginx -n default
+
+2. create the service. 
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: webserver1
+  namespace: default # Change this if you're using a different namespace
+spec:
+  selector:
+    app: webserver1
+  ports:
+    - protocol: TCP
+      port: 80        # Service port
+      targetPort: 80 # Pod port
+  type: ClusterIP
+
+3. create the ingress rule. 
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name:  webserver1-ingress-rule
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: webserver1.172.16.0.90.nip.io
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: webserver1
+            port:
+              number: 80
+4. Access the web server using below url. 
+
+http://webserver1.172.16.0.90.nip.io/
+
+
+
+
 
 
 
