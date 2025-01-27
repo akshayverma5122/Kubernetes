@@ -70,6 +70,24 @@ Address:        10.96.0.10#53
 Name:   nginx-frontend.database.svc.cluster.local
 Address: 10.96.80.163
 
+######################################################### Load Balancer #####################################################
+
+Layer 7 Load Balancer
+
+1. NGINX
+2. Envoy
+3. Traefik
+4. HAProxy
+
+Layer 4 Load Balaner 
+
+1. HAProxy
+2. NGINX Pro
+3. Seesaw
+4. F5 Networks
+5. MetalLB
+
+
 
 ###################################################################### nip.io ########################################################################
 
@@ -118,6 +136,7 @@ spec:
 4. Access the web server using below url. 
 
 http://webserver1.172.16.0.90.nip.io/
+
 
 
 
