@@ -137,6 +137,10 @@ spec:
 
 http://webserver1.172.16.0.90.nip.io/
 
+kubectl create deploy webserver1 --replicas=2 --image=nginx -n ingress-testing
+kubectl expose deploy webserver1 --name=webserver1-service --type=ClusterIP --port=80 --target-port=80 -n ingress-testing
+kubectl create ingress webserver1-ingress-rule --rule="webserver1-service.172.16.0.19.nip.io/*=webserver1-service:80" -n ingress-testing
+
 
 
 
