@@ -1,1 +1,68 @@
+Layer 4 load balancer options:-
+------------------------------
+
+HAProxy
+NGINX Pro
+Seesaw
+F5 Networks
+MetalLB
+
+MetalLB:-
+--------
+
+MetalLB components:-
+
+1. Controller
+2. Speaker
+
+Creating a LoadBalancer service:-
+
+1. Create the IPAddressPool custom resource.
+
+vi pool1.yaml
+
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: pool-01
+  namespace: metallb-system
+spec:
+  addresses:
+  - 172.18.10.10-172.18.10.20
+
+kubectl create -f 
+kubectl get ipaddresspool
+
+2. create the L2Advertisement which will advertise the list of IP address. This will advertise all the ip address pool becase we have not mentioned the pool info in manifest file. 
+
+vi advertise1.yaml
+
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: l2-all-pools
+  namespace: metallb-system
+
+kubectl create -f advertise1.yaml
+kubectl get L2Advertisement
+
+3. Restart the controller to take the effect of newly created advertisement. 
+
+kubectl  rollout restart  deploy controller
+
+4. create the nginx deployment 
+
+kubectl create deploy nginx --image=nginx --replicas=1
+
+5. Generate the yaml file for load balancer service and create the lb service for nginx deployment. 
+
+kubectl create service loadbalancer nginx-lb --tcp=8080 --dry-run=client  -o yaml > lb.yaml
+kubectl create -f lb.yaml  >>>> change the selector value in lb.yaml and then execute this command
+kubectl get svc nginx-lb   >>>> check the external ip 
+kubectl describe nginx-lb  >>>> check the endpoint details of the service 
+
+6. test the service using below curl command with external-ip of LB. 
+
+curl 172.18.10.11
+
 
