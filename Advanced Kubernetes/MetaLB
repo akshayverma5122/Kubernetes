@@ -1,3 +1,5 @@
+Learning Repo - https://github.com/PacktPublishing/Kubernetes-An-Enterprise-Guide-Third-Edition
+
 Layer 4 load balancer options:-
 ------------------------------
 
@@ -63,6 +65,6 @@ kubectl describe nginx-lb  >>>> check the endpoint details of the service
 
 6. test the service using below curl command with external-ip of LB. 
 
-curl 172.18.10.11
+curl <LB IP>
 
 
