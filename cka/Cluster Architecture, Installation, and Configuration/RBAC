@@ -1,48 +1,5 @@
-openssl genrsa -out sudha.key 2048
-openssl req -new -key sudha.key -out sudha.csr -subj "/CN=sudha/O=developer"
-
-
-vi Sudha.yaml
-
-apiVersion: certificates.k8s.io/v1
-kind: CertificateSigningRequest
-metadata:
-  name: sudha # example
-spec:
-  # This is an encoded CSR. Change this to the base64-encoded contents of myuser.csr
-  request: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURSBSRVFVRVNULS0tLS0KTUlJQ2FUQ0NBVkVDQVFBd0pERU9NQXdHQTFVRUF3d0ZjM1ZrYUdFeEVqQVFCZ05WQkFvTUNXUmxkbVZzYjNCbApjakNDQVNJd0RRWUpLb1pJaHZjTkFRRUJCUUFEZ2dFUEFEQ0NBUW9DZ2dFQkFJMnErbEVKRHkrL3ZmWmhHOU4rClJ2UGlNYit4aXEzekd6OFQ2b09qMzVWVEdDWDBqaFVOa1ZBYWVzV3JhMjdpV1JPZlhwS2RjVUFjNFQxTFpBV2kKblNmejZ0U2NPcHhFZDR1RzFkcDZleFdWNHF1TUlZR0h4eXlGMjRyYjl0L2xEa0JzbEhjZGk1WHQ2WGt6ZFZCQgp6YkhDWjBmMkQ2MXViRlRhYXZlV2JEYlVYbVZkNFlMenJNanJPL0NEWGM1b0RxWHRTeHAxeGhZNjYrblZMbCtiCjZBZFA0ZnRoamVBdldvdXdZRjlRekxVU1BRYjYxSW5sakt4NUFKczQ2MjZvekpmRHJ6L3BOT3pMUkJrR1VjL0oKYzIyN0pKQVlPczNVMGxtSHdLQlNXelJPZXJkNkltN1ltM2pCZUtjcW5taUhQZ2RSaUtkZUNUSmVsR2NkNUl0SQpRRWtDQXdFQUFhQUFNQTBHQ1NxR1NJYjNEUUVCQ3dVQUE0SUJBUUJ1WFBHbjZxYVZYUEhoTW1STG42cHgreUR4CmRydXpZNXBSRFJpblFQb1QxZ1ZoL1RLVUFzMThSZ3FRM2RTd2pCRmJlRVFPUjQzZmFBUWhpNmk1bGIzaVFZYk0Ka2xLOWM2blZUaVgrSFNJeDBPc1l5NTJPT0haOE4zY3Z5NzdOdE9lRmo3VWYyTFY5TXFyWnQ4SFRqb1VJS29zMwppS2ZUSlh6TFRFTTg0ZmV3N2I2akdJcXdhUC8zVU82c3lvYzBpL0pFelNkZXJMNW9lTEVoNm0wQ1c2UUJ1R2N3ClRXTENJUy9LeFhvZ1BBTzdFd2JIWE1QV05xWXJFekQyOVBaK2xsa1ljWHlvRmtCOG1uYnhGL2xKR255Z1IvNmYKZHk3Y0Y0VFQ0MVRtYStpMnFWbzk4Q3lUTDRNaEV6OVlMVlFuZUtEeUZJVzByRmFOQitCNEZ4K2trREhMCi0tLS0tRU5EIENFUlRJRklDQVRFIFJFUVVFU1QtLS0tLQo=
-  signerName: kubernetes.io/kube-apiserver-client
-  expirationSeconds: 86400  # one day
-  usages:
-  - client auth
-
-
-kubectl create -f Sudha.yaml
-kubectl get csr	
-kubectl certificate approve Sudha
-
-kubectl get csr sudha -o jsonpath='{.status.certificate}' | base64 -d  > sudha.crt
-kubectl --kubeconfig=/root/certs/sudha/sudha.kubeconfig config set-credentials sudha --client-key=sudha.key --client-certificate=sudha.crt --embed-certs=true
-
-kubectl --kubeconfig=sudha.kubeconfig config set-cluster dev-cluster --embed-certs=true --certificate-authority=/root/certs/ca.crt
-
- kubectl --kubeconfig=sudha.kubeconfig config set-context dev --cluster=dev-cluster --user=sudha
-kubectl --kubeconfig=sudh.kubeconfig config use-context dev-cluster
-kubectl --kubeconfig=sudha.kubeconfig config use-context dev
-
-kubectl create role sudharole --verb=get,list,watch,create,update,patch,delete --resource=pods -n oaans
-kubectl create rolebinding sudharolebinding --role=sudharole --user=sudha -n oaans
-
-
-kubectl --kubeconfig=sudha.kubeconfig get po  -n oaans
-kubectl --kubeconfig=sudha.kubeconfig auth can-i --list  -n oaans
-kubectl auth can-i --list --as johndoe
-kubectl --kubeconfig=sudha.kubeconfig auth can-i create pods  -n oaans
-
-
-openssl x509 -req -in sudha.csr  -CA /root/certs/ca.crt -CAkey ca.key -CAcreateserial -out sudha2.crt -days 364
-
-RBAC - 
+Role Based Access Control (RBAC) :- 
+---------------------------------
 
 1. Subject
      A. User
@@ -50,19 +7,13 @@ RBAC -
      C. ServiceAccount
 2. Resources - Deployment, pods 
 3. Verbs - create,delete,update,patch
-
-RBAC API Primitives
-
-1. Namespaced
+4. Namespaced
        A. Role
        B. Rolebinding
-2. Clusterwide 
+5. Clusterwide 
        A. ClusterRole
        B. ClusterRoleBinding
-
-RBAC aggregation 
-
-Note:- user & group is not stored in etcd but serviceaccount will get stored as object in etcd.
+6. RBAC aggregation 
 
 Default cluster role 
 
@@ -71,8 +22,39 @@ Default cluster role
 3. edit
 4. view 
 
+################################################# Notes Section ##############################################################
+1. user & group is not stored in etcd but serviceaccount will get stored as object in etcd.
 
 
+#################################### User Creation and kubeconfig file readiness ############################################
 
+1. Generate the private key and certificate signing request. 
+
+openssl genrsa -out john.key 2048
+openssl req -new -key john.key -out john.csr -subj "/CN=john/O=developer"
+
+2. submit the csr to kubernetes clusters. 
+
+vi john.yaml
+
+apiVersion: certificates.k8s.io/v1
+kind: CertificateSigningRequest
+metadata:
+  name: john # example
+spec:
+  request: $(cat john.csr | base64 | tr -d '\n')
+  signerName: kubernetes.io/kube-apiserver-client
+  expirationSeconds: 86400  
+  usages:
+  - client auth
+
+kubectl create -f john.yaml
+
+3. Get the csr and approve it.
+
+kubectl get csr	
+kubectl certificate approve john
+
+4. 
 
 
