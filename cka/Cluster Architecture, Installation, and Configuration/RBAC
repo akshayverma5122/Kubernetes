@@ -97,8 +97,7 @@ kubectl --kubeconfig=john.kubeconfig auth can-i --list  -n devapp
 kubectl --kubeconfig=john.kubeconfig auth can-i create pods  -n devapp
 
 
-Aggregating RBAC Rules:-
-----------------------
+########################################## Aggregating RBAC Rules #############################################################
 
 1. Create the cluster role with name list-pods and delete-services. 
 
@@ -156,6 +155,13 @@ rules: []
 3. Describe the aggregated cluster role and check. this will include the permission of both clusterroles delete-services and list-pods.
 
 k describe clusterrole pods-services-aggregation-rules
+
+
+############################################ Practice RBAC Commands ############################################################
+
+Clusterrole & Clusterrolebinding -  
+--------------------------------
+
 
 
 
