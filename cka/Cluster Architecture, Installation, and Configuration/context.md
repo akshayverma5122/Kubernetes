@@ -1,5 +1,5 @@
 ###### Practice Excersize 
-        https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/
+    https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/
 
 ###### Display the current context. 
     kubectl config --kubeconfig=config-demo current-context
