@@ -3,4 +3,4 @@ Practice Excersize -
 
 1. Display the current context 
 
-<pre> ```kubectl config current-context``` </pre>
+<pre> kubectl config current-context </pre>
