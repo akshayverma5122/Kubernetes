@@ -1,19 +1,22 @@
-#### Role Based Access Control (RBAC)  
+### 🔐 Kubernetes RBAC Cheat Sheet
 
-1. Subject     >>> User, Group, ServiceAccount
-2. Resources   >>> Deployment, pods 
-3. Verbs       >>> create,delete,update,patch
-4. Namespaced  >>> Role & Rolebinding 
-5. Clusterwide >>> ClusterRole & ClusterRoleBinding
-6. RBAC aggregation 
+- **Subject**: User | Group | ServiceAccount  
+- **Resources**: Deployments | Pods  
+- **Verbs**: create | delete | update | patch  
+- **Scope**:  
+  - **Namespaced** → `Role` & `RoleBinding`  
+  - **Cluster-wide** → `ClusterRole` & `ClusterRoleBinding`  
+- **Aggregation**:  
+  - Combine multiple `ClusterRoles` using `aggregationRule`
 
-#### Default cluster role 
+
+### Default cluster role 
 1. cluster-admin
 2. Admin
 3. edit
 4. view 
 
-#### User Creation 
+### User Creation 
 1. Generate the private key and certificate signing request.
    
 		openssl genrsa -out john.key 2048
@@ -34,31 +37,31 @@
 		  - client auth
 		EOF
 
-4. Get the csr and approve it.
+3. Get the csr and approve it.
 
-kubectl get csr	
-kubectl certificate approve john
+		kubectl get csr	
+		kubectl certificate approve john
 
-4. Retrieve the certificate for john after approval. 
+4. Retrieve the certificate for john after approval.
+   
+		kubectl get csr john -o jsonpath='{.status.certificate}' | base64 -d  > john.crt
 
-kubectl get csr john -o jsonpath='{.status.certificate}' | base64 -d  > john.crt
-
-Kubeconfig file preparation for john:-
-------------------------------------
+### Kubeconfig file preparation for john
 
 1. Embed the user certificate and key in kubeconfig file. 
 
-kubectl --kubeconfig=john.kubeconfig config set-credentials john --client-key=john.key --client-certificate=john.crt --embed-certs=true
+		kubectl --kubeconfig=john.kubeconfig config set-credentials john \
+		--client-key=john.key --client-certificate=john.crt --embed-certs=true
 
 2. Embed the cluster endpoint and cluster certificate authority data into kubeconfig file. 
 
-kubectl --kubeconfig=john.kubeconfig config set-cluster dev-cluster --server=https://0.0.0.0:6443
-kubectl --kubeconfig=john.kubeconfig config set-cluster dev-cluster --embed-certs=true --certificate-authority=/etc/kubernetes/pki/ca.crt
+		kubectl --kubeconfig=john.kubeconfig config set-cluster dev-cluster \
+		--server=https://0.0.0.0:6443 --embed-certs=true --certificate-authority=/etc/kubernetes/pki/ca.crt
 
 3. configure the context in kubecofig file. 
 
-kubectl --kubeconfig=john.kubeconfig config set-context dev --cluster=dev-cluster --user=john
-kubectl --kubeconfig=john.kubeconfig config use-context dev
+		kubectl --kubeconfig=john.kubeconfig config set-context dev --cluster=dev-cluster --user=john
+		kubectl --kubeconfig=john.kubeconfig config use-context dev
 
 Assiging the roles for john user:-
 ---------------------------------
