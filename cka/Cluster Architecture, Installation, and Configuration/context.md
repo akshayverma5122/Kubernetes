@@ -14,7 +14,9 @@
 ###### For developer user
     kubectl config --kubeconfig=config-demo set-credentials developer \
     --client-certificate=/root/certs/developer/developer.crt \
-    --client-key=/root/certs/developer/developer.key --embed-certs=true
+    --client-key=/root/certs/developer/developer.key \
+    --embed-certs=true
+
 ###### For experimenter user
     kubectl config --kubeconfig=config-demo set-credentials  experimenter --username=exp --password=badpassword
 ###### 3. set the values like cluster,namespace,user details in dev-frontend, dev-storage and exp-test context    
@@ -26,8 +28,11 @@
      user=developer
 ###### for exp-test context
     kubectl config --kubeconfig=config-demo set-context exp-test --cluster=test --namespace=default --user=expirementer
-    
-
+###### 4. Display the added details
+    kubectl config --kubeconfig=config-demo view 
+###### 5. Set the current context 
+    kubectl config --kubeconfig=config-demo use-context dev-frontend
+        
     
 ###### Display the current context. 
     kubectl config --kubeconfig=config-demo current-context
