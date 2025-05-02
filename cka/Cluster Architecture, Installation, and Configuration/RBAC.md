@@ -32,11 +32,9 @@
 		  expirationSeconds: 86400  
 		  usages:
 		  - client auth
-    EOF
+		EOF
 
-kubectl create -f john.yaml
-
-3. Get the csr and approve it.
+4. Get the csr and approve it.
 
 kubectl get csr	
 kubectl certificate approve john
