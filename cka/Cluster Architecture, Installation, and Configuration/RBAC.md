@@ -63,26 +63,23 @@
 		kubectl --kubeconfig=john.kubeconfig config set-context dev --cluster=dev-cluster --user=john
 		kubectl --kubeconfig=john.kubeconfig config use-context dev
 
-Assiging the roles for john user:-
----------------------------------
-
+### Assiging the roles for john user
 1. Create the namespace and role.
-
-kubectl create ns devapp
-kubectl create role johnrole --verb=get,list,watch,create --resource=pods -n devapp
+		kubectl create ns devapp
+		kubectl create role johnrole --verb=get,list,watch,create --resource=pods -n devapp
 
 2. Create the rolebinding for john user. 
 
-kubectl create rolebinding johnrolebinding --role=johnrole --user=john -n devapp
+		kubectl create rolebinding johnrolebinding --role=johnrole --user=john -n devapp
 
 3. Validate the given permission. 
 
-kubectl auth can-i --list --as john
-kubectl --kubeconfig=john.kubeconfig auth can-i --list  -n devapp
-kubectl --kubeconfig=john.kubeconfig auth can-i create pods  -n devapp
+		kubectl auth can-i --list --as john
+		kubectl --kubeconfig=john.kubeconfig auth can-i --list  -n devapp
+		kubectl --kubeconfig=john.kubeconfig auth can-i create pods  -n devapp
 
 
-########################################## Aggregating RBAC Rules #############################################################
+### Aggregating RBAC Rules 
 
 1. Create the cluster role with name list-pods and delete-services. 
 
