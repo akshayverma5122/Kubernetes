@@ -24,7 +24,7 @@
 		apiVersion: certificates.k8s.io/v1
 		kind: CertificateSigningRequest
 		metadata:
-  		name: john # example
+  		 name: john # example
 		spec:
 		  request: $(cat john.csr | base64 | tr -d '\n')
 		  signerName: kubernetes.io/kube-apiserver-client
