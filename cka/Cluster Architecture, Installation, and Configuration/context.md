@@ -4,8 +4,10 @@
 ### Prepare kubeconfig file from scratch 
 
 ###### 1. set cluster name, server and certificate-authority-data in config-demo kubeconfig file
-    kubectl config --kubeconfig=config-demo set-cluster development
-    kubectl config --kubeconfig=config-demo set-cluster test
+    kubectl config --kubeconfig=config-demo set-cluster development \
+    --server=https://1.2.3.4:6443 \
+    --certificate-authority=/root/certs/ca.crt --embed-certs=true
+=
 ###### 2. set the username, client-certificate-data and client-key-data for developer and experimenter
     kubectl config --kubeconfig=config-demo set-credentials developer
     kubectl config --kubeconfig=config-demo set-credentials experimenter
