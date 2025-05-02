@@ -1,54 +1,36 @@
-Role Based Access Control (RBAC) :- 
----------------------------------
+#### Role Based Access Control (RBAC)  
 
-1. Subject
-     A. User
-     B. Group
-     C. ServiceAccount
-2. Resources - Deployment, pods 
-3. Verbs - create,delete,update,patch
-4. Namespaced
-       A. Role
-       B. Rolebinding
-5. Clusterwide 
-       A. ClusterRole
-       B. ClusterRoleBinding
+1. Subject     >>> User, Group, ServiceAccount
+2. Resources   >>> Deployment, pods 
+3. Verbs       >>> create,delete,update,patch
+4. Namespaced  >>> Role & Rolebinding 
+5. Clusterwide >>> ClusterRole & ClusterRoleBinding
 6. RBAC aggregation 
 
-Default cluster role 
-
+#### Default cluster role 
 1. cluster-admin
 2. Admin
 3. edit
 4. view 
 
-################################################# Notes Section ##############################################################
-1. user & group is not stored in etcd but serviceaccount will get stored as object in etcd.
+#### User Creation 
+1. Generate the private key and certificate signing request.
+   
+		openssl genrsa -out john.key 2048
+		openssl req -new -key john.key -out john.csr -subj "/CN=john/O=developer"
 
+2. submit the csr to kubernetes clusters.
 
-#################################### User Creation and kubeconfig file readiness ############################################
-
-User Creation :-
----------------
-1. Generate the private key and certificate signing request. 
-
-openssl genrsa -out john.key 2048
-openssl req -new -key john.key -out john.csr -subj "/CN=john/O=developer"
-
-2. submit the csr to kubernetes clusters. 
-
-vi john.yaml
-
-apiVersion: certificates.k8s.io/v1
-kind: CertificateSigningRequest
-metadata:
-  name: john # example
-spec:
-  request: $(cat john.csr | base64 | tr -d '\n')
-  signerName: kubernetes.io/kube-apiserver-client
-  expirationSeconds: 86400  
-  usages:
-  - client auth
+		apiVersion: certificates.k8s.io/v1
+		kind: CertificateSigningRequest
+		metadata:
+  		name: john # example
+		spec:
+		  request: $(cat john.csr | base64 | tr -d '\n')
+		  signerName: kubernetes.io/kube-apiserver-client
+		  expirationSeconds: 86400  
+		  usages:
+		  - client auth
 
 kubectl create -f john.yaml
 
@@ -156,7 +138,9 @@ rules: []
 
 k describe clusterrole pods-services-aggregation-rules
 
-
+################################################# Notes Section ##############################################################
+1. user & group is not stored in etcd but serviceaccount will get stored as object in etcd.
+2. 
 ############################################ Practice RBAC Commands ############################################################
 
 Clusterrole & Clusterrolebinding -  
