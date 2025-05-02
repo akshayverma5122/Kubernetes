@@ -65,6 +65,7 @@
 
 ### Assiging the roles for john user
 1. Create the namespace and role.
+   
 		kubectl create ns devapp
 		kubectl create role johnrole --verb=get,list,watch,create --resource=pods -n devapp
 
