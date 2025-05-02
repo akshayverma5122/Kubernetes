@@ -36,6 +36,9 @@
     kubectl config --kubeconfig=config-demo view --minify             
 ###### Display the current context. 
     kubectl config --kubeconfig=config-demo current-context
+###### 6. Change the current context to dev-storage and display the current context for verification. 
+    kubectl config --kubeconfig=config-demo use-context dev-storage
+    kubectl config --kubeconfig=config-demo current-context
 
     
 ###### Delete the specified cluster,context and user from the kubeconfig.
