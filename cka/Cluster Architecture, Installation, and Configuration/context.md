@@ -40,11 +40,18 @@
     kubectl config --kubeconfig=config-demo use-context dev-storage
     kubectl config --kubeconfig=config-demo current-context
 
-    
+### other config commands 
+###### Get the cluster,context and user details from kubeconfig file. 
+    kubectl config --kubeconfig=config-demo get-clusters
+    kubectl config --kubecofig=config-demo get-users
+    kubectl config --kubeconfig=config-demo get-contexts 
+    kubectl config --kubeconfig=config-demo get-contexts -oname
 ###### Delete the specified cluster,context and user from the kubeconfig.
     kubectl config --kubeconfig=config-demo delete-cluster development
     kubectl config --kubeconfig=config-demo delete-context test
     kubectl config --kubeconfig=config-demo delete-user developer
+###### Renames a context from the kubeconfig file.
+    kubectl config --kubeconfig=config-demo rename-context exp-test research-test
     
 ###### Practice Excersize 
     https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/
