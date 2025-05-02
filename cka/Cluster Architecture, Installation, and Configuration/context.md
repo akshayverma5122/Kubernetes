@@ -48,8 +48,12 @@
     kubectl config --kubeconfig=config-demo get-contexts -oname
 ###### Delete the specified cluster,context and user from the kubeconfig.
     kubectl config --kubeconfig=config-demo delete-cluster development
-    kubectl config --kubeconfig=config-demo delete-context test
+    kubectl config --kubeconfig=config-demo delete-context dev-storage
     kubectl config --kubeconfig=config-demo delete-user developer
+###### or use unset command to delete the cluster, context and user from kubeconfig file. 
+    kubectl config --kubeconfig=config-demo unset clusters.development
+    kubectl config --kubeconfig=config-demo unset contexts.dev-storage
+    kubectl config --kubeconfig=config-demo unset users.developer
 ###### Renames a context from the kubeconfig file.
     kubectl config --kubeconfig=config-demo rename-context exp-test research-test
     
