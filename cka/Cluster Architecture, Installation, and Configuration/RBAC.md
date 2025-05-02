@@ -20,7 +20,7 @@
 		openssl req -new -key john.key -out john.csr -subj "/CN=john/O=developer"
 
 2. submit the csr to kubernetes clusters.
-
+		kubectl create -f - <<EOF
 		apiVersion: certificates.k8s.io/v1
 		kind: CertificateSigningRequest
 		metadata:
@@ -31,6 +31,7 @@
 		  expirationSeconds: 86400  
 		  usages:
 		  - client auth
+    EOF
 
 kubectl create -f john.yaml
 
