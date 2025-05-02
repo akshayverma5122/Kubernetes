@@ -53,5 +53,7 @@
 ###### Renames a context from the kubeconfig file.
     kubectl config --kubeconfig=config-demo rename-context exp-test research-test
     
-###### Practice Excersize 
+###### Remaining commands available
+    https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#-em-set-em-
+###### practice url 
     https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/
