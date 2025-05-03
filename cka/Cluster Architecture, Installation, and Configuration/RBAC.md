@@ -82,70 +82,31 @@
 
 ### Aggregating RBAC Rules 
 
-1. Create the cluster role with name list-pods and delete-services. 
+1. Create the cluster role with name list-pods and delete-services.
 
-vi list-pods.yaml
+		kubectl create clusterrole list-pods --verb=list --resource=pods
+		kubectl create clusterrole delete-services --verb=delete --resource=services
 
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: list-pods
-  namespace: rbac-example
-  labels:
-    rbac-pod-list: "true"
-rules:
-- apiGroups:
-  - ""
-  resources:
-  - pods
-  verbs:
-  - list
+2. assign the label to clusterrole.
 
-vi delete-services.yaml 
+		kubectl label clusterrole list-pods rbac-pod-list="true"
+		kubectl label clusterrole delete-services rbac-service-delete="true"
 
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: delete-services
-  namespace: rbac-example
-  labels:
-    rbac-service-delete: "true"
-rules:
-- apiGroups:
-  - ""
-  resources:
-  - services
-  verbs:
-  - delete
+3. Create the ClusterRole with aggregated rules.
 
-2. Create the ClusterRole with aggregated rules. 
+	 	kubectl create clusterrole pods-services-aggregation-rules --aggregation-rule=rbac-service-delete="true"
+   
+4. edit the clusterrole pods-services-aggregation-rules and add the matchLabels for list-pods cluster role as well.
 
-vi pods-services-aggregation-rules.yaml 
+	 kubectl edit clusterrole pods-services-aggregation-rules
+		
+6. Describe the aggregated cluster role and check. this will include the permission of both clusterroles delete-services and list-pods.
 
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: pods-services-aggregation-rules
-  namespace: rbac-example
-aggregationRule:
-  clusterRoleSelectors:
-  - matchLabels:
-      rbac-pod-list: "true"
-  - matchLabels:
-      rbac-service-delete: "true"
-rules: []
+		kubectl describe clusterrole pods-services-aggregation-rules
 
-3. Describe the aggregated cluster role and check. this will include the permission of both clusterroles delete-services and list-pods.
-
-k describe clusterrole pods-services-aggregation-rules
-
-################################################# Notes Section ##############################################################
+### Notes Section
 1. user & group is not stored in etcd but serviceaccount will get stored as object in etcd.
-2. 
-############################################ Practice RBAC Commands ############################################################
-
-Clusterrole & Clusterrolebinding -  
---------------------------------
+   
 
 
 
