@@ -29,6 +29,45 @@
 
 		sudo echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
+7. Add the CRI-O repository
+
+		sudo curl -fsSL https://download.opensuse.org/repositories/isv:/cri-o:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/cri-o-apt-keyring.gpg
+
+		sudo echo "deb [signed-by=/etc/apt/keyrings/cri-o-apt-keyring.gpg] https://download.opensuse.org/repositories/isv:/cri-o:/stable:/v1.28/deb/ /" | sudo tee /etc/apt/sources.list.d/cri-o.list
+
+6. list and Install the specific version of kubelet, kubectl and kubeadm packages
+   
+   listing the packages
+
+		sudo apt-get update
+		sudo apt list -a kubeadm
+		sudo apt list -a kubelet
+		sudo apt list -a kubectl
+		sudo apt list -a cri-o
+
+   installing the packages
+
+		sudo apt-get install cri-o=1.28.11-1.1 kubelet=1.28.12-1.1 kubeadm=1.28.12-1.1  kubectl=1.28.12-1.1 -y
+
+8. Start and enable the CRI-O. Enable the kubelet as well.
+
+		sudo systemctl enable crio.service
+		sudo systemctl enable kubelet.service
+		sudo systemctl start crio.service
+
+9. Bootstrap a cluster
+
+		sudo modprobe br_netfilter
+		sudo sysctl -w net.ipv4.ip_forward=1
+
+### Initialize the kubernetes cluster 
+		sudo kubeadm init
+
+
+
+		
+
+
 
 
    
