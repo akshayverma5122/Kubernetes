@@ -55,12 +55,13 @@
 		sudo systemctl enable kubelet.service
 		sudo systemctl start crio.service
 
-9. Bootstrap a cluster
+9. udpate the network configuration. 
 
 		sudo modprobe br_netfilter
 		sudo sysctl -w net.ipv4.ip_forward=1
 
-### Initialize the kubernetes cluster 
+##### perform below steps in all the master nodes only
+
 		sudo kubeadm init
 
 
