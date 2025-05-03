@@ -60,9 +60,11 @@
 		sudo modprobe br_netfilter
 		sudo sysctl -w net.ipv4.ip_forward=1
 
-##### perform below steps in all the master nodes only
+10. execute in the master node only.
 
 		sudo kubeadm init
+
+
 
 
 
