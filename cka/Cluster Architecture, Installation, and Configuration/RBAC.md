@@ -98,9 +98,30 @@
    
 4. edit the clusterrole pods-services-aggregation-rules and add the matchLabels for list-pods cluster role as well.
 
-	 kubectl edit clusterrole pods-services-aggregation-rules
-		
-6. Describe the aggregated cluster role and check. this will include the permission of both clusterroles delete-services and list-pods.
+		kubectl edit clusterrole pods-services-aggregation-rules
+		aggregationRule:
+		  clusterRoleSelectors:
+		  - matchLabels:
+		      rbac-service-delete: "true"
+		  - matchLabels:                 ### Add this line for list-pods clusterrole 
+		      rbac-pod-list: "true"      ### Add this line for list-pods clusterrole 
+		apiVersion: rbac.authorization.k8s.io/v1
+		kind: ClusterRole
+		metadata:
+		  creationTimestamp: "2025-05-03T05:11:37Z"
+		  name: pods-services-aggregation-rules
+		  resourceVersion: "538310"
+		  uid: 489c636e-aae6-4fba-a01e-adeffa44c5ef
+		rules:
+		- apiGroups:
+		  - ""
+		  resources:
+		  - services
+		  verbs:
+		  - delete
+
+	
+5. Describe the aggregated cluster role and check. this will include the permission of both clusterroles delete-services and list-pods.
 
 		kubectl describe clusterrole pods-services-aggregation-rules
 
