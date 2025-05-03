@@ -1,9 +1,6 @@
 ### Creating the ETCD Database backup and restoring using etcdctl command 
 1. Download the etcdctl binary for your os distribution. Below is for the ubuntu server.
-
-    wget https://github.com/etcd-io/etcd/releases/download/v3.5.17/etcd-v3.5.17-linux-amd64.tar.gz
-  
-
+   wget https://github.com/etcd-io/etcd/releases/download/v3.5.17/etcd-v3.5.17-linux-amd64.tar.gz
 3. check the version of etcd client.
 
     etcdctl version
