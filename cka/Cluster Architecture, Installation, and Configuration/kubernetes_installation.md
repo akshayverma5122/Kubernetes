@@ -13,31 +13,31 @@
 		sudo swapoff -a 
 		sudo sed -i.bak '/\sswap\s/s/^/#/' /etc/fstab
 
-4. Stop and disable the firewalld.
+3. Stop and disable the firewalld.
 
 		sudo systemctl stop ufw.service
 		sudo systemctl disable  ufw.service
 
-5. Install the dependencies for adding repositories
+4. Install the dependencies for adding repositories
 
 		sudo apt-get update
 		sudo apt-get install -y software-properties-common curl
 
-6. Add the Kubernetes repository
+5. Add the Kubernetes repository
 
 		sudo curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 
 		sudo echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
-7. Add the CRI-O repository
+6. Add the CRI-O repository
 
 		sudo curl -fsSL https://download.opensuse.org/repositories/isv:/cri-o:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/cri-o-apt-keyring.gpg
 
 		sudo echo "deb [signed-by=/etc/apt/keyrings/cri-o-apt-keyring.gpg] https://download.opensuse.org/repositories/isv:/cri-o:/stable:/v1.28/deb/ /" | sudo tee /etc/apt/sources.list.d/cri-o.list
 
-6. list and Install the specific version of kubelet, kubectl and kubeadm packages
-   
-   listing the packages
+7. list and Install the specific version of kubelet, kubectl and kubeadm packages
+
+- listing the packages
 
 		sudo apt-get update
 		sudo apt list -a kubeadm
@@ -45,7 +45,7 @@
 		sudo apt list -a kubectl
 		sudo apt list -a cri-o
 
-   installing the packages
+- installing the packages
 
 		sudo apt-get install cri-o=1.28.11-1.1 kubelet=1.28.12-1.1 kubeadm=1.28.12-1.1  kubectl=1.28.12-1.1 -y
 
@@ -64,7 +64,7 @@
 		sudo sysctl --system
 
 
-11. execute in the master node only.
+10. execute in the master node only.
 
 		sudo kubeadm init --v=5
 
