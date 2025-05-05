@@ -59,8 +59,12 @@
 
 		sudo modprobe br_netfilter
 		sudo sysctl -w net.ipv4.ip_forward=1
+		sudo echo "br_netfilter" | sudo tee /etc/modules-load.d/br_netfilter.conf
+		sudo echo "net.ipv4.ip_forward=1" | sudo tee /etc/sysctl.d/99-sysctl-ipforward.conf
+		sudo sysctl --system
 
-10. execute in the master node only.
+
+11. execute in the master node only.
 
 		sudo kubeadm init --v=5
 
