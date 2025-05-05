@@ -87,8 +87,46 @@ The output is similar to this:
 
 
 #### 3. Accessing the API from a Pod
+
+- Create and log in the pods with nginx image
+
+		kubectl run web --image=nginx
+		kubectl exec -it web -- /bin/bash
+
+- Execute the below command inside the pods
+
+
+		# Point to the internal API server hostname
+		APISERVER=https://kubernetes.default.svc
+
+		# Path to ServiceAccount token
+		SERVICEACCOUNT=/var/run/secrets/kubernetes.io/serviceaccount
+
+		# Read this Pod's namespace
+		NAMESPACE=$(cat ${SERVICEACCOUNT}/namespace)
+
+		# Read the ServiceAccount bearer token
+		TOKEN=$(cat ${SERVICEACCOUNT}/token)
+
+		# Reference the internal certificate authority (CA)
+		CACERT=${SERVICEACCOUNT}/ca.crt
+
+		# Explore the API with TOKEN
+		curl --cacert ${CACERT} --header "Authorization: Bearer ${TOKEN}" -X GET ${APISERVER}/api
     
-   
+- The output will be similar to this.
+
+
+		{
+		  "kind": "APIVersions",
+		  "versions": ["v1"],
+		  "serverAddressByClientCIDRs": [
+		    {
+		      "clientCIDR": "0.0.0.0/0",
+		      "serverAddress": "10.0.1.149:443"
+		    }
+		  ]
+		}
   
 
 
