@@ -99,6 +99,12 @@
 		sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 		sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
+13. Execute the below command in master node only to validate the cluster is deployed as expected.
+
+		kubectl get nodes -owide
+		kubectl get pods -A -owide
+ 
+
 		
 
 
