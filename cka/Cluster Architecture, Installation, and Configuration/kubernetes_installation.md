@@ -62,7 +62,45 @@
 
 10. execute in the master node only.
 
-		sudo kubeadm init
+		sudo kubeadm init --v=5
+
+- output is similar to below
+
+		Your Kubernetes control-plane has initialized successfully!
+
+		To start using your cluster, you need to run the following as a regular user:
+
+		  mkdir -p $HOME/.kube
+		  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+		  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+		Alternatively, if you are the root user, you can run:
+
+		  export KUBECONFIG=/etc/kubernetes/admin.conf
+
+		You should now deploy a pod network to the cluster.
+		Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
+		  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
+		Then you can join any number of worker nodes by running the following on each as root:
+
+		kubeadm join 192.168.4.205:6443 --token phdalh.k1xvjxb9gfus1gd8 \
+        --discovery-token-ca-cert-hash sha256:a0a08554444f3b32e0aaefc8c0705586a013bfe141a296ddaba8c59a4e607e94
+
+11. Join the worker nodes to cluster using above generated commands. Execute the below commands in worker node only.
+
+		kubeadm join 192.168.4.205:6443 --token phdalh.k1xvjxb9gfus1gd8 \
+        --discovery-token-ca-cert-hash sha256:a0a08554444f3b32e0aaefc8c0705586a013bfe141a296ddaba8c59a4e607e94
+
+12. Execute the below commands in master node only to access the kubernetes cluster.
+
+
+		mkdir -p $HOME/.kube
+		sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+		sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+		
+
 
 
 
