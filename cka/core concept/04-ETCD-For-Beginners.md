@@ -47,7 +47,6 @@
         ```
 
        K8s Reference Docs:
-       - https://kubernetes.io/docs/concepts/overview/components/
        - https://etcd.io/docs/
        - https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/
 
