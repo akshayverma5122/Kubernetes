@@ -1,5 +1,4 @@
 # ETCD for Beginners
-  - Take me to the [Video Tutorial](https://kodekloud.com/topic/etcd-for-beginners/)
 
   In this section, we will take a quick look at introduction to ETCD for beginners.
   - What is ETCD?
@@ -12,12 +11,8 @@
 
 ## What is a Key-Value Store
    - Traditionally, databases have been in tabular format, you must have heard about SQL or Relational databases. They store data in rows and columns
-
-     ![relational-dbs](../../images/relational-dbs.PNG)
-
+     
    - A Key-Value Store stores information in a Key and Value format.
-
-     ![key-value](../../images/key-value.PNG)
 
 ## Install ETCD
    - It's easy to install and get started with **`ETCD`**.
@@ -50,8 +45,6 @@
         Syntax: To view more commands. Run etcdctl without any arguments
         $ ./etcdctl
         ```
-
-        ![etcdctl](../../images/etcdctl.PNG)
 
        K8s Reference Docs:
        - https://kubernetes.io/docs/concepts/overview/components/
