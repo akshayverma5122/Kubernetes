@@ -1,7 +1,5 @@
-
-
-### Kube-apiserver is the primary component in kubernetes.
-- Kube-apiserver is responsible for **`authenticating`**, **`validating`** requests, **`retrieving`** and **`Updating`** data in ETCD key-value store. In fact kube-apiserver is the only component that interacts directly to the etcd datastore. The other components such as kube-scheduler, kube-controller-manager and kubelet uses the API-Server to update in the cluster in their respective areas.
+## kube-apiserver
+- Kube-apiserver is the primary component in kubernetes. Kube-apiserver is responsible for **`authenticating`**, **`validating`** requests, **`retrieving`** and **`Updating`** data in ETCD key-value store. In fact kube-apiserver is the only component that interacts directly to the etcd datastore. The other components such as kube-scheduler, kube-controller-manager and kubelet uses the API-Server to update in the cluster in their respective areas.
   
 
   
@@ -13,24 +11,6 @@
     $ wget https://storage.googleapis.com/kubernetes-release/release/v1.13.0/bin/linux/amd64/kube-apiserver
     ```
 
- 
-### View kube-apiserver - Kubeadm
-- kubeadm deploys the kube-apiserver as a pod in kube-system namespace on the master node.
-  ```
-  $ kubectl get pods -n kube-system
-  ```
-   
-
-   
-### View kube-apiserver options - Kubeadm
-- You can see the options with in the pod definition file located at **`/etc/kubernetes/manifests/kube-apiserver.yaml`**
-  ```
-  $ cat /etc/kubernetes/manifests/kube-apiserver.yaml
-  ```
-  
-
-   
-### View kube-apiserver options - Manual
 - In a Non-kubeadm setup, you can inspect the options by viewing the kube-apiserver.service
   ```
   $ cat /etc/systemd/system/kube-apiserver.service
@@ -40,6 +20,18 @@
 - You can also see the running process and effective options by listing the process on master node and searching for kube-apiserver.
   ```
   $ ps -aux | grep kube-apiserver
+  ```
+
+ 
+### View kube-apiserver - Kubeadm
+- kubeadm deploys the kube-apiserver as a pod in kube-system namespace on the master node.
+  ```
+  $ kubectl get pods -n kube-system
+  ```
+  
+- You can see the options with in the pod definition file located at **`/etc/kubernetes/manifests/kube-apiserver.yaml`**
+  ```
+  $ cat /etc/kubernetes/manifests/kube-apiserver.yaml
   ```
 
 ### Accessing the kube-apiserver
@@ -93,8 +85,8 @@ The output is similar to this:
 		  ]
 		}
 
-		
 
+#### 3. Accessing the API from a Pod
     
    
   
