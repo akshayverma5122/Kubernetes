@@ -32,6 +32,15 @@
 
 		etcdctl --endpoints=https://172.19.0.5:2379 --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key --cacert=/etc/kubernetes/pki/etcd/ca.crt --write-out=table endpoint status
 
+- add the member node in etcd cluster
+
+		etcdctl --endpoints=https://172.19.0.3:2379 --learner=true --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key --cacert=/etc/kubernetes/pki/etcd/ca.crt member add multinode-control-plane3 --peer-urls=https://172.19.0.5:2380 
+
+-- add the --peer-urls to existing the etcd member nodes.
+
+		etcdctl --endpoints=https://172.19.0.3:2379  --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key --cacert=/etc/kubernetes/pki/etcd/ca.crt  member update 8e9e05c52164694d --peer-urls=https://172.19.0.3:2380
+
+
     
   
 ## ETCD in HA Environment
