@@ -38,6 +38,9 @@
 - **etcdctl:** This is the primary command-line client for interacting with etcd over a network. It is used for day-to-day operations such as managing keys and values, administering the cluster, checking health, and more.
 - **etcdutl:** This is an administration utility designed to operate directly on etcd data files, including migrating data between etcd versions, defragmenting the database, restoring snapshots, and validating data consistency. For network operations, etcdctl should be used.
 - **--peer-key-file** and **--peer-cert-file** for securing communication between etcd members, and **--key-file** and **--cert-file** for securing communication between etcd and its clients. **--client-cert-auth** along with TLS, it verifies the certificates from clients by using system CAs or the CA passed in by **--trusted-ca-file** flag
+- Scaling out etcd clusters increases availability by trading off performance. Scaling does not increase cluster performance nor capability. A general rule is not to scale out or in etcd clusters. Do not configure any auto scaling groups for etcd clusters. It is strongly recommended to always run a static five-member etcd cluster for production Kubernetes clusters at any officially supported scale.
+
+## Replacing a failed etcd member
  
    
 K8s Reference Docs:
