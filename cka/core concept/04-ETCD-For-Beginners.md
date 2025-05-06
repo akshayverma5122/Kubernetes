@@ -46,7 +46,4 @@
         $ ./etcdctl
         ```
 
-       K8s Reference Docs:
-       - https://etcd.io/docs/
-       - https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/
-
+      
