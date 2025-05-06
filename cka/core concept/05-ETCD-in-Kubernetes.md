@@ -24,6 +24,22 @@
 ## ETCD in HA Environment
    - In a high availability environment, you will have multiple master nodes in your cluster that will have multiple ETCD Instances spread across the master nodes.
    - Make sure etcd instances know each other by setting the right parameter in the **`etcd.service`** configuration. The **`--initial-cluster`** option where you need to specify the different instances of the etcd service.
+
+## Important Notes - ETCD 
+
+- etcd is a leader-based distributed system. Ensure that the leader periodically send heartbeats on time to all followers to keep the cluster stable.
+
+- You should run etcd as a cluster with an odd number of members.
+- **etcdctl:** This is the primary command-line client for interacting with etcd over a network. It is used for day-to-day operations such as managing keys and values, administering the cluster, checking health, and more.
+- **etcdutl:** This is an administration utility designed to operate directly on etcd data files, including migrating data between etcd versions, defragmenting the database, restoring snapshots, and validating data consistency. For network operations, etcdctl should be used.
+- **--peer-key-file** and **--peer-cert-file** for securing communication between etcd members, and **--key-file** and **--cert-file** for securing communication between etcd and its clients. **--client-cert-auth** along with TLS, it verifies the certificates from clients by using system CAs or the CA passed in by **--trusted-ca-file** flag
+- 
+
+
+
+sudo ETCDCTL_API=3 etcdctl --endpoints 127.0.0.1:2379   --cert=/etc/kubernetes/pki/etcd/server.crt   --key=/etc/kubernetes/pki/etcd/server.key   --cacert=/etc/kubernetes/pki/etcd/ca.crt   member list
+
+
    
 K8s Reference Docs:
 - https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/
