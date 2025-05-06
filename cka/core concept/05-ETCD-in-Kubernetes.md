@@ -56,10 +56,7 @@
 - **etcdutl:** This is an administration utility designed to operate directly on etcd data files, including migrating data between etcd versions, defragmenting the database, restoring snapshots, and validating data consistency. For network operations, etcdctl should be used.
 - **--peer-key-file** and **--peer-cert-file** for securing communication between etcd members, and **--key-file** and **--cert-file** for securing communication between etcd and its clients. **--client-cert-auth** along with TLS, it verifies the certificates from clients by using system CAs or the CA passed in by **--trusted-ca-file** flag
 - Scaling out etcd clusters increases availability by trading off performance. Scaling does not increase cluster performance nor capability. A general rule is not to scale out or in etcd clusters. Do not configure any auto scaling groups for etcd clusters. It is strongly recommended to always run a static five-member etcd cluster for production Kubernetes clusters at any officially supported scale.
-
-## Replacing a failed etcd member
- 
-   
+    
 K8s Reference Docs:
 - https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/
 - https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/setup-ha-etcd-with-kubeadm/
