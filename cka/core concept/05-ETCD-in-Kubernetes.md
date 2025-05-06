@@ -20,6 +20,11 @@
   $ kubectl exec etcd-master -n kube-system -- sh -c "ETCDCTL_API=3 etcdctl --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key --cacert=/etc/kubernetes/pki/etcd/ca.crt get / --prefix --keys-only"
   ```
 - Kubernetes Stores data in a specific directory structure, the root directory is the **`registry`** and under that you have various kubernetes constructs such as **`minions`**, **`nodes`**, **`pods`**, **`replicasets`**, **`deployments`**, **`roles`**, **`secrets`** and **`Others`**.
+- To list all members of etcd cluster.
+
+		sudo ETCDCTL_API=3 etcdctl --endpoints 127.0.0.1:2379   --cert=/etc/kubernetes/pki/etcd/server.crt   --key=/etc/kubernetes/pki/etcd/server.key   --cacert=/etc/kubernetes/pki/etcd/ca.crt   member list
+
+    
   
 ## ETCD in HA Environment
    - In a high availability environment, you will have multiple master nodes in your cluster that will have multiple ETCD Instances spread across the master nodes.
@@ -33,13 +38,7 @@
 - **etcdctl:** This is the primary command-line client for interacting with etcd over a network. It is used for day-to-day operations such as managing keys and values, administering the cluster, checking health, and more.
 - **etcdutl:** This is an administration utility designed to operate directly on etcd data files, including migrating data between etcd versions, defragmenting the database, restoring snapshots, and validating data consistency. For network operations, etcdctl should be used.
 - **--peer-key-file** and **--peer-cert-file** for securing communication between etcd members, and **--key-file** and **--cert-file** for securing communication between etcd and its clients. **--client-cert-auth** along with TLS, it verifies the certificates from clients by using system CAs or the CA passed in by **--trusted-ca-file** flag
-- 
-
-
-
-sudo ETCDCTL_API=3 etcdctl --endpoints 127.0.0.1:2379   --cert=/etc/kubernetes/pki/etcd/server.crt   --key=/etc/kubernetes/pki/etcd/server.key   --cacert=/etc/kubernetes/pki/etcd/ca.crt   member list
-
-
+ 
    
 K8s Reference Docs:
 - https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/
