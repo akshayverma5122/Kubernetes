@@ -1,4 +1,9 @@
-### Kubernetes installation steps in ubuntu server.
+### Kubernetes installation in ubuntu server.
+
+- Creating Highly Available Clusters with kubeadm.
+  1. Using Stacked ETCD >> cluster should have loadbalancer, three master and three worker nodes.
+  2. Using External ETCD >> Cluster should have loadbalancer, three master & worker nodes and three nodes for etcd. 
+  
 #### kubernetes Nodes - single master, two worker
 ##### perform below steps in all the master and worker nodes. 
 
