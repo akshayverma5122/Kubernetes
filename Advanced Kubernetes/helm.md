@@ -1,43 +1,50 @@
-Helm basic 
----------------
+## Helm Commands 
+- Helm repo management commands
 
-Helm repo --help
-Helm repo list
-Helm repo update
-helm repo add bitnami https://charts.bitnami.com/bitnami
-Helm repo remove bitnami 
+		Helm repo --help
+		helm repo list
+		helm repo update
+		helm repo add bitnami https://charts.bitnami.com/bitnami
+		helm repo remove bitnami 
 
-helm search repo wordpress
-helm search repo wordpress --versions
+- searching the charts in added helm repository
+  
+		helm search repo wordpress
+		helm search repo wordpress --versions
 
+- installing the wordpress using helm charts
 
-helm  show chart  bitnami/wordpress
-Helm show readme bitnami/wordpress
-Helm show values bitnami/wordpress
-helm show values bitnami/wordpress --version 24.2.3  > values.yaml
+		helm install myblogging  bitnami/wordpress --version 24.2.3
 
+- Getting the values and readme details of added helm repository.
+  
+		helm show chart  bitnami/wordpress
+		helm show readme bitnami/wordpress
+		helm show values bitnami/wordpress
+		helm show values bitnami/wordpress --version 24.2.3
 
-helm install myblogging  bitnami/wordpress --version 24.2.3
+- install the helm charts with custom values.
 
-helm install local-wp bitnami/wordpress --version 24.2.3 --set mariadb.auth.rootPassword=goodpassword --set mariadb.auth.username=mariadbuser --set mariadb.auth.password=badpassword
+		helm install local-wp bitnami/wordpress --version 24.2.3 --set mariadb.auth.rootPassword=goodpassword --set 			mariadb.auth.username=mariadbuser --set mariadb.auth.password=badpassword
 
-helm install local-wp bitnami/wordpress --version 24.2.3 -f custom-values.yaml
+		helm install local-wp bitnami/wordpress --version 24.2.3 -f custom-values.yaml
 
-Helm uninstall local-wp
+- uninstalling the helm charts
 
+		helm uninstall local-wp
 
-helm get values local-wp
-helm get values local-wp --all
+- Get the custom applied and all the values
 
-Upgrading & Rollback helm 
-----------------------
+		helm get values local-wp	
+		helm get values local-wp --all
 
-helm upgrade --reuse-values --values custom-values.yaml local-wp bitnami/wordpress --version 24.2.3
-helm get values local-wp 
-helm history local-wp 
-helm get values local-wp --revision 1
+- Upgrading & Rollback helm 
 
-helm rollback local-wp 3
+		helm upgrade --reuse-values --values custom-values.yaml local-wp bitnami/wordpress --version 24.2.3
+		helm get values local-wp 
+		helm history local-wp 
+		helm get values local-wp --revision 1
+		helm rollback local-wp 3
 
-helm upgrade --reuse-values --values custom-values.yaml --set image.tag="nonexistence" local-wp bitnami/wordpress --version 24.2.2  --atomic --cleanup-on-fail  --debug --timeout 2m
-![Uploading image.png…]()
+		helm upgrade --reuse-values --values custom-values.yaml --set image.tag="nonexistence" local-wp bitnami/wordpress --version 24.2.2  --atomic --cleanup-on-fail  --debug --timeout 2m
+
