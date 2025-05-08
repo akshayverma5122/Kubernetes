@@ -1,28 +1,18 @@
 # Kube Scheduler
-  - Take me to [Video Tutorial](https://kodekloud.com/topic/kube-scheduler/)
-
-In this section, we will take a look at kube-scheduler.
-
-#### kube-scheduler is responsible for scheduling pods on nodes.  
-- The kube-scheduler is only responsible for deciding which pod goes on which node. It doesn't actually place the pod on the nodes, that's the job of the **`kubelet`**.
-
-  ![kube-scheduler1](../../images/kube-scheduler1.PNG)
-  
-#### Why do you need a Scheduler?
-
-  ![kube-scheduler2](../../images/kube-scheduler2.PNG)
-    
-## Install kube-scheduler - Manual
+- The kube-scheduler is only responsible for deciding which pod goes on which node. It doesn't actually place the pod on the nodes, that's the job of the **`kubelet`**. So, kube-scheduler is responsible for scheduling pods on nodes.
+- kube scheduler will filter the node by using compute resource availability, affinity, anti-affinity rule and it will provide the score to that node. if multiple nodes is having the same score then schedule will pickup one node randomly and place the pods there. it means **Filtering** and **Scoring** is the main job of kube-scheduler. 
+## kube-scheduler - Manual
 - Download the kubescheduler binary from the kubernetes release pages [kube-scheduler](https://storage.googleapis.com/kubernetes-release/release/v1.13.0/bin/linux/amd64/kube-scheduler). For example: To download kube-scheduler v1.13.0, Run the below command.
   ```
   $ wget https://storage.googleapis.com/kubernetes-release/release/v1.13.0/bin/linux/amd64/kube-scheduler
   ```
 - Extract it
 - Run it as a service
-
-  ![kube-scheduler3](../../images/kube-scheduler3.PNG)
-  
-## View kube-scheduler options - kubeadm
+- You can also see the running process and effective options by listing the process on master node and searching for kube-apiserver.
+  ``` 
+  $ ps -aux | grep kube-scheduler
+  ```  
+## kube-scheduler - kubeadm
 - If you set it up with kubeadm tool, kubeadm tool will deploy the kube-scheduler as pod in kube-system namespace on master node.
   ```
   $ kubectl get pods -n kube-system
@@ -31,14 +21,6 @@ In this section, we will take a look at kube-scheduler.
   ```
   $ cat /etc/kubernetes/manifests/kube-scheduler.yaml
   ```
-  ![kube-scheduler4](../../images/kube-scheduler4.PNG)
-  
-- You can also see the running process and effective options by listing the process on master node and searching for kube-apiserver.
-  ``` 
-  $ ps -aux | grep kube-scheduler
-  ```
-  ![kube-scheduler5](../../images/kube-scheduler5.PNG)
-  
   K8s Reference Docs:
   - https://kubernetes.io/docs/reference/command-line-tools-reference/kube-scheduler/
   - https://kubernetes.io/docs/concepts/scheduling-eviction/kube-scheduler/
