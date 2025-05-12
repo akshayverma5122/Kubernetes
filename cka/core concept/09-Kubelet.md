@@ -147,6 +147,13 @@
 
 		kubeadm config print init-defaults --component-configs KubeletConfiguration
 
+## kubelet configuration files 
+- The KubeConfig file to use for the TLS Bootstrap is /etc/kubernetes/bootstrap-kubelet.conf, but it is only used if /etc/kubernetes/kubelet.conf does not exist.
+- The KubeConfig file with the unique kubelet identity is /etc/kubernetes/kubelet.conf.
+- The file containing the kubelet's ComponentConfig is /var/lib/kubelet/config.yaml.
+- The dynamic environment file that contains KUBELET_KUBEADM_ARGS is sourced from /var/lib/kubelet/kubeadm-flags.env.
+- The file that can contain user-specified flag overrides with KUBELET_EXTRA_ARGS is sourced from /etc/default/kubelet (for DEBs), or /etc/sysconfig/kubelet (for RPMs). KUBELET_EXTRA_ARGS is last in the flag chain and has the highest priority in the event of conflicting settings.
+
 K8s Reference Docs:
 - https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/
 - https://kubernetes.io/docs/concepts/overview/components/
