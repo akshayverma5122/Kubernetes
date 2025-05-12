@@ -156,5 +156,5 @@
 
 K8s Reference Docs:
 - https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/
-- https://kubernetes.io/docs/concepts/overview/components/
+- https://kubernetes.io/docs/tasks/administer-cluster/kubelet-config-file/
 - https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/kubelet-integration/
