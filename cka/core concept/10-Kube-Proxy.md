@@ -10,13 +10,14 @@
 - Run it as a service
 ## View kube-proxy options - kubeadm
 - If you set it up with kubeadm tool, kubeadm tool will deploy the kube-proxy as pod in kube-system namespace. In fact it is deployed as a daemonset on master node.
+  ```  
+  $ kubectl get pods -n kube-system
   ```
+
 - view the varioud options of kubeproxy daemonsets
 
-    kubectl exec -it kube-proxy-4s674 -n kube-system -- cat /var/lib/kube-proxy/config.conf
+		kubectl exec -it kube-proxy-4s674 -n kube-system -- cat /var/lib/kube-proxy/config.conf
   
-  $ kubectl get pods -n kube-system
-  ```  
 K8s Reference Docs:
 - https://kubernetes.io/docs/reference/command-line-tools-reference/kube-proxy/
 
