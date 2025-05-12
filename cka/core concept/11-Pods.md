@@ -15,7 +15,7 @@
 - Controllers for workload resources create Pods from a pod template and manage those Pods on your behalf.
 - Most of the metadata about a Pod is immutable. For example, you cannot change the namespace, name, uid, or creationTimestamp fields.
 - Multi container pods - init container, sidecar container.
-- static pods, ephemeral pods 
+- single container pods types - static pods, ephemeral pods 
   
 ## Deploy Pods using imperative commands 
 - To deploy a docker container by creating a POD.
