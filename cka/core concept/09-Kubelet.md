@@ -142,7 +142,11 @@
 	}
 
   ```
-    
+
+- same info can be printed using the below commands
+
+		kubeadm config print init-defaults --component-configs KubeletConfiguration
+
 K8s Reference Docs:
 - https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/
 - https://kubernetes.io/docs/concepts/overview/components/
