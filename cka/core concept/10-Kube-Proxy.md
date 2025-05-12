@@ -1,6 +1,6 @@
 # Kube Proxy
 - Within Kubernetes Cluster, every pod can reach every other pod. This is accomplished by deploying a pod networking cluster to the cluster. 
-- Kube-Proxy is a process that runs on each node in the kubernetes cluster.    
+- Kube-Proxy is a process that runs on each node in the kubernetes cluster. This reflects services as defined in the Kubernetes API on each node and can do simple TCP, UDP, and SCTP stream forwarding or round robin TCP, UDP, and SCTP forwarding across a set of backends.
 ## Install kube-proxy - Manual
 - Download the kube-proxy binary from the kubernetes release pages [kube-proxy](https://storage.googleapis.com/kubernetes-release/release/v1.13.0/bin/linux/amd64/kube-proxy). For example: To download kube-proxy v1.13.0, Run the below command.
   ```
