@@ -18,15 +18,28 @@
 - single container pods types - static pods, ephemeral pods 
   
 ## Deploy Pods using imperative commands 
-- To deploy a docker container by creating a POD.
-  ```
-  $ kubectl run nginx --image nginx
-  ```
+- Start the web1 pods with nginx image without exposing the container port
 
-- To get the list of pods
-  ```
-  $ kubectl get pods
-  ```
+		kubectl run web1 --image=nginx -n webserver
+
+- Start the web2 pod with nginx image with exposing the container port on 80.
+
+		kubectl run web2 --image=nginx --port=80 -n webserver
+
+- Start the web3 pod and set environment variables "key1=value1" and "key2=value2" in the container
+
+		kubectl run web3 --image=nginx --env="key1=value1" --env="key2=value2" -n webserver
+		
+- Start the web4 pod and set labels "app=middleware" and "env=prod" in the container
+  
+		kubectl run web4 --image --labels="app=middleware,env=prod" -n webserver
+
+- Dry run; print the corresponding API objects without creating them
+
+		kubectl run web5 --image=nginx --port=80 --labels="app=middleware,env=prod" --env="key1=value1" -n webserver --dry-run=client -oyaml 
+
+		
+    
 K8s Reference Docs:
 - https://kubernetes.io/docs/concepts/workloads/pods/pod/
 - https://kubernetes.io/docs/tutorials/kubernetes-basics/explore/explore-intro/
