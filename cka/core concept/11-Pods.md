@@ -2,7 +2,7 @@
 - Kubernetes doesn't deploy containers directly on the worker node.
 - Pod will have a one-to-one relationship with containers running your application.
 - **Multi-Container PODs** - A single pod can have multiple containers except for the fact that they are usually not multiple containers of the **`same kind`**.
-- Containers should only be scheduled together in a single Pod if they are tightly coupled and need to share resources such as disk.
+- Multiple containers should only be scheduled together in a single Pod if they are tightly coupled and need to share resources such as disk.
 - A Pod is a group of one or more application containers (such as Docker) and includes shared storage (volumes), IP address and information about how to run them. Those resources include:
   
    1. Shared storage, as Volumes,
