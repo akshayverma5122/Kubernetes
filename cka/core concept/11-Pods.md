@@ -36,7 +36,22 @@
 
 - Dry run; print the corresponding API objects without creating them
 
-		kubectl run web5 --image=nginx --port=80 --labels="app=middleware,env=prod" --env="key1=value1" -n webserver --dry-run=client -oyaml 
+		kubectl run web5 --image=nginx --port=80 --labels="app=middleware,env=prod" --env="key1=value1" -n webserver --dry-run=client -oyaml
+
+- Start a busybox pod and keep it in the foreground, don't restart it if it exits
+
+		kubectl run -it web6 --image=nginx --restart=Never
+
+- Start the dns pod using the default command, but use custom arguments (arg1 .. argN) for that command
+
+		kubectl run dnspod --rm -it --image=tutum/dnsutils --restart=Never -- nslookup kubernetes.default
+
+- Start the nginx pod using a different command and custom arguments
+  
+		kubectl run nginx --image=nginx --command -- <cmd> <arg1> ... <argN>
+	
+
+	
 
 		
     
