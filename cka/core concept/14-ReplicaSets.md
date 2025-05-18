@@ -1,11 +1,10 @@
-# ReplicaSets
+# ReplicaSets & Replication Controller 
 - Controllers are brain behind kubernetes
 
 ## Difference between ReplicaSet and Replication Controller
 - **`Replication Controller`** is the older technology that is being replaced by a **`ReplicaSet`**.
 - **`ReplicaSet`** is the new way to setup replication.
 - **ReplicaSet** requires a selector definition when compare to **Replication Controller**.
-
 
 ## Creating a Replication Controller
   - To Create the replication controller
