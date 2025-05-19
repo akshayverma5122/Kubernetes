@@ -1,4 +1,10 @@
-# ReplicaSets & Replication Controller 
+## ReplicaSets
+- A ReplicaSet's purpose is to maintain a stable set of replica Pods running at any given time. Usually, you define a Deployment and let that Deployment manage ReplicaSets automatically.
+- When a ReplicaSet needs to create new Pods, it uses its Pod template.
+- A ReplicaSet identifies new Pods to acquire by using its selector. If there is a Pod that has no OwnerReference or the OwnerReference is not a Controller and it matches a ReplicaSet's selector, it will be immediately acquired by said ReplicaSet.
+- if we create the pods with same label as replicaset is having then replicaset will aquire this pod even if it is not created by the replicaset controller. this replicaset behaviour is similar if i create the pods before replicaset creation or after replicaset creation. 
+
+## Replication Controller 
 - Controllers are brain behind kubernetes
 
 ## Difference between ReplicaSet and Replication Controller
