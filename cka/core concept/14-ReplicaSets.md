@@ -11,7 +11,7 @@
 - **`ReplicaSet`** is the new way to setup replication.
 - **`ReplicaSet`** requires a selector definition when compare to **`Replication Controller`**.
   
-## Creating a ReplicaSet
+### Creating a ReplicaSet
      
   - To Create the replicaset
     ```
@@ -44,7 +44,7 @@
   ```
   kubectl autoscale rs frontend --max=10 --min=3 --cpu-percent=50
 
-## ReplicaSet using REST API
+### ReplicaSet using REST API
 - Execute the below command to access the apis in localhost
   ```
   kubect proxy --port=8080
@@ -69,10 +69,10 @@
 
    kubectl delete rs frontend --cascade=orphan
   ```    
-## Replication Controller 
+### Replication Controller 
 - Controllers are brain behind kubernetes
   
-## Creating a Replication Controller
+### Creating a Replication Controller
   - To Create the replication controller
     ```
     $ kubectl create -f rc-definition.yaml
@@ -85,16 +85,6 @@
     ```
     $ kubectl get pods
     ```    
-  
-
-
-## Labels and Selectors
-#### What is the deal with Labels and Selectors? Why do we label pods and objects in kubernetes?
-  
-
-
- 
-
 #### K8s Reference Docs:
 - https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
 - https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/
