@@ -31,7 +31,7 @@
      
   - To Create the replicaset
     ```
-    $ kubectl create -f replicaset-definition.yaml
+    $ kubectl create -f https://raw.githubusercontent.com/akshayverma5122/Kubernetes/refs/heads/master/cka/core%20concept/manifest/replicaset-definition.yaml
     ```
   - To list all the replicaset
     ```
