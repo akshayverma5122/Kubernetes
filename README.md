@@ -17,3 +17,7 @@
   - [10-Kube-Proxy](cka/02-Core-Concepts/10-Kube-Proxy.md)
   - [11-Pods](cka/02-Core-Concepts/11-Pods.md)
   - [12-ReplicaSets](cka/02-Core-Concepts/12-ReplicaSets.md)
+
+- [07-Security](cka/07-Security)
+  - [01-kubeConfig](cka/07-Security/01-kubeConfig.md)
+  - [02-RBAC](cka/07-Security/02-RBAC.md)
