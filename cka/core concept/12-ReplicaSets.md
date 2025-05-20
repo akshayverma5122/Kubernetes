@@ -5,6 +5,7 @@
 - if we create the pods with same label as replicaset is having then replicaset will aquire this pod even if it is not created by the replicaset controller. this replicaset behaviour is similar if i create the pods before replicaset creation or after replicaset creation.
 - You can remove Pods from a ReplicaSet by changing their labels. This technique may be used to remove Pods from service for debugging, data recovery, etc.
 - **Pod deletion cost** - Using the **controller.kubernetes.io/pod-deletion-cost** annotation, users can set a preference regarding which pods to remove first when downscaling a ReplicaSet.The annotation should be set on the pod, the range is [-2147483648, 2147483647]. It represents the cost of deleting a pod compared to other pods belonging to the same ReplicaSet. Pods with lower deletion cost are preferred to be deleted before pods with higher deletion cost. The implicit value for this annotation for pods that don't set it is 0; negative values are permitted. Invalid values will be rejected by the API server.
+- In the ReplicaSet, .spec.template.metadata.labels must match spec.selector, or it will be rejected by the API. if spec.selector is not mentioned then the default value will be .spec.template.metadata.labels values. 
   
 ### Difference between ReplicaSet and Replication Controller
 - **`Replication Controller`** is the older technology that is being replaced by a **`ReplicaSet`**.
