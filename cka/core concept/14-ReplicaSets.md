@@ -40,6 +40,19 @@
   ```
   $ kubectl scale --replicas=6 replicaset myapp-replicaset
   ```
+
+## ReplicaSet using REST API
+- Execute the below command to access the apis in localhost
+
+		kubect proxy --port=8080
+
+- list the all replicasets
+  
+		curl -X GET localhost:8080/apis/apps/v1/namespaces/default/replicasets
+
+- list the frontend replicasets
+
+		curl -X GET localhost:8080/apis/apps/v1/namespaces/default/replicasets/frontend
     
 ## Labels and Selectors
 #### What is the deal with Labels and Selectors? Why do we label pods and objects in kubernetes?
