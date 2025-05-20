@@ -16,7 +16,7 @@
      
   - To Create the replicaset
     ```
-     kubectl create -f https://raw.githubusercontent.com/akshayverma5122/Kubernetes/refs/heads/master/cka/core%20concept/manifest/replicaset-definition.yaml
+     kubectl create -f https://raw.githubusercontent.com/akshayverma5122/Kubernetes/refs/heads/master/cka/02-Core-Concepts/manifest/replicaset-definition.yaml
     ```
   - To list all the replicaset
     ```
@@ -76,7 +76,7 @@
 ### Creating a Replication Controller
   - To Create the replication controller
     ```
-    $ kubectl create -f https://raw.githubusercontent.com/akshayverma5122/Kubernetes/refs/heads/master/cka/core%20concept/manifest/replicaset-definition.yaml
+    $ kubectl create -f https://raw.githubusercontent.com/akshayverma5122/Kubernetes/refs/heads/master/cka/02-Core-Concepts/manifest/rc-definition.yaml
     ```
   - To list all the replication controllers
     ```
