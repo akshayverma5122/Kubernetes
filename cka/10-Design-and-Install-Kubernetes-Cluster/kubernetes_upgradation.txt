@@ -1,0 +1,98 @@
+===========================================================================================================================
+v1.28.12
+
+docker load -i kube-apiserver-v1-28-12.tar
+docker tag registry.k8s.io/kube-apiserver:v1.28.12 container-registry.oarm.sbi/kube-apiserver:v1.28.12
+docker push container-registry.oarm.sbi/kube-apiserver:v1.28.12
+
+docker load -i kube-controller-manager-v1-28-12.tar
+docker tag registry.k8s.io/kube-controller-manager:v1.28.12 container-registry.oarm.sbi/kube-controller-manager:v1.28.12
+docker push container-registry.oarm.sbi/kube-controller-manager:v1.28.12
+
+
+docker load -i kube-proxy-v1-28-12.tar
+docker tag registry.k8s.io/kube-proxy:v1.28.12 container-registry.oarm.sbi/kube-proxy:v1.28.12
+docker push container-registry.oarm.sbi/kube-proxy:v1.28.12
+
+docker load -i kube-scheduler-v1-28-12.tar
+docker tag registry.k8s.io/kube-scheduler:v1.28.12 container-registry.oarm.sbi/kube-scheduler:v1.28.12
+docker push container-registry.oarm.sbi/kube-scheduler:v1.28.12
+
+docker load -i pause-3-9.tar
+docker tag registry.k8s.io/pause:3.9 container-registry.oarm.sbi/pause:3.9
+docker push container-registry.oarm.sbi/pause:3.9
+
+docker load -i coredns-v1-10-1.tar
+docker tag registry.k8s.io/coredns/coredns:v1.10.1 container-registry.oarm.sbi/coredns/coredns:v1.10.1
+docker push container-registry.oarm.sbi/coredns:v1.10.1
+
+docker load -i etcd-3-5-12.tar
+docker tag registry.k8s.io/etcd:3.5.12-0 container-registry.oarm.sbi/etcd:3.5.12-0
+docker push  container-registry.oarm.sbi/etcd:3.5.12-0
+==================================================================================================================================
+
+ETCD backup
+
+sudo ETCDCTL_API=3 etcdctl  --endpoints=https://10.176.55.102:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt  --cert=/etc/kubernetes/pki/etcd/server.crt  --key=/etc/kubernetes/pki/etcd/server.key snapshot save /u01/oracle/etcd_backup/etcd_"$(date +"%Y-%m-%d_%H-%M-%S")".db
+
+sudo ETCDCTL_API=3 etcdctl  --endpoints=https://10.176.55.102:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt  --cert=/etc/kubernetes/pki/etcd/server.crt  --key=/etc/kubernetes/pki/etcd/server.key snapshot save /u01/oracle/etcd_backup/etcd.db
+sudo  ETCDCTL_API=3 etcdctl --write-out=table snapshot status etcd.db
+
+upgrade CRI-o
+
+sudo sh install
+crio version
+sudo systemctl stop kubelet.service
+sudo systemctl daemon-reload
+sudo systemctl stop crio.service
+sudo systemctl start  crio.service
+sudo systemctl status   crio.service
+sudo systemctl start kubelet.service
+sudo systemctl status  kubelet.service
+kubectl get node -owide
+
+upgrade Master Node
+
+
+
+kubectl get node -owide
+sudo rpm -Uvh cri-tools-1.26.0-150500.1.1.x86_64.rpm
+sudo rpm -Uvh kubeadm-1.25.16-150500.1.1.x86_64.rpm
+kubeadm version
+sudo kubeadm upgrade plan
+sudo kubeadm upgrade apply v1.24.17
+sudo rpm -Uvh kubelet-1.26.15-150500.1.1.x86_64.rpm
+sudo systemctl restart kubelet.service
+sudo systemctl status  kubelet.service
+sudo rpm -Uvh kubectl-1.25.16-150500.1.1.x86_64.rpm
+sudo rpm -Uvh  kubernetes-cni-1.2.0-150500.2.1.x86_64.rpm
+kubectl get node -owide
+
+
+=======================================================================================================================================
+upgrade Worker node
+
+on master node
+
+kubectl get node -owide
+kubectl get  pods --all-namespaces --field-selector spec.nodeName=gitfou149droarmkw1.oarm.sbi
+kubectl drain gitfofebafad011 --ignore-daemonsets
+
+
+
+on worker node
+
+sudo rpm -Uvh cri-tools-1.26.0-150500.1.1.x86_64.rpm
+sudo rpm -Uvh kubeadm-1.25.16-150500.1.1.x86_64.rpm
+kubeadm version
+sudo kubeadm upgrade node
+sudo rpm -Uvh kubelet-1.25.16-150500.1.1.x86_64.rpm
+sudo systemctl restart kubelet.service
+sudo systemctl status  kubelet.service
+sudo rpm -Uvh kubectl-1.25.16-150500.1.1.x86_64.rpm
+sudo rpm -Uvh kubernetes-cni-1.2.0-150500.2.1.x86_64.rpm
+
+on master node
+kubectl get node -owide
+kubectl uncordon gitfofebafad011
+kubectl get node -owide
