@@ -75,7 +75,7 @@
 ### Creating a Replication Controller
   - To Create the replication controller
     ```
-    $ kubectl create -f rc-definition.yaml
+    $ kubectl create -f https://raw.githubusercontent.com/akshayverma5122/Kubernetes/refs/heads/master/cka/core%20concept/manifest/replicaset-definition.yaml
     ```
   - To list all the replication controllers
     ```
