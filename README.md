@@ -1,4 +1,8 @@
 ## Certified Kubernetes Administrator
+- [01-KubernetesCluster-installation&maintainance/](cka/01-KubernetesCluster-installation&maintainance/02-kubernetes-installation-with-HA.pdf)
+  - [01-kubernetes-installation-without-HA](cka/01-KubernetesCluster-installation&maintainance/01-kubernetes-installation-without-HA.md)
+  - [02-kubernetes-installation-with-HA](cka/01-KubernetesCluster-installation&maintainance/02-kubernetes-installation-with-HA.pdf)
+    
 - [02-Core-Concepts](cka/02-Core-Concepts)
 
   - [02-Cluster-Architecture](cka/02-Core-Concepts/02-Cluster-Architecture.md)
@@ -12,4 +16,4 @@
   - [09-Kubelet](cka/02-Core-Concepts/09-Kubelet.md)
   - [10-Kube-Proxy](cka/02-Core-Concepts/10-Kube-Proxy.md)
   - [11-Pods](cka/02-Core-Concepts/11-Pods.md)
-  - [12-ReplicaSets.md](cka/02-Core-Concepts/12-ReplicaSets.md)
+  - [12-ReplicaSets](cka/02-Core-Concepts/12-ReplicaSets.md)
