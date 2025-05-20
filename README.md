@@ -1,5 +1,27 @@
-https://medium.com/@muppedaanvesh/a-hands-on-guide-to-kubernetes-endpoints-endpointslices-%EF%B8%8F-1375dfc9075c  - A Hands-On Guide to Kubernetes Endpoints & EndpointSlices 
+02-Core-Concepts
 
-https://devopscube.com/reduce-docker-image-size/ - How to Reduce Docker Image Size: 6 Optimization Methods
-
-https://github.com/bmuschko/cka-study-guide  - CKA Learning Repo
+01-Core-Concepts-Section-Introduction
+02-Cluster-Architecture
+03-Docker-vs-ContainerD
+04-ETCD-For-Beginners
+05-ETCD-in-Kubernetes
+06-Kube-API-Server
+07-Kube-Controller-Manager
+08-Kube-Scheduler
+09-Kubelet
+10-Kube-Proxy
+11-Pods
+12-Practice-Test-Introduction
+13-Practice-Test-PODs
+14-ReplicaSets
+15-Practice-Tests-ReplicaSet
+16-Deployments
+17-Practice-Tests-Deployments
+18-Namespaces
+19-Practice-Test-Namespaces
+20-Services
+21-Services-ClusterIP
+22-Practice-Test-Services
+23-Imperative-Commands-with-kubectl
+24-Practice-Test-Imperative-Commands
+25-Attachments
