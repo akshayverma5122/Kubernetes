@@ -40,6 +40,9 @@
   ```
    kubectl scale --replicas=6 replicaset myapp-replicaset
   ```
+  - create the Horizontal Pod Autoscaler for replicaset
+  ```
+  kubectl autoscale rs frontend --max=10 --min=3 --cpu-percent=50
 
 ## ReplicaSet using REST API
 - Execute the below command to access the apis in localhost
@@ -57,17 +60,15 @@
 - delete the frontend replicasets and its pods 
   ```
   curl -X DELETE  'localhost:8080/apis/apps/v1/namespaces/default/replicasets/frontend'   -d '{"kind":"DeleteOptions","apiVersion":"v1","propagationPolicy":"Foreground"}'   -H "Content-Type: application/json"
+
+  kubectl delete rs frontend
   ```
 - delete the frontend replicasets only.
   ```
    curl -X DELETE  'localhost:8080/apis/apps/v1/namespaces/default/replicasets/frontend' -d '{"kind":"DeleteOptions","apiVersion":"v1","propagationPolicy":"Orphan"}' -H "Content-Type: application/json"
-  ```
-    
-## Labels and Selectors
-#### What is the deal with Labels and Selectors? Why do we label pods and objects in kubernetes?
-  
 
-
+   kubectl delete rs frontend --cascade=orphan
+  ```    
 ## Replication Controller 
 - Controllers are brain behind kubernetes
   
@@ -84,8 +85,12 @@
     ```
     $ kubectl get pods
     ```    
-  kubectl autoscale rs frontend --max=10 --min=3 --cpu-percent=50
+  
 
+
+## Labels and Selectors
+#### What is the deal with Labels and Selectors? Why do we label pods and objects in kubernetes?
+  
 
 
  
