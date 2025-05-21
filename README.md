@@ -18,6 +18,7 @@
   - [10-Kube-Proxy](cka/02-Core-Concepts/10-Kube-Proxy.md)
   - [11-Pods](cka/02-Core-Concepts/11-Pods.md)
   - [12-ReplicaSets](cka/02-Core-Concepts/12-ReplicaSets.md)
+  - [13-Deployments](cka/02-Core-Concepts/13-Deployments.md)
 
 - [05-Application-Lifecycle-Management](cka/05-Application-Lifecycle-Management)
   
