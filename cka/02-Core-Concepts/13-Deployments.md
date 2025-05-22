@@ -1,9 +1,26 @@
 ## Deployments
+- A Deployment manages a set of Pods to run an application workload, usually one that doesn't maintain state.
+- A Deployment provides declarative updates for Pods and ReplicaSets.
+- You describe a desired state in a Deployment, and the Deployment Controller changes the actual state to the desired state at a controlled rate. You can define Deployments to create new ReplicaSets, or to remove existing Deployments and adopt all their resources with new Deployments.
 
+## Use Case
+The following are typical use cases for Deployments:
+- **Create a Deployment to rollout a ReplicaSet**. The ReplicaSet creates Pods in the background. Check the status of the rollout to see if it succeeds or not.
+- **Declare the new state of the Pods** by updating the PodTemplateSpec of the Deployment. A new ReplicaSet is created and the Deployment manages moving the Pods from the old
+  ReplicaSet to the new one at a controlled rate. Each new ReplicaSet updates the revision of the Deployment.
+- **Rollback to an earlier Deployment revision** if the current state of the Deployment is not stable. Each rollback updates the revision of the Deployment.
+- **Scale up the Deployment to facilitate more load.**
+- **Pause the rollout of a Deployment** to apply multiple fixes to its PodTemplateSpec and then resume it to start a new rollout.
+- **Use the status of the Deployment** as an indicator that a rollout has stuck.
+- **Clean up older ReplicaSets** that you don't need anymore.
 
+## Notes
+- You must specify an appropriate selector and Pod template labels in a Deployment. Do not overlap labels or selectors with other controllers (including other Deployments and StatefulSets). Kubernetes doesn't stop you from overlapping, and if multiple controllers have overlapping selectors those controllers might conflict and behave unexpectedly.
+- A Deployment's rollout is triggered if and only if the Deployment's Pod template (that is, .spec.template) is changed, for example if the labels or container images of the template are updated. Other updates, such as scaling the Deployment, do not trigger a rollout.
+- Kubernetes doesn't count terminating Pods when calculating the number of availableReplicas, which must be between replicas - maxUnavailable and replicas + maxSurge. As a result, you might notice that there are more Pods than expected during a rollout, and that the total resources consumed by the Deployment is more than replicas + maxSurge until the terminationGracePeriodSeconds of the terminating Pods expires.
 
 #### Deployment using kubectl
-- Once the file is ready, create the deployment using deployment definition file
+- create the deployment using deployment definition file
   ```
   kubectl create -f deployment-definition.yaml
   ```
