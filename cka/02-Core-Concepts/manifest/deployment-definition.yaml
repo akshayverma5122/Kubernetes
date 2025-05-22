@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: nginx-deployment     # Name of the deployment
   labels:
-    app: nginx               # label of the deployment
+    app: nginx               # label of the replicaset and deployment
 spec:
   replicas: 3
   selector:                  # it will select the pods basis of spec.template.metadata.labels values. 
