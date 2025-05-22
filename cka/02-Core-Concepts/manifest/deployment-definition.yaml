@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment     # Name of the deployment
+  labels:
+    app: nginx               # label of the deployment
+spec:
+  replicas: 3
+  selector:                  # it will select the pods basis of spec.template.metadata.labels values. 
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx           # label of pods 
+    spec:
+      containers:
+      - name: nginx          # Name of container
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80  # port of container
