@@ -86,6 +86,35 @@ The following are typical use cases for Deployments:
   kubectl autoscale deployment nginx-deployment --min=5 --max=10 --cpu-percent=80
   ```
 #### Proportional scaling
+- RollingUpdate Deployments support running multiple versions of an application at the same time. When you or an autoscaler scales a RollingUpdate Deployment that is in the middle of a rollout (either in progress or paused), the Deployment controller balances the additional replicas in the existing active ReplicaSets (ReplicaSets with Pods) in order to mitigate risk. This is called proportional scaling.
+- Create the deployment with 10 replicas
+  ```
+  kubectl create deployment oarm --image=nginx --replicas=10 -n defaul
+  ```
+- update the new image with nginx1.161 which happens to be unresolvable from inside the cluster.
+  ```
+  kubectl set image deployment oarm nginx=nginx:1.14.1
+  ```
+- The image update starts a new rollout with ReplicaSet nginx-deployment-1989198191, but it's blocked due to the maxUnavailable requirement that you mentioned above. Check out the rollout status:
+  ```
+  kubectl get rs
+  ```
+- scale the deployment with 15 replicas
+  ```
+  kubectl scale deploy oarm --replicas=15
+  ```
+- Then a new scaling request for the Deployment comes along. The autoscaler increments the Deployment replicas to 15. The Deployment controller needs to decide where to add these new 5 replicas. If you weren't using proportional scaling, all 5 of them would be added in the new ReplicaSet. With proportional scaling, you spread the additional replicas across all ReplicaSets. Bigger proportions go to the ReplicaSets with the most replicas and lower proportions go to ReplicaSets with less replicas. Any leftovers are added to the ReplicaSet with the most replicas. ReplicaSets with zero replicas are not scaled up. In our example above, 3 replicas are added to the old ReplicaSet and 2 replicas are added to the new ReplicaSet.
+  ```
+  kubectl get rs
+  ```
+- The rollout process should eventually move all replicas to the new ReplicaSet, assuming the new replicas become healthy after executing the below commands.
+  ```
+  kubectl set image deployment oarm nginx=nginx:1.14.1
+  kubectl get rs
+  ```
+  
+  
+  
 
   
   
