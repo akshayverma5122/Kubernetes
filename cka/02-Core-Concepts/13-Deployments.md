@@ -9,6 +9,7 @@
 
 ## Deployments Types 
 - Canary Deployment
+- Blue Green Deployment
 ## Deployments Strategy
 - RollingUpdate
   - maxUnavailable
