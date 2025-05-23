@@ -155,7 +155,16 @@ The following are typical use cases for Deployments:
   watch kubectl get rs --selector=app=myapp1 -n default
   ```
 
-  
+## kubectl commands for deployments
+- create
+- expose
+- delete
+- get
+- scale
+- autoscale
+- rollout
+- set
+- 
   
   
 
