@@ -7,6 +7,23 @@
 - **Label selector updates** In API version apps/v1, a Deployment's label selector is immutable after it gets created. it means we can not change the deployment's label selector.
 - You cannot rollback a paused Deployment until you resume it.
 
+## Deployments Types 
+- Canary Deployment
+## Deployments Strategy
+- RollingUpdate
+  - maxUnavailable
+  - Max Surge 
+- Recreate
+## Deployment status
+- Progressing Deployment
+- Complete Deployment
+- Failed Deployment - Deployment could fail due to one of below reason -
+  - Insufficient quota
+  - Readiness probe failures
+  - Image pull errors
+  - Insufficient permissions
+  - Limit ranges
+  - Application runtime misconfiguration
 ## Use Case
 The following are typical use cases for Deployments:
 - **Create a Deployment to rollout a ReplicaSet**. The ReplicaSet creates Pods in the background. Check the status of the rollout to see if it succeeds or not.
@@ -24,7 +41,10 @@ The following are typical use cases for Deployments:
 - Kubernetes doesn't count terminating Pods when calculating the number of availableReplicas, which must be between replicas - maxUnavailable and replicas + maxSurge. As a result, you might notice that there are more Pods than expected during a rollout, and that the total resources consumed by the Deployment is more than replicas + maxSurge until the terminationGracePeriodSeconds of the terminating Pods expires.
 - A Deployment's revision is created when a Deployment's rollout is triggered. This means that the new revision is created if and only if the Deployment's Pod template (.spec.template) is changed, for example if you update the labels or container images of the template. Other updates, such as scaling the Deployment, do not create a Deployment revision, so that you can facilitate simultaneous manual- or auto-scaling. This means that when you roll back to an earlier revision, only the Deployment's Pod template part is rolled back.
 - The Deployment controller stops the bad rollout automatically, and stops scaling up the new ReplicaSet. This depends on the rollingUpdate parameters (maxUnavailable specifically) that you have specified. Kubernetes by default sets the value to 25%.
-- 
+- Kubernetes takes no action on a stalled Deployment other than to report a status condition with reason: ProgressDeadlineExceeded. Higher level orchestrators can take advantage of it and act accordingly, for example, rollback the Deployment to its previous version.
+- If you pause a Deployment rollout, Kubernetes does not check progress against your specified deadline. You can safely pause a Deployment rollout in the middle of a rollout and resume without triggering the condition for exceeding the deadline.
+- **Clean up Policy** You can set .spec.revisionHistoryLimit field in a Deployment to specify how many old ReplicaSets for this Deployment you want to retain. The rest will be garbage-collected in the background. By default, it is 10.
+- You should not create other Pods whose labels match this selector, either directly, by creating another Deployment, or by creating another controller such as a ReplicaSet or a ReplicationController. If you do so, the first Deployment thinks that it created these other Pods. Kubernetes does not stop you from doing this.
 #### Deployment using kubectl
 - create the deployment using deployment definition file
   ```
