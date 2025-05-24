@@ -20,7 +20,10 @@
 - disable the cephBlockPools and ceph-objectstore
   helm upgrade --reuse-values rook-ceph rook-release/rook-ceph --namespace rook-ceph  -f rook/deploy/charts/rook-ceph-cluster/values.yaml
 
-
+- ugrade the ceph-cluster with custom values.
+  ```
+  helm upgrade --reuse-values --values rook/deploy/charts/rook-ceph-cluster/values.yaml rook-ceph-cluster rook-release/rook-ceph-cluster --version v1.17.2 -n rook-ceph
+  ```
 
 https://github.com/rook/rook.git
 https://rook.io/docs/rook/latest-release/Getting-Started/quickstart/#tldr
