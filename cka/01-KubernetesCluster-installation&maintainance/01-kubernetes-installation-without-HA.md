@@ -112,8 +112,22 @@
 
 		kubectl get nodes -owide
 		kubectl get pods -A -owide
- 
 
+## Join the new worker node to existing kubernetes cluster
+
+1. perform the steps from 1 to 10 in new worker node. execute the below command to generate the kubernetes cluster join command in the master node.
+   ```
+   kubeadm token create --print-join-command
+   ```
+   output will be :-
+   ```
+   kubeadm join 172.16.0.17:6443 --token 25fpks.e8zl25qmoerl4rna --discovery-token-ca-cert-hash sha256:6479f31e714ba72bf0296db3fc6a6e7f8bd43c7da99512c0a75cc2f110435237
+   ```
+2. Execute the below command in new worker node to join the existing cluster.
+   ```
+   sudo kubeadm join 172.16.0.17:6443 --token 25fpks.e8zl25qmoerl4rna --discovery-token-ca-cert-hash sha256:6479f31e714ba72bf0296db3fc6a6e7f8bd43c7da99512c0a75cc2f110435237
+   ```
+   
 		
 
 
