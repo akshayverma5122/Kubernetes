@@ -1,4 +1,4 @@
-## Rook-ceph installation
+## Rook-ceph installation using helm 
 - Clone the rook github repository.
   ```
   git clone --single-branch --branch v1.17.2 https://github.com/rook/rook.git
@@ -21,7 +21,30 @@
   ```
   helm upgrade --reuse-values --values rook/deploy/charts/rook-ceph-cluster/values.yaml rook-ceph-cluster rook-release/rook-ceph-cluster --version v1.17.2 -n rook-ceph
   ```
-  
+## Rook-ceph installation using kubectl 
+- Clone the rook github repository.
+  ```
+  git clone --single-branch --branch v1.17.2 https://github.com/rook/rook.git
+  ```
+- Create the crd,operator and RBAC for ceph cluster
+  ```
+  cd rook/deploy/examples
+  kubectl create -f crds.yaml -f common.yaml -f operator.yaml
+  kubectl create -f cluster.yaml
+  ```
+- Create the cephfilesystem and storage class.
+  ```
+  cd /rook/deploy/examples
+  kubectl create -f filesystem.yaml
+  cd /rook/deploy/examples/csi/cephfs
+  kubectl create -f storageclass.yaml
+  ```
+- Check the ceph filesystem and ceph cluster
+  ```
+  kubectl -n rook-ceph get cephfilesystem
+  kubectl -n rook-ceph get cephcluster
+  ```
+
 https://github.com/rook/rook.git
 https://rook.io/docs/rook/latest-release/Getting-Started/quickstart/#tldr
 https://rook.io/docs/rook/latest-release/Helm-Charts/ceph-cluster-chart/#release
