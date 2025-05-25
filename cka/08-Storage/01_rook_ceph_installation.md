@@ -1,3 +1,10 @@
+## rook with ceph 
+- Ceph provides a comprehensive solution to the challenges of distributed storage within Kubernetes by leveraging its unique architecture and features. At the core of Ceph is RADOS (Reliable Autonomic Distributed Object Store), which serves as the foundation for data distribution, replication, and self-healing. The primary components of Ceph’s architecture
+  -  **Object Storage Daemons (OSDs)** >>  it handle the storage of data and its replication
+  -  **Monitors (MONs)** >> it maintain the overall health and configuration of the cluster.
+  -  **Metadata Servers (MDS)** >> it is utilized when file storage is implemented, managing metadata for CephFS, enabling file system semantics within the Ceph architecture.
+    
+
 ## Rook-ceph installation using helm 
 - Clone the rook github repository.
   ```
