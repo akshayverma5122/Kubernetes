@@ -44,6 +44,18 @@
   kubectl -n rook-ceph get cephfilesystem
   kubectl -n rook-ceph get cephcluster
   ```
+- Create the nodeport service to access the ceph dashboard
+  ```
+  cd rook/deploy/examples
+  kubectl create -f dashboard-external-http.yaml -n rook-ceph
+  ```
+- Rook creates a default user named admin and generates a secret called rook-ceph-dashboard-password in the namespace where the Rook Ceph cluster is running.
+  ```
+  kubectl -n rook-ceph get secret rook-ceph-dashboard-password -o jsonpath="{['data']['password']}" | base64 --decode && echo
+  ```
+- Login in the ceph dashboard using the admin username and above password.
+  
+  
 
 https://github.com/rook/rook.git
 https://rook.io/docs/rook/latest-release/Getting-Started/quickstart/#tldr
