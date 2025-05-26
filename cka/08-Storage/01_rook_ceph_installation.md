@@ -62,9 +62,23 @@
   ```
 - Login in the ceph dashboard using the admin username and above password.
   
+## Rook-ceph uninstallation using kubectl
+- First clean up the resources from applications that consume the Rook storage. These commands will clean up the resources from the example application block and file walkthroughs (unmount volumes, delete volume claims, etc).
+  ```
+  kubectl delete  sc --all  -n rook-ceph
+  kubectl delete CephBlockPool  --all -n rook-ceph
+  kubectl delete CephFileSystem  --all -n rook-ceph
+  ```
+- Delete the CephCluster CRD.
+  ```
+  kubectl -n rook-ceph patch cephcluster rook-ceph --type merge -p '{"spec":{"cleanupPolicy":{"confirmation":"yes-really-destroy-data"}}}'
+  kubectl -n rook-ceph delete cephcluster rook-ceph
+  kubectl -n rook-ceph get cephcluster
   
+
 
 https://github.com/rook/rook.git
 https://rook.io/docs/rook/latest-release/Getting-Started/quickstart/#tldr
 https://rook.io/docs/rook/latest-release/Helm-Charts/ceph-cluster-chart/#release
+https://rook.io/docs/rook/latest-release/Storage-Configuration/ceph-teardown/#delete-the-operator-resources
 
