@@ -46,6 +46,7 @@ The following are typical use cases for Deployments:
 - If you pause a Deployment rollout, Kubernetes does not check progress against your specified deadline. You can safely pause a Deployment rollout in the middle of a rollout and resume without triggering the condition for exceeding the deadline.
 - **Clean up Policy** You can set .spec.revisionHistoryLimit field in a Deployment to specify how many old ReplicaSets for this Deployment you want to retain. The rest will be garbage-collected in the background. By default, it is 10.
 - You should not create other Pods whose labels match this selector, either directly, by creating another Deployment, or by creating another controller such as a ReplicaSet or a ReplicationController. If you do so, the first Deployment thinks that it created these other Pods. Kubernetes does not stop you from doing this.
+- **apiVersion,kind,metadata and spec** - these are mandatory field in yaml or json to create any kubernetes resources. 
 #### Deployment using kubectl
 - create the deployment using deployment definition file
   ```
