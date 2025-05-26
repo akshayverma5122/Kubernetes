@@ -59,6 +59,7 @@
   ```
 - Get the version of kubernetes cluster. And also query the pods using REST APIs. 
   ```
+  kubectl proxy
   curl http://localhost:8001/version
   curl http://localhost:8001/api/v1/namespaces/default/pods/
   curl http://localhost:8001/api/v1/namespaces/default/pods/testpods
