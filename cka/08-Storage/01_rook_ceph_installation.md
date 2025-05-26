@@ -112,7 +112,10 @@
   rm -rf /dev/ceph-*
   rm -rf /dev/mapper/ceph--*
   ```
-
+- Delete the namespace if it is stuck in terminating state
+  ```
+  kubectl get namespace rook-ceph -o json | jq 'del(.spec.finalizers)' | kubectl replace --raw "/api/v1/namespaces/rook-ceph/finalize" -f -
+  ```
 
 https://github.com/rook/rook.git
 https://rook.io/docs/rook/latest-release/Getting-Started/quickstart/#tldr
