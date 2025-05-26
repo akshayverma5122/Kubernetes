@@ -53,6 +53,16 @@
 - Count the number of pods
 
 		kubectl get pods --no-headers | wc -l
+- list the number of pods in kube-system namespace.
+  ```
+  kubectl -n kube-system get pods -o go-template --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}'
+  ```
+- Get the version of kubernetes cluster. And also query the pods using REST APIs. 
+  ```
+  curl http://localhost:8001/version
+  curl http://localhost:8001/api/v1/namespaces/default/pods/
+  curl http://localhost:8001/api/v1/namespaces/default/pods/testpods
+  ```
 
 
 	
