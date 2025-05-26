@@ -155,7 +155,22 @@ The following are typical use cases for Deployments:
   kubectl rollout resume deployment myapp1 -n default
   watch kubectl get rs --selector=app=myapp1 -n default
   ```
-
+### Other kubectl commands for deployments 
+## create
+  ```
+  kubectl -n webserver create deploy webserver --image=nginx --port=80 --replicas=3
+  kubectl -n webserver create deploy webserver --image=nginx --port=80 --replicas=3 --dry-run=server/client -o yaml
+  ```
+## expose
+- deployment will get exposed using the clusterip type of service
+  ```
+  kubectl -n webserver  expose deploy webserver --port=8443 --target-port=80  
+  
+  ```
+- deployment will get exposed using the nodeport type of service
+  ```
+  kubectl -n webserver expose deploy webserver --port=8443 --target-port=80  --type=NodePort
+  ```
 ## kubectl commands for deployments
 - create
 - expose
