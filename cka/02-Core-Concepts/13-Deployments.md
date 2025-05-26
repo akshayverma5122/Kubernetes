@@ -167,5 +167,4 @@ The following are typical use cases for Deployments:
     
 K8s Reference Docs:
 - https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
-- https://kubernetes.io/docs/concepts/cluster-administration/manage-deployment/
 - https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/
