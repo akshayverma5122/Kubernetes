@@ -162,20 +162,14 @@ The following are typical use cases for Deployments:
   kubectl -n webserver create deploy webserver --image=nginx --port=80 --replicas=3 --dry-run=server/client -o yaml
   ```
 ## expose
-- deployment will get exposed using the clusterip type of service
+- deployment will get exposed using the clusterip,Nodeport,loadbalancer,headless type of service
   ```
-  kubectl -n webserver  expose deploy webserver --port=8443 --target-port=80  
-  
-  ```
-- deployment will get exposed using the nodeport type of service
-  ```
-  kubectl -n webserver expose deploy webserver --port=8443 --target-port=80  --type=NodePort
+  kubectl -n webserver  expose deploy webserver --port=8443 --target-port=80 --name=webserver-svc1
+  kubectl -n webserver expose deploy webserver --port=8443 --target-port=80  --type=NodePort --name=webserver-svc2
+  kubectl -n webserver expose deployment webserver --port=8080 --target-port=80 --type=LoadBalancer --name=webserver-svc3
+  kubectl -n webserver expose deployment webserver --port=8080 --target-port=80 --cluster-ip=None --name=webserver-svc4
   ```
 ## kubectl commands for deployments
-- create
-- expose
-- delete
-- get
 - scale
 - autoscale
 - rollout
