@@ -35,13 +35,32 @@
 - Create the quota-mem-cpu-example. Generate the pod yaml with cpu and memory requests & limits
   ```
   kubectl -n quota-mem-cpu-example run  web1 --image=nginx --port=80 --image-pull-policy=Always --dry-run=server -o yaml  > pod1.yaml
-  kubectl set resources -f pod1.yaml --requests=cpu=400m,memory=600Mi --limits=cpu=800m,memory=800Mi --local -o yaml > finalpod.yaml
+  kubectl set resources -f pod1.yaml --requests=cpu=400m,memory=600Mi --limits=cpu=800m,memory=800Mi --local -o yaml > finalpod2.yaml
   ```
 - Create a ResourceQuota
   ```
   kubectl create quota mem-cpu-demo --hard=requests.cpu=1,requests.memory=1Gi,limits.cpu=2,limits.memory=2Gi,pods=2,services=1 -n quota-mem-cpu-example
   ```
-
+- Create the pods and it will allow the pod creation request.
+  ```
+  kubectl create -f finalpod2.yaml
+  ```
+- Modify the name, request and limit of cpu & memory in  finalpod2.yaml.
+  ```
+  name: web2
+  resources:
+      limits:
+        cpu: 800m
+        memory: 1Gi
+      requests:
+        cpu: 400m
+        memory: 700Mi
+   ```
+- Create the pods and this will give the below error because it is exceeding the cpu & memory usage.
+  ```
+  Error from server (Forbidden): error when creating "finalpod.yaml": pods "web2" is forbidden: exceeded quota: mem-cpu-demo, 
+  requested: requests.memory=700Mi, used: requests.memory=600Mi, limited: requests.memory=1Gi
+  ```
 K8s Reference Docs:
 - https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
 - https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/quota-memory-cpu-namespace/
