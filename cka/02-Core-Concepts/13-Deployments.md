@@ -96,6 +96,10 @@ The following are typical use cases for Deployments:
   kubectl rollout undo deployment nginx-deployment
   kubectl rollout undo deployment nginx-deployment --to-revision=3
   ```
+- restart the deployment.
+  ```
+  kubectl -n webserver rollout restart deployment webserver
+  ```
 #### Scaling a Deployment
 - You can scale a Deployment by using the following command
   ```
@@ -103,7 +107,7 @@ The following are typical use cases for Deployments:
   ```
 - if **horizontal Pod autoscaling** is enabled in the cluster then you can set up an autoscaler for your Deployment and choose the minimum and maximum number of Pods you want to run based on the CPU utilization of your existing Pods.
   ```
-  kubectl autoscale deployment nginx-deployment --min=5 --max=10 --cpu-percent=80
+  kubectl autoscale deployment nginx-deployment --min=5 --max=10 --cpu-percent=80 --name=nginx-deployment-autoscale
   ```
 #### Proportional scaling
 - RollingUpdate Deployments support running multiple versions of an application at the same time. When you or an autoscaler scales a RollingUpdate Deployment that is in the middle of a rollout (either in progress or paused), the Deployment controller balances the additional replicas in the existing active ReplicaSets (ReplicaSets with Pods) in order to mitigate risk. This is called proportional scaling.
@@ -169,12 +173,45 @@ The following are typical use cases for Deployments:
   kubectl -n webserver expose deployment webserver --port=8080 --target-port=80 --type=LoadBalancer --name=webserver-svc3
   kubectl -n webserver expose deployment webserver --port=8080 --target-port=80 --cluster-ip=None --name=webserver-svc4
   ```
-## kubectl commands for deployments
-- scale
-- autoscale
-- rollout
-- set
-    
+## annotate
+- create, overwrite and delete the annotation in deployments
+  ```
+  kubectl -n webserver annotate deployments.apps webserver description="frontend webserver"
+  kubectl -n webserver annotate --overwrite  deployments.apps webserver description="backend webserver"
+  kubectl -n webserver annotate deployments.apps webserver description-
+  ```
+## label
+- create, verify, overwrite and delete the label in deployments
+  ```
+  kubectl -n webserver label deployments.apps webserver tier=frontend
+  kubectl -n webserver get deployments.apps --show-labels
+  kubectl -n webserver get deployments.apps -l app=webserver
+  kubectl -n webserver label --overwrite  deployments.apps webserver tier=backend
+  kubectl -n webserver label deployments.apps webserver tier-
+  ```
+## set
+- set the image,resource,env and serviceaccount in deployment
+  ```
+  kubectl -n webserver set image deployment webserver nginx=nginx:1.16.1
+  kubectl -n webserver set resources deployment webserver --limits=cpu=250m,memory=125Mi --requests=cpu=125m,memory=65Mi
+  kubectl -n webserver set resources deployment webserver --limits=cpu=0,memory=0 --requests=cpu=0,memory=0
+
+  kubectl -n webserver set env deployment webserver username=admin
+  kubectl -n webserver set env deployment webserver --list
+  kubectl -n webserver set env deployment webserver username-
+
+  kubectl -n webserver create configmap webserver-cm --from-literal=rootpath=/etc/nginx --from-literal=configFile=/etc/ngnix/nginx.conf
+  kubectl -n webserver set env --keys=rootpath,configFile --from=configmap/webserver-cm deployment/webserver
+  kubectl -n webserver set env --from=configmap/webserver-cm deployment/webserver
+  kubectl -n webserver set env deployment webserver CONFIGFILE-
+  kubectl -n webserver set env deployment webserver ROOTPATH-
+
+  kubectl -n webserver create secret generic webserver-secret --from-literal=username=admin --from-literal=password=admin@123
+  kubectl -n webserver set env --from=secret/webserver-secret deployment/webserver
+  kubectl -n webserver set env --keys=username,password --from=secret/webserver-secret deployment/webserver
+  kubectl -n webserver set env deployment/webserver PASSWORD-
+  kubectl -n webserver set env deployment/webserver USERNAME-
+  ```    
 K8s Reference Docs:
 - https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
 
