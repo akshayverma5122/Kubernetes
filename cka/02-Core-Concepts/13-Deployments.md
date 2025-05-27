@@ -211,6 +211,7 @@ The following are typical use cases for Deployments:
   kubectl -n webserver set env --keys=username,password --from=secret/webserver-secret deployment/webserver
   kubectl -n webserver set env deployment/webserver PASSWORD-
   kubectl -n webserver set env deployment/webserver USERNAME-
+  kubectl -n webserver set serviceaccount deployment/webserver nginx-sa
   ```    
 K8s Reference Docs:
 - https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
