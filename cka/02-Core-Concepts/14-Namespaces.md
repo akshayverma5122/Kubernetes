@@ -9,6 +9,8 @@
   - **kube-node-lease** - This namespace holds Lease objects associated with each node. Node leases allow the kubelet to send heartbeats so that the control plane can detect node failure.
 - Avoid creating namespaces with the prefix kube-, since it is reserved for Kubernetes system namespaces.
 - By creating namespaces with the same name as public top-level domains, Services in these namespaces can have short DNS names that overlap with public DNS records. Workloads from any namespace performing a DNS lookup without a trailing dot will be redirected to those services, taking precedence over public DNS. To mitigate this, limit privileges for creating namespaces to trusted users. If required, you could additionally configure third-party security controls, such as admission webhooks, to block creating any namespace with the name of public TLDs.
+- **Resource quota** tracks aggregate usage of resources in the Namespace and allows cluster operators to define Hard resource usage limits that a Namespace may consume.
+- A **limit range** defines min/max constraints on the amount of resources a single entity can consume in a Namespace.
 
 ## namespace kubectl commands 
 - set and verify the current namespace.
@@ -21,8 +23,18 @@
   kubectl api-resources --namespaced=true
   kubectl api-resources --namespaced=false
   ```
+- list the pods along with its images.
+  ```
+   kubectl get pods --all-namespaces -o jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{", "}{end}{end}' |sort
+  ```
+- List all Container images only.
+  ```
+  kubectl get pods --all-namespaces -o jsonpath="{.items[*].spec['initContainers', 'containers'][*].image}" |tr -s '[[:space:]]' '\n' |sort |uniq -c
+  ```
+
 K8s Reference Docs:
 - https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+- https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/quota-memory-cpu-namespace/
 
 
   
