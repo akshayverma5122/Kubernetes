@@ -31,10 +31,17 @@
   ```
   kubectl get pods --all-namespaces -o jsonpath="{.items[*].spec['initContainers', 'containers'][*].image}" |tr -s '[[:space:]]' '\n' |sort |uniq -c
   ```
+#### Configure Memory and CPU Quotas for a Namespace
+- Create the quota-mem-cpu-example. Generate the pod yaml with cpu and memory requests & limits
+  ```
+  kubectl -n quota-mem-cpu-example run  web1 --image=nginx --port=80 --image-pull-policy=Always --dry-run=server -o yaml  > pod1.yaml
+  kubectl set resources -f pod1.yaml --requests=cpu=400m,memory=600Mi --limits=cpu=800m,memory=800Mi --local -o yaml > finalpod.yaml
+  ```
+- Create a ResourceQuota
+  ```
+  kubectl create quota mem-cpu-demo --hard=requests.cpu=1,requests.memory=1Gi,limits.cpu=2,limits.memory=2Gi,pods=2,services=1 -n quota-mem-cpu-example
+  ```
 
 K8s Reference Docs:
 - https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
 - https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/quota-memory-cpu-namespace/
-
-
-  
