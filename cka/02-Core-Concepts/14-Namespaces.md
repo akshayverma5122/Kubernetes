@@ -1,6 +1,7 @@
 ## Namespace 
 - In Kubernetes, namespaces provide a mechanism for isolating groups of resources within a single cluster. Names of resources need to be unique within a namespace, but not across namespaces. Namespace-based scoping is applicable only for namespaced objects (e.g. Deployments, Services, etc.) and not for cluster-wide objects (e.g. StorageClass, Nodes, PersistentVolumes, etc.).
 - For a production cluster, consider not using the default namespace. Instead, make other namespaces and use those.
+- A mechanism to attach authorization and policy to a subsection of the cluster.
 - Kubernetes starts with four initial namespaces: default,kube-system,kube-public,kube-node-lease
   - **default** - Kubernetes includes this namespace so that you can start using your new cluster without first creating a namespace.
   - **kube-system** - The namespace for objects created by the Kubernetes system.
