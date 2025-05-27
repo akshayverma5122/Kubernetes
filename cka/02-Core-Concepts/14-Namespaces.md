@@ -20,7 +20,8 @@
   kubectl api-resources --namespaced=true
   kubectl api-resources --namespaced=false
   ```
-
+K8s Reference Docs:
+- https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
 
 
   
