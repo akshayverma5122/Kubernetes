@@ -10,6 +10,7 @@
 - The **Gateway API** for Kubernetes provides extra capabilities beyond Ingress and Service. You can add Gateway to your cluster - it is a family of extension APIs, implemented using CustomResourceDefinitions - and then use these to configure access to network services that are running in your cluster.
 - **Traffic policies** - You can set the .spec.internalTrafficPolicy and .spec.externalTrafficPolicy fields to control how Kubernetes routes traffic to healthy (“ready”) backends.
 - **Traffic distribution** - spec.trafficDistribution field provides another way to influence traffic routing within a Kubernetes Service. it is supported in kubernetes v1.33
+- **Session stickiness** - If you want to make sure that connections from a particular client are passed to the same Pod each time, you can configure session affinity based on the client's IP address.
 ## EndpointSlices
 - EndpointSlices are objects that represent a subset (a slice) of the backing network endpoints for a Service.
 - By default, Kubernetes makes a new EndpointSlice once the existing EndpointSlices all contain at least 100 endpoints.
