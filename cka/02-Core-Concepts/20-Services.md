@@ -2,7 +2,7 @@
 - Kubernetes Services enables communication between various components within and outside of the application.
 - Expose an application running in your cluster behind a single outward-facing endpoint, even when the workload is split across multiple backends.
 - A Service can map any incoming port to a targetPort. By default and for convenience, the targetPort is set to the same value as the port field.
-- The default protocol for Services is TCP; you can also use any other supported protocol.
+- The default protocol for Services is TCP; you can also use any other supported protocol like UDP. 
 - if we are planning to use service without selector then we must create the endpoints slices seperately. The endpoint IP addresses cannot be the cluster IPs of other Kubernetes Services, because kube-proxy doesn't support virtual IPs as a destination.
 - As with Kubernetes names in general, names for ports must only contain lowercase alphanumeric characters and -. Port names must also start and end with an alphanumeric character. For example, the names 123-abc and web are valid, but 123_abc and -web are not.
 - The Service API, part of Kubernetes, is an abstraction to help you expose groups of Pods over a network.
