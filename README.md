@@ -20,7 +20,7 @@
   - [12-ReplicaSets](cka/02-Core-Concepts/12-ReplicaSets.md)
   - [13-Deployments](cka/02-Core-Concepts/13-Deployments.md)
   - [14-Namespaces](cka/02-Core-Concepts/14-Namespaces.md)
-  - [15-Services.md](cka/02-Core-Concepts/15-Services.md)
+  - [15-Services](cka/02-Core-Concepts/15-Services.md)
 
 - [05-Application-Lifecycle-Management](cka/05-Application-Lifecycle-Management)
   
