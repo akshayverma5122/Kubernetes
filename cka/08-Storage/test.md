@@ -50,6 +50,12 @@ sudo systemctl start nfs-server
    Visit https://github.com/prometheus-operator/kube-prometheus for instructions on how to create & configure Alertmanager 
    and Prometheus instances using the Operator.
    ```
+3. Checking kube-prometheus-stack crds
+   ```
+   kubectl -n monitoring get prometheuses
+   kubectl -n monitoring get alertmanagers
+   ```
+   
 ### Access prometheus, grafana and alertmanager using NodePort
 1. Generate the nodeport service yaml file and change the labels & selector for grafana, prometheus and alertmanager.
    ```
