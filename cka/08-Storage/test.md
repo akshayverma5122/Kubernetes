@@ -20,10 +20,40 @@ sudo systemctl start nfs-server
    helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
    helm repo update
    ```
-2. Install chart
+2. Search all the chart version and Install chart
    ```
+   helm search repo  prometheus-community/kube-prometheus-stack  --versions
    kubectl create ns monitoring
-   helm install monitoring-stack prometheus-community/kube-prometheus-stack --version 72.8.0 -n monitoring
+    helm install monitoring-stack prometheus-community/kube-prometheus-stack --version 72.7.0 --set prometheus.prometheusSpec.maximumStartupDurationSeconds=900 -n monitoring
+   ```
+   output will be similar like below:
+   ```
+   NAME: monitoring-stack
+   LAST DEPLOYED: Sat May 31 10:23:03 2025
+   NAMESPACE: monitoring
+   STATUS: deployed
+   REVISION: 1
+   NOTES:
+   kube-prometheus-stack has been installed. Check its status by running:
+   kubectl --namespace monitoring get pods -l "release=monitoring-stack"
+
+   Get Grafana 'admin' user password by running:
+
+   kubectl --namespace monitoring get secrets monitoring-stack-grafana -o jsonpath="{.data.admin-password}" | base64 -d ; echo
+
+   Access Grafana local instance:
+
+   export POD_NAME=$(kubectl --namespace monitoring get pod -l 
+   "app.kubernetes.io/name=grafana,app.kubernetes.io/instance=monitoring-stack" -oname)
+   kubectl --namespace monitoring port-forward $POD_NAME 3000
+
+   Visit https://github.com/prometheus-operator/kube-prometheus for instructions on how to create & configure Alertmanager 
+   and Prometheus instances using the Operator.
+   ```
+### Access prometheus, grafana and alertmanager using NodePort
+1. Generate the nodeport service yaml file and change the labels & selector for grafana, prometheus and alertmanager.
+   ```
+   kubectl -n monitoring create service nodeport prom-dashboard --tcp=9090:9090 --node-port=30090 --dry-run=server -o yaml > prom-dashboard-np-service.yaml
    ```
 ### kube-prometheus-stack uninstallation Using Helm Chart
 1. unistallation of kube-prometheus-stack
