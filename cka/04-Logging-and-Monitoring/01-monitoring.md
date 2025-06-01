@@ -109,4 +109,5 @@ sudo systemctl start nfs-server
   - https://prometheus.io/docs/guides/node-exporter/
 - Grafana Prebuilt Dashboard
   - https://grafana.com/grafana/dashboards/12486-node-exporter-full/
+  - https://grafana.com/grafana/dashboards/21742-object-s-health-kube-state-metrics-v2/
 
