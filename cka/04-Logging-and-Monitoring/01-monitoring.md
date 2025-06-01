@@ -107,4 +107,6 @@ sudo systemctl start nfs-server
   - https://github.com/prometheus-operator/kube-prometheus
 - Node exporter url
   - https://prometheus.io/docs/guides/node-exporter/
+- Grafana Prebuilt Dashboard
+  - https://grafana.com/grafana/dashboards/12486-node-exporter-full/
 
