@@ -61,6 +61,17 @@ sudo systemctl start nfs-server
    ```
    kubectl -n monitoring create service nodeport prom-dashboard --tcp=9090:9090 --node-port=30090 --dry-run=server -o yaml > prom-dashboard-np-service.yaml
    ```
+### Exploring the Node Exporter
+1. Create and login in the test pods.
+   ```
+   kubectl run -it dnspods --image=nicolaka/netshoot --restart=Never
+   kubectl exec -it dnspods -- /bin/bash
+   ```
+2. once node exported installed, by default it exports the metrics on http://localhost:9100/metrics. So verify the same.
+   ```
+   curl http://monitoring-stack-prometheus-node-exporter.monitoring.svc.cluster.local:9100/metrics
+   curl http://monitoring-stack-prometheus-node-exporter.monitoring.svc.cluster.local:9100/metrics | grep "node_"
+   ``` 
 ### kube-prometheus-stack uninstallation Using Helm Chart
 1. unistallation of kube-prometheus-stack
    ```
