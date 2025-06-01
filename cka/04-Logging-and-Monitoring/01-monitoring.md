@@ -71,7 +71,15 @@ sudo systemctl start nfs-server
    ```
    curl http://monitoring-stack-prometheus-node-exporter.monitoring.svc.cluster.local:9100/metrics
    curl http://monitoring-stack-prometheus-node-exporter.monitoring.svc.cluster.local:9100/metrics | grep "node_"
-   ``` 
+   ```
+3. some node exporter metrics query.
+   ```
+   node_cpu_seconds_total
+   node_exporter_build_info
+   rate(node_cpu_seconds_total{mode="system"}[1m])
+   node_filesystem_avail_bytes
+   rate(node_network_receive_bytes_total[1m])
+   ```
 ### kube-prometheus-stack uninstallation Using Helm Chart
 1. unistallation of kube-prometheus-stack
    ```
@@ -93,7 +101,10 @@ sudo systemctl start nfs-server
 
 
 ### Reference Docs 
-- https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack
-- https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack
-- https://github.com/prometheus-operator/kube-prometheus
+- kube-prometheus-stack url 
+  - https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack
+  - https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack
+  - https://github.com/prometheus-operator/kube-prometheus
+- Node exporter url
+  - https://prometheus.io/docs/guides/node-exporter/
 
