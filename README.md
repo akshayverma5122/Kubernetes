@@ -25,6 +25,9 @@
 - [05-Application-Lifecycle-Management](cka/05-Application-Lifecycle-Management)
   
   - [01-helm](cka/05-Application-Lifecycle-Management/01-helm.md)
+    
+- [04-Logging-and-Monitoring](cka/04-Logging-and-Monitoring)
+  - [01-monitoring](cka/04-Logging-and-Monitoring/01-monitoring.md)
 
 - [07-Security](cka/07-Security)
   
