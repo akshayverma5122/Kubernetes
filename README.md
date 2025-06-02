@@ -23,7 +23,7 @@
   - [15-Services](cka/02-Core-Concepts/15-Services.md)
 
 - [04-Logging-and-Monitoring](cka/04-Logging-and-Monitoring)
-  - [01-monitoring](cka/04-Logging-and-Monitoring/01-monitoring.md)
+  - [01-kube-prometheus-stack](cka/04-Logging-and-Monitoring/01-kube-prometheus-stack.md)
 
 - [05-Application-Lifecycle-Management](cka/05-Application-Lifecycle-Management)
   - [01-helm](cka/05-Application-Lifecycle-Management/01-helm.md)
