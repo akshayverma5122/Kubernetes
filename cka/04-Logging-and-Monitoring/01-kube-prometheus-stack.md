@@ -1,3 +1,4 @@
+### NFS server installation and configuration for PV and PVC
 1. Add /dev/sdb disk. create the logical volume and formate it. Create the /nfs_data folder and give the permission. 
 ```
 pvcreate /dev/sdb
