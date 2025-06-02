@@ -83,7 +83,7 @@ sudo exportfs -ra
              requests:
                storage: 10Gi
    ```
-C. execute the helm upgrade command to customize the prometheus.
+**C.** execute the helm upgrade command to customize the prometheus.
    ```
    helm -n monitoring upgrade --reuse-values --values=custom-value.yaml monitoring-stack  prometheus-community/kube-prometheus-stack --version 72.7.0
    ```
