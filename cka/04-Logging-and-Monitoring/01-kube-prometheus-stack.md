@@ -63,13 +63,14 @@ sudo exportfs -ra
    ```
 ### Customizing kube-prometheus-stack Using Helm Chart 
 #### 1. Attaching the pvc in prometheus 
-A. Create the storage class and persistent volume. please make sure the nfs-server and destination directory should be provision before the storageclass and persistent volume creation.
+**A.** Create the storage class and persistent volume. please make sure the nfs-server and destination directory should be provision before the storageclass and persistent volume creation.
    ```
    mkdir -p /nfs_data/prometheus-server/node01
+   chmod -R a+w prometheus-server/node01
    kubectl create -f storageclass.yaml
    kubectl create -f prometheus-pv-node-01.yaml
    ```
-B. Create the custom volue file and render the below details for automatic persistent volume claim provisioning.
+**B.** Create the custom volue file and render the below details for automatic persistent volume claim provisioning.
    ```
    prometheus:
     prometheusSpec:
