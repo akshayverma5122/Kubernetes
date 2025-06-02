@@ -22,15 +22,15 @@
   - [14-Namespaces](cka/02-Core-Concepts/14-Namespaces.md)
   - [15-Services](cka/02-Core-Concepts/15-Services.md)
 
-- [05-Application-Lifecycle-Management](cka/05-Application-Lifecycle-Management)
-  
-  - [01-helm](cka/05-Application-Lifecycle-Management/01-helm.md)
-- [08-Storage](cka/08-Storage)
-  - [01_rook_ceph_installation](cka/08-Storage/01_rook_ceph_installation.md)
 - [04-Logging-and-Monitoring](cka/04-Logging-and-Monitoring)
   - [01-monitoring](cka/04-Logging-and-Monitoring/01-monitoring.md)
 
+- [05-Application-Lifecycle-Management](cka/05-Application-Lifecycle-Management)
+  - [01-helm](cka/05-Application-Lifecycle-Management/01-helm.md)
+
 - [07-Security](cka/07-Security)
-  
   - [01-kubeConfig](cka/07-Security/01-kubeConfig.md)
   - [02-RBAC](cka/07-Security/02-RBAC.md)
+    
+- [08-Storage](cka/08-Storage)
+  - [01_rook_ceph_installation](cka/08-Storage/01_rook_ceph_installation.md)
