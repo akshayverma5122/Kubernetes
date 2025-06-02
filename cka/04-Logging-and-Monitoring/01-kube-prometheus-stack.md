@@ -1,17 +1,22 @@
-
+1. Add /dev/sdb disk. create the logical volume and formate it. Create the /nfs_data folder and give the permission. 
 ```
+pvcreate /dev/sdb
+vgcreate nfs_vg /dev/sdb
 lvcreate -l 100%FREE -n lv_nfsdata nfs_vg
 mkfs.ext4 /dev/nfs_vg/lv_nfsdata
-systemctl daemon-reload
-sudo apt install -y nfs-kernel-server
+sudo mkdir /nfs_data
 sudo chown nobody:nogroup /nfs_data
 sudo chmod 777 /nfs_data
+mount /dev/nfs_vg/lv_nfsdata  /nfs_data
 ```
+2. install the nfs server and export the nfs directory.
+   
 ```
-/srv/nfs/kubedata 172.16.0.0/24(rw,sync,no_subtree_check,no_root_squash)
-sudo exportfs -ra
+sudo apt install -y nfs-kernel-server
 sudo systemctl enable nfs-server
 sudo systemctl start nfs-server
+/nfs_data 172.16.0.0/24(rw,sync,no_subtree_check,no_root_squash)
+sudo exportfs -ra
 ```
 
 ### kube-prometheus-stack Install Using Helm Chart
