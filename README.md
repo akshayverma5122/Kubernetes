@@ -25,7 +25,8 @@
 - [05-Application-Lifecycle-Management](cka/05-Application-Lifecycle-Management)
   
   - [01-helm](cka/05-Application-Lifecycle-Management/01-helm.md)
-    
+- [08-Storage](cka/08-Storage)
+  - [01_rook_ceph_installation](cka/08-Storage/01_rook_ceph_installation.md)
 - [04-Logging-and-Monitoring](cka/04-Logging-and-Monitoring)
   - [01-monitoring](cka/04-Logging-and-Monitoring/01-monitoring.md)
 
