@@ -88,7 +88,26 @@ sudo exportfs -ra
    helm -n monitoring upgrade --reuse-values --values=custom-value.yaml monitoring-stack  prometheus-community/kube-prometheus-stack --version 72.7.0
    ```
 #### 2. Scaling the prometheus
-A.
+**A.** Create the folder with write permission for node02 persistent volume. 
+   ```
+   mkdir -p /nfs_data/prometheus-server/node02
+   chmod -R a+w /nfs_data/prometheus-server/node02
+   ```
+**B.** Create the persistent volume. 
+   ```
+   kubectl create -f prometheus-server-pv-02.yaml
+   kubectl get pv
+   ```
+**C.** Render the replicas:2 details in custom-value.yaml for scaling the replicas.
+   ```
+   prometheus:
+    prometheusSpec:
+      replicas: 2
+   ```
+**D.** Scale the ReplicaSet to 2. 
+   ```
+   helm -n monitoring upgrade --reuse-values --values=custom-value.yaml monitoring-stack  prometheus-community/kube-prometheus-stack --version 72.7.0
+   ```
 ### Access prometheus, grafana and alertmanager using NodePort
 1. Generate the nodeport service yaml file and change the labels & selector for grafana, prometheus and alertmanager.
    ```
