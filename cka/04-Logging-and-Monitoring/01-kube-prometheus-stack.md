@@ -87,7 +87,8 @@ sudo exportfs -ra
    ```
    helm -n monitoring upgrade --reuse-values --values=custom-value.yaml monitoring-stack  prometheus-community/kube-prometheus-stack --version 72.7.0
    ```
-
+#### 2. Scaling the prometheus
+A.
 ### Access prometheus, grafana and alertmanager using NodePort
 1. Generate the nodeport service yaml file and change the labels & selector for grafana, prometheus and alertmanager.
    ```
