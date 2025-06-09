@@ -61,6 +61,7 @@ sudo exportfs -ra
    kubectl -n monitoring get prometheuses
    kubectl -n monitoring get alertmanagers
    ```
+
 ### Customizing kube-prometheus-stack Using Helm Chart 
 #### 1. Attaching the pvc in prometheus 
 **A.** Create the storage class and persistent volume. please make sure the nfs-server and destination directory should be provision before the storageclass and persistent volume creation.
@@ -132,6 +133,10 @@ sudo exportfs -ra
    node_filesystem_avail_bytes
    rate(node_network_receive_bytes_total[1m])
    ```
+### Exporling the kube-state-metric server
+- The metrics are exported on the HTTP endpoint /metrics on the listening port (default 8080).
+- kube-state-metrics exposes its own general process metrics under --telemetry-host and --telemetry-port (default 8081).
+- **kube-state-metrics vs. metrics-server** - The metrics-server is a project that has been inspired by Heapster and is implemented to serve the goals of core metrics pipelines in Kubernetes monitoring architecture. It is a cluster level component which periodically scrapes metrics from all Kubernetes nodes served by Kubelet through Metrics API. The metrics are aggregated, stored in memory and served in Metrics API format. The metrics-server stores the latest values only and is not responsible for forwarding metrics to third-party destinations. kube-state-metrics is focused on generating completely new metrics from Kubernetes' object state (e.g. metrics based on deployments, replica sets, etc.). It holds an entire snapshot of Kubernetes state in memory and continuously generates new metrics based off of it. And just like the metrics-server it too is not responsible for exporting its metrics anywhere. Having kube-state-metrics as a separate project also enables access to these metrics from monitoring systems such as Prometheus.
 ### kube-prometheus-stack uninstallation Using Helm Chart
 1. unistallation of kube-prometheus-stack
    ```
@@ -162,4 +167,6 @@ sudo exportfs -ra
 - Grafana Prebuilt Dashboard
   - https://grafana.com/grafana/dashboards/12486-node-exporter-full/
   - https://grafana.com/grafana/dashboards/21742-object-s-health-kube-state-metrics-v2/
+- kube-state-metrics
+  - https://github.com/kubernetes/kube-state-metrics
 
