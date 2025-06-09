@@ -169,4 +169,5 @@ sudo exportfs -ra
   - https://grafana.com/grafana/dashboards/21742-object-s-health-kube-state-metrics-v2/
 - kube-state-metrics
   - https://github.com/kubernetes/kube-state-metrics
+  - https://github.com/kubernetes/kube-state-metrics/tree/main/docs 
 
