@@ -137,6 +137,19 @@ sudo exportfs -ra
 - The metrics are exported on the HTTP endpoint /metrics on the listening port (default 8080).
 - kube-state-metrics exposes its own general process metrics under --telemetry-host and --telemetry-port (default 8081).
 - **kube-state-metrics vs. metrics-server** - The metrics-server is a project that has been inspired by Heapster and is implemented to serve the goals of core metrics pipelines in Kubernetes monitoring architecture. It is a cluster level component which periodically scrapes metrics from all Kubernetes nodes served by Kubelet through Metrics API. The metrics are aggregated, stored in memory and served in Metrics API format. The metrics-server stores the latest values only and is not responsible for forwarding metrics to third-party destinations. kube-state-metrics is focused on generating completely new metrics from Kubernetes' object state (e.g. metrics based on deployments, replica sets, etc.). It holds an entire snapshot of Kubernetes state in memory and continuously generates new metrics based off of it. And just like the metrics-server it too is not responsible for exporting its metrics anywhere. Having kube-state-metrics as a separate project also enables access to these metrics from monitoring systems such as Prometheus.
+### Exploring prometheus
+- Prometheus is a popular open-source monitoring and alerting system written in Golang, capable of collecting and processing metrics from various targets. collect the metrics from various targets using pull model.
+- The general term for collecting metrics from the targets using Prometheus is called scraping. By default prometheus looks for metrics under /metrics path of the target.
+- Prometheus primarily consists of the following.
+  - Prometheus Server
+  - Service Discovery
+  - Time-Series Database (TSDB)
+  - Targets
+  - Exporters
+  - Push Gateway
+  - Alert Manager
+  - Client Libraries
+  - PromQL
 ### kube-prometheus-stack uninstallation Using Helm Chart
 1. unistallation of kube-prometheus-stack
    ```
@@ -169,5 +182,8 @@ sudo exportfs -ra
   - https://grafana.com/grafana/dashboards/21742-object-s-health-kube-state-metrics-v2/
 - kube-state-metrics
   - https://github.com/kubernetes/kube-state-metrics
-  - https://github.com/kubernetes/kube-state-metrics/tree/main/docs 
-
+  - https://github.com/kubernetes/kube-state-metrics/tree/main/docs
+- prometheus
+  - https://devopscube.com/prometheus-architecture/
+  - https://prometheus.io/docs/instrumenting/exporters
+  - https://prometheus.io/docs/prometheus/1.8/configuration/configuration
