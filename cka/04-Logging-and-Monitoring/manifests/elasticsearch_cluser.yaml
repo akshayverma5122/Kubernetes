@@ -25,7 +25,7 @@ spec:
                fsGroup: 1000
        initContainers:
        - name: fix-permissions
-         image: drcontainer-registry.oarm.sbi/busybox:latest
+         image: busybox:latest
          imagePullPolicy: IfNotPresent
          command: ["sh", "-c", "chown -R 1000:1000 /usr/share/elasticsearch/data", "chmod -R 777 /usr/share/elasticsearch"]
          securityContext:
@@ -64,7 +64,7 @@ spec:
               memory: 4Gi
         initContainers:
         - name: fix-permissions
-          image: drcontainer-registry.oarm.sbi/busybox:latest
+          image: busybox:latest
           imagePullPolicy: IfNotPresent
           command: ["sh", "-c", "chown -R 1000:1000 /usr/share/elasticsearch/data", "chmod -R 777 /usr/share/elasticsearch"]
           securityContext:
