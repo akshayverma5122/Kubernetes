@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: elastic_master_node_pv_01
+  name: elasticmasternodepv01
 spec:
   capacity:
     storage: 20Gi
