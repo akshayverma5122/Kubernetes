@@ -27,4 +27,5 @@ kubectl -n elastic-system create -f https://raw.githubusercontent.com/akshayverm
 kubectl -n elastic-system create -f https://raw.githubusercontent.com/akshayverma5122/Kubernetes/refs/heads/master/cka/04-Logging-and-Monitoring/manifests/logstash.yaml
 ```
 
-
+### ElasticSearch Reference URLs
+- https://www.elastic.co/docs/deploy-manage/deploy/cloud-on-k8s/install-using-yaml-manifest-quickstart
