@@ -1,0 +1,59 @@
+apiVersion: logstash.k8s.elastic.co/v1alpha1
+kind: Logstash
+metadata:
+  name: logstash-agent  
+spec:
+  version: 8.17.4
+  count: 1
+  elasticsearchRefs:
+    - name: elasticsearch-cluster          # Adjust name based on the target Elasticsearch resource
+      clusterName: elasticsearch-cluster           # Adjust clusterName if necessary
+  pipelines:
+    - pipeline.id: main
+      config.string: |
+        input {
+          beats {
+            port => 5044
+          }
+        }
+        output {
+          elasticsearch {
+            index => "oarm-application-logs-%{+YYYY.MM.dd}"
+            hosts => [ "${ELASTICSEARCH_CLUSTER_ES_HOSTS}" ]
+            user => "elastic"
+            password => "8L5t1JhELV7LUfCBn0g08545"
+            ssl_certificate_authorities => "${ELASTICSEARCH_CLUSTER_ES_SSL_CERTIFICATE_AUTHORITY}"
+          }
+        }
+  volumeClaimTemplates:
+    - metadata:
+        name: logstash-data  # Required if you want to persist data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 7Gi
+        storageClassName: nfs-storage
+  podTemplate:
+    spec:
+      initContainers:
+        - name: fix-permissions
+          image: busybox:latest
+          imagePullPolicy: IfNotPresent
+          command: ["sh", "-c", "chmod -R 777 /usr/share/logstash"]
+          securityContext:
+            privileged: true
+            runAsUser: 0
+      containers:
+        - name: logstash   # Corrected from "logtash"
+          env:
+            - name: LS_JAVA_OPTS
+              value: "-Xmx2g -Xms2g"
+          resources:
+            requests:
+              memory: 1Gi
+              cpu: 0.5
+            limits:
+              memory: 4Gi
+              cpu: 2
