@@ -11,7 +11,7 @@ spec:
   storageClassName: nfs-static
   nfs: 
     path: /nfs_data/ElasticSearch_data/LogstashNode01
-    server: 10.177.49.251  
+    server: 172.16.0.17
 
          
         
