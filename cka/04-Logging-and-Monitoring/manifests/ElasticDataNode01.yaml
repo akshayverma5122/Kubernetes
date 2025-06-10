@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: ElasticDataNodePV01
+  name: elastic_data_node_pv_01
 spec:
   capacity:
     storage: 100Gi
