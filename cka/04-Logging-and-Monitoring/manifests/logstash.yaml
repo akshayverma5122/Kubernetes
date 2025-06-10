@@ -34,7 +34,7 @@ spec:
         resources:
           requests:
             storage: 7Gi
-        storageClassName: nfs-storage
+        storageClassName: nfs-static
   podTemplate:
     spec:
       initContainers:
