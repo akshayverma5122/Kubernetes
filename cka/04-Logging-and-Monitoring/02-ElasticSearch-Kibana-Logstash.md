@@ -26,6 +26,16 @@ kubectl create -n elastic-system -f https://raw.githubusercontent.com/akshayverm
 kubectl -n elastic-system create -f https://raw.githubusercontent.com/akshayverma5122/Kubernetes/refs/heads/master/cka/04-Logging-and-Monitoring/manifests/filebeat.yaml
 kubectl -n elastic-system create -f https://raw.githubusercontent.com/akshayverma5122/Kubernetes/refs/heads/master/cka/04-Logging-and-Monitoring/manifests/logstash.yaml
 ```
+6. Deploy the kibana and expose it using nodeport service.
+```
+kubectl -n elastic-system create -f https://raw.githubusercontent.com/akshayverma5122/Kubernetes/refs/heads/master/cka/04-Logging-and-Monitoring/manifests/kibana.yaml
+kubectl -n elastic-system expose deploy kibana-kb --port=5601 --target-port=5601 --type NodePort
+```
+7. Access the kibana dashboard using the NodeIP and NodePort.
+```
+https://NodeIP:NodePort
+```
+
 
 ### ElasticSearch Reference URLs
 - https://www.elastic.co/docs/deploy-manage/deploy/cloud-on-k8s/install-using-yaml-manifest-quickstart
