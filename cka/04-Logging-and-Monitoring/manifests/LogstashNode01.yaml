@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: LogstashNodePV01
+spec:
+  capacity:
+    storage: 7Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-static
+  nfs: 
+    path: /nfs_data/ElasticSearch_data/LogstashNode01
+    server: 10.177.49.251  
+
+         
+        
