@@ -1,0 +1,88 @@
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: elasticsearch-cluster
+spec:
+  version: 8.17.4
+  nodeSets:
+  - name: master
+    count: 1
+    config:
+      node.store.allow_mmap: false
+      node.roles: ["master"]
+    podTemplate:
+     spec:
+       containers:
+        - name: elasticsearch
+          resources:
+            limits:
+              cpu: 2
+              memory: 4Gi
+            requests:
+              cpu: 2
+              memory: 4Gi
+       securityContext:
+               fsGroup: 1000
+       initContainers:
+       - name: fix-permissions
+         image: drcontainer-registry.oarm.sbi/busybox:latest
+         imagePullPolicy: IfNotPresent
+         command: ["sh", "-c", "chown -R 1000:1000 /usr/share/elasticsearch/data", "chmod -R 777 /usr/share/elasticsearch"]
+         securityContext:
+           privileged: true
+           runAsUser: 0
+       - name: sysctl
+         securityContext:
+           privileged: true
+           runAsUser: 0
+         command: ['sh', '-c', 'sysctl -w vm.max_map_count=262144']
+    volumeClaimTemplates:
+    - metadata:
+        name: elasticsearch-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 20Gi
+        storageClassName: nfs-static  # Adjust this to your Kubernetes cluster's storage class
+
+  - name: data
+    count: 1
+    config:
+      node.store.allow_mmap: false
+      node.roles: ["data"]
+    podTemplate:
+      spec:
+        containers:
+        - name: elasticsearch
+          resources:
+            limits:
+              cpu: 2
+              memory: 4Gi
+            requests:
+              cpu: 2
+              memory: 4Gi
+        initContainers:
+        - name: fix-permissions
+          image: drcontainer-registry.oarm.sbi/busybox:latest
+          imagePullPolicy: IfNotPresent
+          command: ["sh", "-c", "chown -R 1000:1000 /usr/share/elasticsearch/data", "chmod -R 777 /usr/share/elasticsearch"]
+          securityContext:
+            privileged: true
+            runAsUser: 0
+        - name: sysctl
+          securityContext:
+            privileged: true
+            runAsUser: 0
+          command: ['sh', '-c', 'sysctl -w vm.max_map_count=262144']
+    volumeClaimTemplates:
+    - metadata:
+        name: elasticsearch-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 100Gi
+        storageClassName: nfs-static  # Adjust this to your Kubernetes cluster's storage class
+
+
