@@ -6,3 +6,8 @@
 - You can manually assign pods to node itself. Well without a scheduler, to schedule pod is to set nodeName property in your pod definition file while creating a pod.
 - Another way to schedule the pods is by creating the pods and its binding object.
 - **nodeName**  - if nodeName field is mentioned in pod spec then scheduler ignore the pods instead kubelet directly schdule the pods in that particular node. if that particluar node is not available, then pods will either not running or will get deleted automatically.
+
+**K8s Reference Docs:**
+
+https://kubernetes.io/docs/reference/using-api/api-concepts/
+https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodename
