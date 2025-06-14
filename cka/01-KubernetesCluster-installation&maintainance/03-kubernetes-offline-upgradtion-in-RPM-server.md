@@ -78,7 +78,6 @@
     ```
     tar -cvzf kubernetes_v_1_30_13.tar.gz kubernetes_v_1_30_13
     ```
-- Peform below Steps in offline server.
-  - 
-    
+- Perform the below steps in online server. 
+
   
