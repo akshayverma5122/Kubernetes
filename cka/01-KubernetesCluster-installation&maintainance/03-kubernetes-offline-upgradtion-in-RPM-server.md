@@ -1,5 +1,6 @@
 ### Kubernetes Cluster Upgradation
 #### Kubernetes Cluster Upgradation in RPM Based server
+
 - Peform below Steps where internet connectivity is available.
   
   - Add the Kubernetes repository
@@ -77,5 +78,7 @@
     ```
     tar -cvzf kubernetes_v_1_30_13.tar.gz kubernetes_v_1_30_13
     ```
+- Peform below Steps in offline server.
+  - 
     
   
