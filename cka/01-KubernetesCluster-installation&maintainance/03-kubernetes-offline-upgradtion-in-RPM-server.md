@@ -78,6 +78,29 @@
     ```
     tar -cvzf kubernetes_v_1_30_13.tar.gz kubernetes_v_1_30_13
     ```
-- Perform the below steps in online server. 
+- Perform the below steps in local registry server
+  
+  - untar the container images 
+    ```
+    podman load -i kube-apiserver.tar
+    podman load -i kube-controller-manager.tar
+    podman load -i kube-scheduler.tar
+    podman load -i kube-proxy.tar
+    podman load -i coredns.tar
+    podman load -i pause.tar
+    podman load -i etcd.tar
+    ```
+  - tag the container images
+    ```
+    podman tag registry.k8s.io/kube-apiserver:v1.30.13
+    podman tag registry.k8s.io/kube-controller-manager:v1.30.13
+    podman tag registry.k8s.io/kube-scheduler:v1.30.13
+    podman tag registry.k8s.io/kube-proxy:v1.30.13
+    podman tag registry.k8s.io/coredns/coredns:v1.11.3
+    podman tag registry.k8s.io/pause:3.9
+    podman tag registry.k8s.io/etcd:3.5.15-0
+    ```
+    
+    
 
   
