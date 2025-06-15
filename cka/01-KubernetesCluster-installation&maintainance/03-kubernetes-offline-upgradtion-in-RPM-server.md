@@ -92,14 +92,55 @@
     ```
   - tag the container images
     ```
-    podman tag registry.k8s.io/kube-apiserver:v1.30.13
-    podman tag registry.k8s.io/kube-controller-manager:v1.30.13
-    podman tag registry.k8s.io/kube-scheduler:v1.30.13
-    podman tag registry.k8s.io/kube-proxy:v1.30.13
-    podman tag registry.k8s.io/coredns/coredns:v1.11.3
-    podman tag registry.k8s.io/pause:3.9
-    podman tag registry.k8s.io/etcd:3.5.15-0
+    podman tag registry.k8s.io/kube-apiserver:v1.30.13 container-registry.mylab.co.in/kube-apiserver:v1.30.13
+    podman tag registry.k8s.io/kube-controller-manager:v1.30.13 container-registry.mylab.co.in/kube-controller-manager:v1.30.13
+    podman tag registry.k8s.io/kube-scheduler:v1.30.13 container-registry.mylab.co.in/kube-scheduler:v1.30.13
+    podman tag registry.k8s.io/kube-proxy:v1.30.13 container-registry.mylab.co.in/kube-proxy:v1.30.13
+    podman tag registry.k8s.io/coredns/coredns:v1.11.3 container-registry.mylab.co.in/coredns/coredns:v1.11.3
+    podman tag registry.k8s.io/pause:3.9 container-registry.mylab.co.in/pause:3.9 
+    podman tag registry.k8s.io/etcd:3.5.15-0 container-registry.mylab.co.in/etcd:3.5.15-0
     ```
+  - push the container images
+    ```
+    podman push container-registry.mylab.co.in/kube-apiserver:v1.30.13
+    podman push container-registry.mylab.co.in/kube-controller-manager:v1.30.13
+    podman push container-registry.mylab.co.in/kube-scheduler:v1.30.13
+    podman push container-registry.mylab.co.in/kube-proxy:v1.30.13
+    podman push container-registry.mylab.co.in/coredns/coredns:v1.11.3
+    podman push container-registry.mylab.co.in/pause:3.9
+    podman push container-registry.mylab.co.in/etcd:3.5.15-0
+    ```
+- perform the below steps in master node01.
+  
+  - cordon the master node02.
+    kubectl cordon master01
+    
+  - upgrade the kubelet, kubectl, kubernetes-cni, cri-tools and kubeadm
+    ```
+    rpm -Uvh kubelet
+    rpm -Uvh kubectl
+    rpm -Uvh kubernetes-cni
+    rpm -Uvh cri-tools
+    rpm -Uvh kubeadm
+    ```
+  - check the feasibility for kubernetes cluster upgrade
+    ```
+    kubeadm upgrade plan
+    ```
+  - upgrade the master node.
+    ```
+    kubeadm upgrade apply v1.30.13
+    ```
+  - restart the kubelet service
+    ```
+    systemctl restart kubelet.service
+    systemctl status kubelet.service
+    ```
+  - check the kubernetes version
+    ```
+    kubectl get nodes
+    ```
+    
     
     
 
