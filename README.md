@@ -3,6 +3,7 @@
   
   - [01-kubernetes-installation-without-HA](cka/01-KubernetesCluster-installation&maintainance/01-kubernetes-installation-without-HA.md)
   - [02-kubernetes-installation-with-HA](cka/01-KubernetesCluster-installation&maintainance/02-kubernetes-installation-with-HA.pdf)
+  - [03-kubernetes-offline-upgradtion-in-RPM-server](cka/01-KubernetesCluster-installation&maintainance/03-kubernetes-offline-upgradtion-in-RPM-server.md)
     
 - [02-Core-Concepts](cka/02-Core-Concepts)
 
