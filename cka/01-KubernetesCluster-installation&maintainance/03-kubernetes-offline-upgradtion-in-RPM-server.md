@@ -113,8 +113,9 @@
 - perform the below steps in master node01.
   
   - cordon the master node02.
+    ```
     kubectl cordon master01
-    
+    ```
   - upgrade the kubelet, kubectl, kubernetes-cni, cri-tools and kubeadm
     ```
     rpm -Uvh kubelet
