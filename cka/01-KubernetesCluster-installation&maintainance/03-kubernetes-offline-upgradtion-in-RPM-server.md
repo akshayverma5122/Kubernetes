@@ -112,7 +112,7 @@
     ```
 - perform the below steps in master node01.
   
-  - cordon the master node02.
+  - cordon the master node.
     ```
     kubectl cordon master01
     ```
@@ -126,11 +126,11 @@
     ```
   - check the feasibility for kubernetes cluster upgrade
     ```
-    kubeadm upgrade plan
+    sudo kubeadm upgrade plan
     ```
   - upgrade the master node.
     ```
-    kubeadm upgrade apply v1.30.13
+    sudo kubeadm upgrade apply v1.30.13
     ```
   - restart the kubelet service
     ```
