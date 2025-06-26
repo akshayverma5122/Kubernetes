@@ -39,3 +39,6 @@
     
 - [08-Storage](cka/08-Storage)
   - [01_rook_ceph_installation](cka/08-Storage/01_rook_ceph_installation.md)
+
+- [09-Networking](cka/09-Networking)
+  - [01-Tracing-Pod-to-Pod-Network](cka/09-Networking/01-Tracing-Pod-to-Pod-Network.md)
