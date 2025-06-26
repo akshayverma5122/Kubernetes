@@ -26,9 +26,11 @@ nsenter -t 2799 -n ip addr show eth0
 4. get the host-side veth interface of pods. 
 ```
 ip link | grep "^8:" -A1
+ip route
 ```
 ![image](https://github.com/user-attachments/assets/a697b5df-bff7-41d7-b96c-38cf4b096d3b)
 
+![image](https://github.com/user-attachments/assets/3f292fae-2b46-4b14-9954-fbad187381f4)
 
 5. now login in web2 pods and hit the web1 pods using below commands.
 ```
@@ -38,11 +40,11 @@ while true; do curl -s http://172.17.235.158; sleep 1; done
 
 6. we are already having the details of pods web1 veth. So capture the traffic 
 ```
-tcpdump -i cali15104693972 src host 172.17.235.156
+tcpdump -i cali15104693972 src host 172.17.235.156 and port 80
+tcpdump -i any src host 172.17.235.156 and dst host 172.17.235.158 and port 80
 ```
-![image](https://github.com/user-attachments/assets/b1724c75-ab0c-4642-9876-a833a3fbd7b1)
-
-
+![image](https://github.com/user-attachments/assets/7505176f-b558-4987-889e-c2403a9d6005)
+![image](https://github.com/user-attachments/assets/6f5969a5-9f27-489d-8be8-c02afc7e954a)
 
 ### Tracing pod to pod communication on different nodes
 
