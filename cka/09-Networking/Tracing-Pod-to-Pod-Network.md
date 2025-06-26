@@ -44,11 +44,13 @@ tcpdump -i cali15104693972 src host 172.17.235.156 and port 80
 tcpdump -i any src host 172.17.235.156 and dst host 172.17.235.158 and port 80
 ```
 ![image](https://github.com/user-attachments/assets/7505176f-b558-4987-889e-c2403a9d6005)
-![image](https://github.com/user-attachments/assets/6f5969a5-9f27-489d-8be8-c02afc7e954a)
+![image](https://github.com/user-attachments/assets/93da525c-4328-4948-9933-f232b3a31fea)
+
 
 ### Tracing pod to pod communication on different nodes
 
 ### Pod Networking Diagram 
+
 
 ![image](https://github.com/user-attachments/assets/a75ba65b-926a-49be-a591-abe232523330)
 
