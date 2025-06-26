@@ -5,35 +5,53 @@
 kubectl run web1 --image=nginx
 kubectl run web2 --image=nginx
 ```
-![image](https://github.com/user-attachments/assets/b647409d-0d9c-4f1a-b7f1-cb1ec4c61b2a)
+![image](https://github.com/user-attachments/assets/7f3d28af-c1de-40a5-93a0-ac27d939265b)
+
 
 2. Both pods are running in the same worker node. Now, Login in the worker1 and get the process id of web1.
 ```
 crictl ps | grep web1
-crictl inspect <containerid> | grep "pid"
+crictl inspect 5341f5d7617cf  | grep "pid"
 ```
-![image](https://github.com/user-attachments/assets/e1f78ba2-a770-4a90-a7c0-b1084bf39305)
+![image](https://github.com/user-attachments/assets/a4e980fd-991b-487e-8173-c07fdfa8f65f)
+
 
 3. Get the veth name which is in inside the pod.
 ```
-nsenter -t <pid> -n ip addr show eth0
+nsenter -t 2799 -n ip addr show eth0
 ```
-![image](https://github.com/user-attachments/assets/143b22cc-1314-4b6c-9b29-09d3981fd237)
+![image](https://github.com/user-attachments/assets/ce12a712-d2c8-4676-bcb4-86e5afae53c6)
+
 
 4. get the host-side veth interface of pods. 
 ```
-ip link | grep "^10:" -A1
+ip link | grep "^8:" -A1
 ```
-![image](https://github.com/user-attachments/assets/c958a45f-5f4d-4c1e-bdfd-944a871cbd49)
+![image](https://github.com/user-attachments/assets/a697b5df-bff7-41d7-b96c-38cf4b096d3b)
+
 
 5. now login in web2 pods and hit the web1 pods using below commands.
 ```
-while true; do curl -s http://172.17.235.139; sleep 1; done
+while true; do curl -s http://172.17.235.158; sleep 1; done
 ```
-6. we are already having the pods web1 veth. So capture the traffic 
+![image](https://github.com/user-attachments/assets/b1695605-3278-47f0-89a8-3b86ad6c8be2)
+
+6. we are already having the details of pods web1 veth. So capture the traffic 
 ```
-tcpdump -i cali15104693972 src host 172.17.235.157
+tcpdump -i cali15104693972 src host 172.17.235.156
 ```
+![image](https://github.com/user-attachments/assets/b1724c75-ab0c-4642-9876-a833a3fbd7b1)
+
+
+
+### Tracing pod to pod communication on different nodes
+
+### Pod Networking Diagram 
+
+![image](https://github.com/user-attachments/assets/a75ba65b-926a-49be-a591-abe232523330)
+
+
+
 
 
 
