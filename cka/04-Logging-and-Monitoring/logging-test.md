@@ -51,3 +51,10 @@ filebeat.autodiscover:
           type: kubernetes
 
 ```
+
+growk pattern for coredns logs 
+
+```
+\[%{LOGLEVEL:log.level}\] %{IP:client.ip}:%{INT:client.port} - %{INT:dns.id} \"%{WORD:dns.question.type} IN %{HOSTNAME:dns.query.name} %{WORD:dns.protocol} %{INT:dns.size} %{WORD:dns.do} %{INT:dns.bufsize}\" %{WORD:dns.rcode} %{DATA:dns.flags} %{INT:dns.resp_size} %{NUMBER:dns.latency:float}s
+
+```
