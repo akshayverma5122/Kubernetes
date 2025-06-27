@@ -1,0 +1,36 @@
+```
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: filebeat-setup
+  namespace: elastic-system
+spec:
+  template:
+    spec:
+      containers:
+        - name: filebeat
+          image: docker.elastic.co/beats/filebeat:8.17.4
+          command: [ "filebeat", "setup", "-e" ]
+          env:
+            - name: ELASTIC_PASSWORD
+              value: "YrQbPO9B0Y6L5800Z23uE5FA"
+          args:
+            - "-E"
+            - "output.logstash.enabled=false"
+            - "-E"
+            - "output.elasticsearch.hosts=[\"https://elasticsearch-cluster-es-http.elastic-system.svc:9200\"]"
+            - "-E"
+            - "output.elasticsearch.username=elastic"
+            - "-E"
+            - "output.elasticsearch.password=${ELASTIC_PASSWORD}"
+            - "-E"
+            - "output.elasticsearch.ssl.verification_mode=none"
+            - "-E"
+            - "setup.kibana.host=https://kibana-kb-http.elastic-system.svc:5601"
+            - "-E"
+            - "setup.kibana.ssl.verification_mode=none"
+      restartPolicy: Never
+
+```
+
+```
