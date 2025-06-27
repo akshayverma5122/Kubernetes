@@ -32,5 +32,22 @@ spec:
       restartPolicy: Never
 
 ```
+```
+filebeat.autodiscover:
+        providers:
+        - templates:
+          - condition:
+              equals:
+                kubernetes.labels.k8s-app: kube-dns
+            config:
+            - log:
+                enabled: true
+                var.paths:
+                - /var/log/containers/*-${data.kubernetes.container.id}.log
+                var.tags:
+                - coredns
+                - staging
+              module: coredns
+          type: kubernetes
 
 ```
