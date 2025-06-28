@@ -58,3 +58,43 @@ growk pattern for coredns logs
 \[%{LOGLEVEL:log.level}\] %{IP:client.ip}:%{INT:client.port} - %{INT:dns.id} \"%{WORD:dns.question.type} IN %{HOSTNAME:dns.query.name} %{WORD:dns.protocol} %{INT:dns.size} %{WORD:dns.do} %{INT:dns.bufsize}\" %{WORD:dns.rcode} %{DATA:dns.flags} %{INT:dns.resp_size} %{NUMBER:dns.latency:float}s
 
 ```
+
+```
+PUT _index_template/logs-kubernetes-coredns
+{
+  "index_patterns": ["logs-kubernetes.coredns-*"],
+  "data_stream": {},
+  "template": {
+    "mappings": {
+      "properties": {
+        "@timestamp": {
+          "type": "date"
+        },
+        "client": {
+          "properties": {
+            "ip": { "type": "ip" },
+            "port": { "type": "integer" }
+          }
+        },
+        "dns": {
+          "properties": {
+            "id": { "type": "integer" },
+            "query": {
+              "properties": {
+                "name": { "type": "keyword" },
+                "type": { "type": "keyword" }
+              }
+            },
+            "rcode": { "type": "keyword" },
+            "latency": { "type": "float" },
+            "protocol": { "type": "keyword" },
+            "flags": { "type": "keyword" }
+          }
+        }
+      }
+    }
+  },
+  "priority": 500
+}
+
+```
