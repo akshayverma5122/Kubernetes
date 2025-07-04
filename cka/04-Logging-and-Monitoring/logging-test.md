@@ -98,3 +98,85 @@ PUT _index_template/logs-kubernetes-coredns
 }
 
 ```
+
+```
+filebeat.autodiscover:
+        providers:
+        - node: ${NODE_NAME}
+          templates:
+          - condition:
+              equals:
+                kubernetes.labels.k8s-app: kube-dns
+            config:
+            - exclude_lines:
+              - ^\s+[\-`('.|_]
+              id: coredns-input
+              paths:
+              - /var/log/containers/*-${data.kubernetes.container.id}.log
+              processors:
+              - add_fields:
+                  fields:
+                    component: coredns
+                    kubernetes.namespace: ${data.kubernetes.namespace}
+                  target: ""
+              type: container
+          - condition:
+              equals:
+                kubernetes.container.name: kube-apiserver
+            config:
+            - id: apiserver-input
+              paths:
+              - /var/log/containers/*-${data.kubernetes.container.id}.log
+              processors:
+              - add_fields:
+                  fields:
+                    component: kube-apiserver
+                    kubernetes.namespace: ${data.kubernetes.namespace}
+                  target: ""
+              type: container
+          - condition:
+              equals:
+                kubernetes.container.name: kube-controller-manager
+            config:
+            - id: controller-manager-input
+              paths:
+              - /var/log/containers/*-${data.kubernetes.container.id}.log
+              processors:
+              - add_fields:
+                  fields:
+                    component: kube-controller-manager
+                    kubernetes.namespace: ${data.kubernetes.namespace}
+                  target: ""
+              type: container
+          - condition:
+              equals:
+                kubernetes.container.name: kube-scheduler
+            config:
+            - id: scheduler-input
+              paths:
+              - /var/log/containers/*-${data.kubernetes.container.id}.log
+              processors:
+              - add_fields:
+                  fields:
+                    component: kube-scheduler
+                    kubernetes.namespace: ${data.kubernetes.namespace}
+                  target: ""
+              type: container
+          - condition:
+              equals:
+                kubernetes.namespace: kube-system
+            config:
+            - exclude_lines:
+              - ^\s+[\-`('.|_]
+              id: generic-kube-system-input
+              paths:
+              - /var/log/containers/*-${data.kubernetes.container.id}.log
+              processors:
+              - add_fields:
+                  fields:
+                    component: generic-kube-system
+                    kubernetes.namespace: ${data.kubernetes.namespace}
+                  target: ""
+              type: container
+          type: kubernetes
+```
