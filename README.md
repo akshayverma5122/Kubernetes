@@ -29,6 +29,7 @@
     
 - [04-Logging-and-Monitoring](cka/04-Logging-and-Monitoring)
   - [01-kube-prometheus-stack](cka/04-Logging-and-Monitoring/01-kube-prometheus-stack.md)
+  - [02-ElasticSearch-Kibana-Logstash](cka/04-Logging-and-Monitoring/02-ElasticSearch-Kibana-Logstash.md)
 
 - [05-Application-Lifecycle-Management](cka/05-Application-Lifecycle-Management)
   - [01-helm](cka/05-Application-Lifecycle-Management/01-helm.md)
