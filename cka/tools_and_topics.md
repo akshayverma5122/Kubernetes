@@ -51,6 +51,30 @@
    - Elastic search, kibana, logstash, filebeat
    - open telimetry
    - Istio, Kiali
-   - IDP (integrated development portal) 
+   - IDP (integrated development portal)
+     
+4. Managed kubernetes service
+   - Elastic kubernetes service (EKS)
+   - Azure kubernetes service (AKS)
+   - Oracle kubernetes engine (OKE)
+   - Rancher kubernetes engine (RKE)
+
+## Cloud technology 
+1. AWS
+2. Azure
+3. Google Cloud
+
+## DevOps Technology
+1. source code management - Git
+2. CI & CD - jenkins, GitLab
+3. Ansible
+4. kubernetes
+5. docker, podman
+   
+## Trending Technology 
+1. MCP server
+2. Generative and Agentic AI
+   
+
 
           
