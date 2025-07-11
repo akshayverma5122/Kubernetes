@@ -36,10 +36,13 @@
    - Quality of service - Best efforts, guaranteed,
    - custom resource definition and operator
    - helm, kustomize
+   - HPA, VPA
      
 3. External tool
    - kind
    - MetalLB
+   - Metric server
+   - kube-state-metrics
    - External DNS, K8GB
    - OpenID connect, OpenUnison
    - HashiCorp Vault
