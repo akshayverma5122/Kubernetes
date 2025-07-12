@@ -41,6 +41,7 @@
      
 3. External tool
    - kind
+   - ArgoCD
    - MetalLB
    - Metric server
    - kube-state-metrics
