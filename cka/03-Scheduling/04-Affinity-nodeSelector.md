@@ -124,10 +124,7 @@
           - matchExpressions:
             - key: size
               operator: Exists
-  ```
-  
-  ![na2](../../images/na2.PNG)
-  
+  ```  
 
 ## Node Affinity Types
 - Available
