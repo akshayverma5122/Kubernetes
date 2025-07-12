@@ -138,6 +138,7 @@
 - https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes-using-node-affinity/
 - https://kubernetes.io/blog/2017/03/advanced-scheduling-in-kubernetes/
 - https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
+- https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/
 
 
 
