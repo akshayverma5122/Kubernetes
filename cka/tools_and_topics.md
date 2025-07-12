@@ -57,6 +57,8 @@
    - open telimetry
    - Istio, Kiali
    - IDP (integrated development portal)
+   - nginx controller
+   - istio
      
 4. Managed kubernetes service
    - Elastic kubernetes service (EKS)
