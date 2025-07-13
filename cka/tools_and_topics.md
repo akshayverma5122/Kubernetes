@@ -16,7 +16,7 @@
    - coredns
 2. kubernetes core object and concept
    - single container pods
-   - multi container pods, init container, sidecar container 
+   - multi container pods, init container, sidecar container
    - replicaset
    - deployment, rolling update, rolling back, blue green and canary deployment
    - service, nodeport, clusterip, loadbalancer, external name, headless service
@@ -32,7 +32,7 @@
    - cluster role and cluster role binding
    - kubeconfig
    - taint and toleration
-   - affinity, pod affinity and node affinity, node selector
+   - affinity, pod affinity and node affinity, node selector, node name, Topology Spread Constraints
    - Quality of service - Best efforts, guaranteed,
    - custom resource definition and operator
    - helm, kustomize
