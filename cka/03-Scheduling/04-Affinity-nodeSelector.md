@@ -6,22 +6,14 @@
   - nodeName field
   - Pod topology spread constraints
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## Node Selectors
-#### We add new property called Node Selector to the spec section and specify the label.
-- The scheduler uses these labels to match and identify the right node to place the pods on.
+- we need to assign the label to node and add new property called nodeSelector to the spec section of pod manifest file and specify the label. scheduler uses these labels to match and identify the right node to place the pods on.
+- 
+- label the node
+  ```
+  kubectl label nodes node-1 size=Large
+  ```
+- Add the nodeSelector to the spec section.
   ```
   apiVersion: v1
   kind: Pod
@@ -34,41 +26,6 @@
    nodeSelector:
     size: Large
   ```
-
-  
-- To label nodes
-
-  Syntax
-  ```
-  $ kubectl label nodes <node-name> <label-key>=<label-value>
-  ```
-  Example
-  ```
-  $ kubectl label nodes node-1 size=Large
-  ```
-  
-- To create a pod definition
-  ```
-  apiVersion: v1
-  kind: Pod
-  metadata:
-   name: myapp-pod
-  spec:
-   containers:
-   - name: data-processor
-     image: data-processor
-   nodeSelector:
-    size: Large
-  ```
-  ```
-  $ kubectl create -f pod-definition.yml
-  ``` 
-  
-## Node Selector - Limitations
-- We used a single label and selector to achieve our goal here. But what if our requirement is much more complex.  
- 
-- For this we have **`Node Affinity and Anti Affinity`**
-
 ## Node Affinity
  
 #### The primary feature of Node Affinity is to ensure that the pods are hosted on particular nodes.
