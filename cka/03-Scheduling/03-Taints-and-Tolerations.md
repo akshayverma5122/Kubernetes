@@ -8,6 +8,32 @@ Taints and tolerations work together to ensure that pods are not scheduled onto 
 Taints and Tolerations do not tell the pod to go to a particular node. Instead, they tell the node to only accept pods with certain tolerations.
 
 Taints and toleration can be used when we are having the requirement of Dedicated Nodes for pods, Nodes with Special Hardware and when we want to evict the pods based on taints. 
+
+You can specify tolerationSeconds for a Pod to define how long that Pod stays bound to a failing or unresponsive Node or tainted node with noexecute effect. 
+
+if we taint the node with noexecute then node will evict the pods except daemonset. 
+
+
+
+- if we cordon the pod then new pod is not going to schedule because it will add the below parameter in the node. 
+```
+Taints:             node.kubernetes.io/unschedulable:NoSchedule
+Unschedulable:      true
+```
+- and if uncordon the pods then it will add the below parameter - 
+```
+Taints:             <none>
+Unschedulable:      false
+```
+- and if we drain the node then it will evict the pod and add the below parameter in node -
+```
+kubectl drain <nodename> --delete-emptydir-data  --ignore-daemonsets
+```
+```
+Taints:             node.kubernetes.io/unschedulable:NoSchedule
+Unschedulable:      true
+```
+
   
 ## Taints
 - Assign taint to node
@@ -29,7 +55,18 @@ Taints and toleration can be used when we are having the requirement of Dedicate
        - Pods that do not tolerate the taint are evicted immediately
        - Pods that tolerate the taint without specifying tolerationSeconds in their toleration specification remain bound forever
        - Pods that tolerate the taint with a specified tolerationSeconds remain bound for the specified amount of time. After that time elapses, the node lifecycle controller evicts the Pods from the node.
-  
+
+## Taint based Evictions
+The node controller automatically taints a Node when certain conditions are true - 
+```
+node.kubernetes.io/not-ready
+node.kubernetes.io/unreachable
+node.kubernetes.io/memory-pressure
+node.kubernetes.io/disk-pressure
+node.kubernetes.io/pid-pressure
+node.kubernetes.io/network-unavailable
+node.kubernetes.io/unschedulable
+```
 ## Tolerations
    - Tolerations are added to pods by adding a **`tolerations`** section in pod definition.
      ```
