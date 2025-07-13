@@ -24,8 +24,9 @@
   - [15-Services](cka/02-Core-Concepts/15-Services.md)
     
 - [03-Scheduling](cka/03-Scheduling)
-  - [01-Manual-Scheduling.md](cka/03-Scheduling/01-Manual-Scheduling.md)
-  - [02-Labels-and-Selectors.md](cka/03-Scheduling/02-Labels-and-Selectors.md)
+  - [01-Manual-Scheduling](cka/03-Scheduling/01-Manual-Scheduling.md)
+  - [02-Labels-and-Selectors](cka/03-Scheduling/02-Labels-and-Selectors.md)
+  - [03-Taints-and-Tolerations](cka/03-Scheduling/03-Taints-and-Tolerations.md)
     
 - [04-Logging-and-Monitoring](cka/04-Logging-and-Monitoring)
   - [01-kube-prometheus-stack](cka/04-Logging-and-Monitoring/01-kube-prometheus-stack.md)
