@@ -1,30 +1,27 @@
-# Taints and Tolerations
-  
-In this section, we will take a look at taints and tolerations.
-- Pod to node relationship and how you can restrict what pods are placed on what nodes.
+# Taints and Tolerations 
+Node affinity is a property of Pods that attracts them to a set of nodes (either as a preference or a hard requirement). Taints are the opposite -- they allow a node to repel a set of pods.
 
-#### Taints and Tolerations are used to set restrictions on what pods can be scheduled on a node. 
-- Only pods which are tolerant to the particular taint on a node will get scheduled on that node.
+Tolerations are applied to pods. Tolerations allow the scheduler to schedule pods with matching taints. Tolerations allow scheduling but don't guarantee scheduling: the scheduler also evaluates other parameters as part of its function.
 
+Taints and tolerations work together to ensure that pods are not scheduled onto inappropriate nodes. One or more taints are applied to a node; this marks that the node should not accept any pods that do not tolerate the taints.
   
 ## Taints
-- Use **`kubectl taint nodes`** command to taint a node.
-
-  Syntax
+- Assign taint to node
   ```
-  $ kubectl taint nodes <node-name> key=value:taint-effect
+  kubectl taint nodes <node-name> key=value:<taint-effect>
   ```
- 
-  Example
+- Remove taint from node
   ```
-  $ kubectl taint nodes node1 app=blue:NoSchedule
+  kubectl taint nodes <node-name> key=value:<taint-effect>-
   ```
   
-- The taint effect defines what would happen to the pods if they do not tolerate the taint.
-- There are 3 taint effects
-  - **`NoSchedule`**
-  - **`PreferNoSchedule`**
-  - **`NoExecute`**
+- The taint effect defines what would happen to the pods if they do not tolerate the taint. There are 3 taint effects
+  - **`NoSchedule`** - No new Pods will be scheduled on the tainted node unless they have a matching toleration. Pods currently running on the node are not evicted.
+  - **`PreferNoSchedule`** - PreferNoSchedule is a "preference" or "soft" version of NoSchedule. The control plane will try to avoid placing a Pod that does not tolerate the taint on the node, but it is not guaranteed.
+  - **`NoExecute`** - This affects pods that are already running on the node as follows:
+       - Pods that do not tolerate the taint are evicted immediately
+       - Pods that tolerate the taint without specifying tolerationSeconds in their toleration specification remain bound forever
+       - Pods that tolerate the taint with a specified tolerationSeconds remain bound for the specified amount of time. After that time elapses, the node lifecycle controller evicts the Pods from the node.
 
   
 ## Tolerations
