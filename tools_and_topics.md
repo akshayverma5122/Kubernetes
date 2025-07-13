@@ -66,6 +66,7 @@
    - Azure kubernetes service (AKS)
    - Oracle kubernetes engine (OKE)
    - Rancher kubernetes engine (RKE)
+   - openshift kubernetes engine 
 
 ## Cloud technology 
 1. AWS
