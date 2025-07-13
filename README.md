@@ -27,6 +27,7 @@
   - [01-Manual-Scheduling](cka/03-Scheduling/01-Manual-Scheduling.md)
   - [02-Labels-and-Selectors](cka/03-Scheduling/02-Labels-and-Selectors.md)
   - [03-Taints-and-Tolerations](cka/03-Scheduling/03-Taints-and-Tolerations.md)
+  - [04-Affinity-nodeSelector](cka/03-Scheduling/04-Affinity-nodeSelector.md)
     
 - [04-Logging-and-Monitoring](cka/04-Logging-and-Monitoring)
   - [01-kube-prometheus-stack](cka/04-Logging-and-Monitoring/01-kube-prometheus-stack.md)
