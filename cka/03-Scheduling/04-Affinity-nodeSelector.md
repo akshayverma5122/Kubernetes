@@ -1,3 +1,24 @@
+## Assigning Pods to Nodes
+- if we create the pods then kube-scheduler automatically assign the pods to node while considering some rule like memory, disk and cpu pressure but if we want to decide to place the pods as per our bussiness and technical requirement then you can use any of the following methods to choose where Kube-scheduler will place the pods:
+  
+  - nodeSelector field matching against node labels
+  - Affinity and anti-affinity
+  - nodeName field
+  - Pod topology spread constraints
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Node Selectors
 #### We add new property called Node Selector to the spec section and specify the label.
 - The scheduler uses these labels to match and identify the right node to place the pods on.
