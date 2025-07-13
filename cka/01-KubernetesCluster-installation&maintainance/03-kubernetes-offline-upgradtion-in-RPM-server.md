@@ -141,7 +141,36 @@
     ```
     kubectl get nodes
     ```
-    
+Note:- Follow the same steps to upgrade the rest of master node. 
+
+- perform the below steps in worker node01.
+  - drain the worker node.
+    ```
+    kubectl drain worker01 --ignore-daemonsets --delete-empty-dir
+    ```
+  - upgrade the kubelet, kubectl, kubernetes-cni, cri-tools and kubeadm
+    ```
+    rpm -Uvh kubelet
+    rpm -Uvh kubectl
+    rpm -Uvh kubernetes-cni
+    rpm -Uvh cri-tools
+    rpm -Uvh kubeadm
+    ```
+  - upgrade the worker node
+    ```
+    sudo kubeadm upgrade node
+    ```
+  - restart the kubelet service
+    ```
+    systemctl restart kubelet.service
+    systemctl status kubelet.service
+    ```
+  - check the kubernetes version
+    ```
+    kubectl get nodes
+    ```
+Note:- follow these steps to upgrade the remaining worker node. 
+  
     
     
 
