@@ -11,7 +11,32 @@ Taints and toleration can be used when we are having the requirement of Dedicate
 
 You can specify tolerationSeconds for a Pod to define how long that Pod stays bound to a failing or unresponsive Node or tainted node with noexecute effect. 
 
-if we taint the node with noexecute then node will evict the pods except daemonset. 
+- if we taint the node with noexecute then node will evict the pods except daemonset because daemonset will be created with below toleration automatically.
+```
+tolerations:
+- operator: Exists
+- effect: NoExecute
+  key: node.kubernetes.io/not-ready
+  operator: Exists
+- effect: NoExecute
+  key: node.kubernetes.io/unreachable
+  operator: Exists
+- effect: NoSchedule
+  key: node.kubernetes.io/disk-pressure
+  operator: Exists
+- effect: NoSchedule
+  key: node.kubernetes.io/memory-pressure
+  operator: Exists
+- effect: NoSchedule
+  key: node.kubernetes.io/pid-pressure
+  operator: Exists
+- effect: NoSchedule
+  key: node.kubernetes.io/unschedulable
+  operator: Exists
+- effect: NoSchedule
+  key: node.kubernetes.io/network-unavailable
+  operator: Exists
+```
 
 
 
