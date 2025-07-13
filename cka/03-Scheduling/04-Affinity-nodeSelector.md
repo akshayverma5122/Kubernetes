@@ -1,4 +1,4 @@
-# Node Selectors
+## Node Selectors
 #### We add new property called Node Selector to the spec section and specify the label.
 - The scheduler uses these labels to match and identify the right node to place the pods on.
   ```
@@ -48,7 +48,7 @@
  
 - For this we have **`Node Affinity and Anti Affinity`**
 
-# Node Affinity
+## Node Affinity
  
 #### The primary feature of Node Affinity is to ensure that the pods are hosted on particular nodes.
 - With **`Node Selectors`** we cannot provide the advance expressions.
