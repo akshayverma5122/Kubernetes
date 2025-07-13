@@ -37,6 +37,7 @@
    - custom resource definition and operator
    - helm, kustomize
    - HPA, VPA
+   - pod disruption budget
    - persistent volume claim, persistent volume, storageclass, storage driver, container storage interface
      
 3. External tool
