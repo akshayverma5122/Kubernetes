@@ -1,0 +1,165 @@
+Services:-
+https://github.com/PacktPublishing/Kubernetes-An-Enterprise-Guide-Third-Edition.
+1. ClusterIP
+2. NodePort
+3. External Name
+4. Load Balancer
+5. Ingress Controller
+6. Headless Service
+
+There are four different types of services in Kubernetes. 
+
+1. ClusterIP - Creates a service that is accessible from inside of the cluster.
+2. NodePort - Creates a service that is accessible from inside or outside of the cluster using an assigned port.
+3. LoadBalancer - Creates a service that is accessible from inside or outside of the cluster. For external access, an additional component is required to create the load-balanced object.
+4. ExternalName - Creates a service that does not target an endpoint in the cluster. Instead, it is used to provide a service name that targets any external DNS name as an endpoint.
+5. Headless - A Kubernetes Headless Service is a service type that enables direct communication with individual pods instead of distributing traffic across them like other services. It is created by specifying none for the clusterIP spec in the Service definition.
+
+Note :- When you create a service, you can specify a service type, but if you do not specify a type, the ClusterIP type will be used by default.
+
+Using DNS to resolve services:-
+-----------------------------
+
+1. Create the deployment using below command in database namespace.
+
+kubectl create -f https://raw.githubusercontent.com/akshayverma5122/Kubernetes/refs/heads/master/cka/services%20%26%20networking/nginx-deployments.yaml -n database
+
+2. create the services using below command in database namespace.
+
+kubectl create -f https://raw.githubusercontent.com/akshayverma5122/Kubernetes/refs/heads/master/cka/services%20%26%20networking/ClusterIP.yaml -n database
+
+3. list the service, endpoint and endpoint slices using below commands.
+
+kubectl get svc 
+kubectl get ep nginx-frontend
+kubectl get endpointslice
+kubectl describe svc nginx-frontend
+
+4. The following table provides an example of how a service may be accessed from various namespaces:
+
+Cluster name: cluster.local
+Target Service: mysql-web
+Target Service Namespace: database
+
+Pod Namespace    Valid Names to Connect to the MySQL Service
+database         mysql-web
+production-web   mysql-web.database.svc mysql-web.database.svc.cluster.local
+
+5. Create the pods using below commands and verify the dns resolution using nslookup commands.
+
+kubectl create ns database
+kubectl run nslookup-pod1  --image=tutum/dnsutils --restart=Always -n database --command -- tail -f /dev/null
+# nslookup nginx-frontend
+Server:         10.96.0.10
+Address:        10.96.0.10#53
+Name:   nginx-frontend.database.svc.cluster.local
+Address: 10.96.80.163
+
+
+kubectl create ns production-web
+kubectl run nslookup-pod2  --image=tutum/dnsutils --restart=Always -n production-web --command -- tail -f /dev/null
+# nslookup nginx-frontend.database.svc.cluster.local
+Server:         10.96.0.10
+Address:        10.96.0.10#53
+Name:   nginx-frontend.database.svc.cluster.local
+Address: 10.96.80.163
+
+# nslookup nginx-frontend.database.svc
+Server:         10.96.0.10
+Address:        10.96.0.10#53
+Name:   nginx-frontend.database.svc.cluster.local
+Address: 10.96.80.163
+
+######################################################### Load Balancer #####################################################
+
+Layer 7 Load Balancer
+
+1. NGINX
+2. Envoy
+3. Traefik
+4. HAProxy
+
+Layer 4 Load Balaner 
+
+1. HAProxy
+2. NGINX Pro
+3. Seesaw
+4. F5 Networks
+5. MetalLB
+
+
+
+###################################################################### nip.io ########################################################################
+
+
+1. Create the deployment of nginx server using below command. 
+
+kubectl create deploy webserver1 --replicas=3 --image=nginx -n default
+
+2. create the service. 
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: webserver1
+  namespace: default # Change this if you're using a different namespace
+spec:
+  selector:
+    app: webserver1
+  ports:
+    - protocol: TCP
+      port: 80        # Service port
+      targetPort: 80 # Pod port
+  type: ClusterIP
+
+3. create the ingress rule. 
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name:  webserver1-ingress-rule
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: webserver1.172.16.0.90.nip.io
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: webserver1
+            port:
+              number: 80
+4. Access the web server using below url. 
+
+http://webserver1.172.16.0.90.nip.io/
+
+kubectl create deploy webserver1 --replicas=2 --image=nginx -n ingress-testing
+kubectl expose deploy webserver1 --name=webserver1-service --type=ClusterIP --port=80 --target-port=80 -n ingress-testing
+kubectl create ingress webserver1-ingress-rule --rule="webserver1-service.172.16.0.19.nip.io/*=webserver1-service:80" -n ingress-testing
+
+
+
+################################### Layer4 LB #############################################################################
+
+1. MetalLb 
+
+################################### Network Policy ######################################################################
+
+1. ingress
+2. Egress 
+
+
+
+
+
+
+
+
+
+
+
+
