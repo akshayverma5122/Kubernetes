@@ -89,10 +89,12 @@ If you specify multiple expressions in a single matchExpressions field associate
 
   
 #### K8s Reference Docs
-- https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes-using-node-affinity/
-- https://kubernetes.io/blog/2017/03/advanced-scheduling-in-kubernetes/
-- https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
+- https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
 - https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/
+- https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes-using-node-affinity/
+- https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes/  
+- https://kubernetes.io/blog/2017/03/advanced-scheduling-in-kubernetes/
+
 
 
 
