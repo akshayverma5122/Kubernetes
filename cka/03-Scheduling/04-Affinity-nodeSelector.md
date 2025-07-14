@@ -28,6 +28,18 @@
   ```
 ## nodeName
 
+nodeName is a more direct form of node selection than affinity or nodeSelector. nodeName is a field in the Pod spec. If the nodeName field is not empty, the scheduler ignores the Pod and the kubelet on the named node tries to place the Pod on that node. Using nodeName overrules using nodeSelector or affinity and anti-affinity rules. example of a Pod spec using the nodeName field -
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+  nodeName: kube-01
+```
 ## Affinity and anti-affinity
 - although nodeSelector provides the way to place the pods in the particular nodes but it will not provide the advance expression which includes the soft and hard expression. For that we need to use the affinity scheduling feacture of kubernetes.
 - Affinity and anti-affinity provide the more expressive with hard and soft or preferred language to place the pods in particular nodes. it also provide the option to schedule the pods with pods labels instead of node label (pods which are already running with specific label) to colocate the pods with same process.
@@ -87,7 +99,10 @@ If you specify multiple expressions in a single matchExpressions field associate
 
 ## Inter-pod affinity and anti-affinity
 
-Inter-pod affinity and anti-affinity allow you to constrain which nodes your Pods can be scheduled on based on the labels of Pods already running on that node, instead of the node labels.
+- Inter-pod affinity and anti-affinity allow you to constrain which nodes your Pods can be scheduled on based on the labels of Pods already running on that node, instead of the node labels.
+- two types of Pod affinity and anti-affinity as follows:
+  - requiredDuringSchedulingIgnoredDuringExecution
+  - preferredDuringSchedulingIgnoredDuringExecution
 
   
 #### K8s Reference Docs
