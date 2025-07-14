@@ -85,7 +85,9 @@ If you specify multiple terms in nodeSelectorTerms associated with nodeAffinity 
 
 If you specify multiple expressions in a single matchExpressions field associated with a term in nodeSelectorTerms, then the Pod can be scheduled onto a node only if all the expressions are satisfied (expressions are ANDed).
 
-## Inter-pod affinity and anti-affinity 
+## Inter-pod affinity and anti-affinity
+
+Inter-pod affinity and anti-affinity allow you to constrain which nodes your Pods can be scheduled on based on the labels of Pods already running on that node, instead of the node labels.
 
   
 #### K8s Reference Docs
