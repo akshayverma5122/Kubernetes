@@ -136,7 +136,8 @@ spec:
     image: registry.k8s.io/pause:3.8
 ```
 
-  
+## Pod Topology Spread Constraints
+
 #### K8s Reference Docs
 - https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
 - https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/
