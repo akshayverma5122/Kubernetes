@@ -1,0 +1,117 @@
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: nfs-storage
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+reclaimPolicy: Retain
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: elastic-master-node01
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-storage
+  nfs:
+    path: /u01/oracle/elasticsearch_cluster/elastic_master_node01
+    server: 172.16.0.90
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: elastic-master-node02
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-storage
+  nfs:
+    path: /u01/oracle/elasticsearch_cluster/elastic_master_node02
+    server: 172.16.0.90
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: elastic-master-node03
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-storage
+  nfs:
+    path: /u01/oracle/elasticsearch_cluster/elastic_master_node03
+    server: 172.16.0.90
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: elastic-data-node01
+spec:
+  capacity:
+    storage: 100Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-storage
+  nfs:
+    path: /u01/oracle/elasticsearch_cluster/elastic_data_node01
+    server: 172.16.0.90
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: elastic-data-node02
+spec:
+  capacity:
+    storage: 100Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-storage
+  nfs:
+    path: /u01/oracle/elasticsearch_cluster/elastic_data_node02
+    server: 172.16.0.90
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: elastic-data-node03
+spec:
+  capacity:
+    storage: 100Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-storage
+  nfs:
+    path: /u01/oracle/elasticsearch_cluster/elastic_data_node03
+    server: 172.16.0.90
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: logstash-node01
+spec:
+  capacity:
+    storage: 8Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-storage
+  nfs:
+    path: /u01/oracle/elasticsearch_cluster/logstash_node01
+    server: 172.16.0.90
+
+
+
