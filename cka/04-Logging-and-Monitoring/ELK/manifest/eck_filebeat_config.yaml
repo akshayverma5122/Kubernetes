@@ -1,0 +1,134 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: filebeat-config
+  labels:
+    k8s-app: filebeat
+type: Opaque
+stringData:
+  beat.yml: |-
+    filebeat.inputs:
+      - type: container
+        paths:
+        - /var/log/containers/*.log
+        processors:
+        - add_kubernetes_metadata:
+            host: ${NODE_NAME}
+            matchers:
+             - logs_path:
+                 logs_path: /var/log/containers/
+        - add_fields:
+           fields:
+             source_type: static
+           target: ""
+    filebeat.autodiscover:
+      providers:
+        - type: kubernetes
+          node: ${NODE_NAME}
+          hints.enabled: false
+          templates:
+            - condition:
+                and:
+                  - equals:
+                      kubernetes.namespace: oaans
+                  - or:
+                      - equals:
+                          kubernetes.labels.app.kubernetes.io/name: email
+                      - equals:
+                          kubernetes.labels.app.kubernetes.io/name: fido
+                      - equals:
+                          kubernetes.labels.app.kubernetes.io/name: oaa
+                      - equals:
+                          kubernetes.labels.app.kubernetes.io/name: oaa-admin-ui
+                      - equals:
+                          kubernetes.labels.app.kubernetes.io/name: oaa-kba
+                      - equals:
+                          kubernetes.labels.app.kubernetes.io/name: oaa-policy
+                      - equals:
+                          kubernetes.labels.app.kubernetes.io/name: push
+                      - equals: 
+                          kubernetes.labels.app.kubernetes.io/name: risk
+                      - equals:
+                          kubernetes.labels.app.kubernetes.io/name: risk-cc
+                      - equals:
+                          kubernetes.labels.app.kubernetes.io/name: sms
+                      - equals:
+                          kubernetes.labels.app.kubernetes.io/name: spui
+                      - equals:
+                          kubernetes.labels.app.kubernetes.io/name: totp
+                      - equals:
+                          kubernetes.labels.app.kubernetes.io/name: yotp
+                      - equals:
+                          kubernetes.labels.app.kubernetes.io/name: oaa-mgmt
+         
+              config:
+                - id: oaans-application-logs
+                  type: container
+                  paths:
+                    - /var/log/containers/*-${data.kubernetes.container.id}.log
+                  processors:
+                    - add_fields:
+                        target: ""
+                        fields:
+                          component: ${data.kubernetes.labels.app.kubernetes.io/name}
+                          kubernetes.namespace: ${data.kubernetes.namespace}
+                          source_type: "autodiscover"
+                                                       
+            - condition:
+                and:
+                  - equals:
+                      kubernetes.namespace: kube-system
+                  - or:
+                      - equals:
+                          kubernetes.labels.k8s-app: kube-dns
+                      - equals:
+                          kubernetes.labels.component: etcd
+                      - equals:
+                          kubernetes.labels.component: kube-apiserver
+                      - equals:
+                          kubernetes.labels.component: kube-controller-manager
+                      - equals:
+                          kubernetes.labels.k8s-app: kube-proxy
+                      - equals:
+                          kubernetes.labels.component: kube-scheduler
+              config:
+                - id: kube-system-control-plane
+                  type: container
+                  paths:
+                    - /var/log/containers/*-${data.kubernetes.container.id}.log
+                  processors:
+                    - add_fields:
+                        target: ""
+                        fields:
+                          component: >-
+                            ${data.kubernetes.labels.component:${data.kubernetes.labels.k8s-app}}
+                          kubernetes.namespace: ${data.kubernetes.namespace}
+                          source_type: "autodiscover"
+
+            - condition:
+                and:
+                  - equals:
+                      kubernetes.namespace: ingress-nginx
+                  - equals:
+                      kubernetes.labels.app.kubernetes.io/name: ingress-nginx
+              config:
+                - id: ingress-nginx-controller
+                  type: container
+                  paths:
+                    - /var/log/containers/*-${data.kubernetes.container.id}.log
+                  processors:
+                    - add_fields:
+                        target: ""
+                        fields:
+                          component: ingress-nginx
+                          kubernetes.namespace: ${data.kubernetes.namespace}
+                          source_type: "autodiscover"
+
+    output.logstash:
+      hosts:
+        - logstash-svc-for-filebeat.elastic-system.svc.cluster.local:5044
+
+    processors:
+      - add_cloud_metadata: {}
+      - add_host_metadata: {}
+
