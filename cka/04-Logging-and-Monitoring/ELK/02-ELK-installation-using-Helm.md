@@ -64,6 +64,86 @@ config:
 ```
 helm install -n elastic-system eck-operator ./eck-operator-3.0.0.tgz --values=/u01/oracle/elasticsearch_cluster/eck-setup/operator.yaml
 ```
+8. customize the below parameters in eck_elasticsearch.yaml and install the charts.
+```
+nodeSets:
+- name: data
+  count: 3
+  config:
+    node.store.allow_mmap: false
+    node.roles: ["data", "ingest"]
+  podTemplate:
+   spec:
+    containers:
+      - name: elasticsearch
+        resources:
+          limits:
+            # cpu: 1
+            memory: 2Gi
+          requests:
+            # cpu: 1
+            memory: 2Gi
+
+    initContainers:
+       - command:
+         - sh
+         - -c
+         - chown -R 1000:1000 /usr/share/elasticsearch/data
+         - chmod -R 777 /usr/share/elasticsearch
+         name: fix-permissions
+         image: container-registry.example.com/busybox:latest
+         imagePullPolicy: IfNotPresent
+         securityContext:
+           privileged: true
+           runAsUser: 0
+  volumeClaimTemplates:
+    - metadata:
+        name: elasticsearch-data
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 100Gi
+        storageClassName: nfs-storage
+- name: master
+  count: 3
+  config:
+    node.store.allow_mmap: false
+    node.roles: ["master"]
+  volumeClaimTemplates:
+    - metadata:
+        name: elasticsearch-data
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 20Gi
+        storageClassName: nfs-storage
+  podTemplate:
+    spec:
+      containers:
+      - name: elasticsearch
+        resources:
+          limits:
+            memory: 2Gi
+          requests:
+            memory: 2Gi
+      initContainers:
+       - command:
+         - sh
+         - -c
+         - chown -R 1000:1000 /usr/share/elasticsearch/data
+         - chmod -R 777 /usr/share/elasticsearch
+         name: fix-permissions
+         image: container-registry.example.com/busybox:latest
+         imagePullPolicy: IfNotPresent
+         securityContext:
+           privileged: true
+           runAsUser: 0
+```
+
 
 
 
