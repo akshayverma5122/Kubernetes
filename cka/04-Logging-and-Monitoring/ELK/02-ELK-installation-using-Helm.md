@@ -180,6 +180,108 @@ ingress:
 ```
 helm install -n elastic-system  kibana ./eck-kibana-0.15.0.tgz  --values=/u01/oracle/elasticsearch_cluster/eck-setup/kibana.yaml
 ```
+9. obtain the elasticsearch username and password. 
+```
+kubectl get secret  elasticsearch-eck-elasticsearch-es-elastic-user -n elastic-system -o json | jq .data.elastic   ### base64 encoded values
+echo "djZuZDhxeDAwcVc1VzVYRzY5UnMxSjFs" | base64 -d
+```
+10. change the password value in eck-logstash-pipeline-secret.yaml file and create the secret. 
+```
+kubectl create -n elastic-system -f https://raw.githubusercontent.com/akshayverma5122/Kubernetes/refs/heads/master/cka/04-Logging-and-Monitoring/ELK/manifest/eck-logstash-pipeline-secret.yaml
+```
+11. Customize the logstash values file. install the logstash and create the logstash service for filebeat to consume it.
+```
+podTemplate: 
+ spec:
+  containers:
+  - env:
+    - name: LS_JAVA_OPTS
+      value: -Xmx2g -Xms2g
+    name: logstash
+    resources:
+      limits:
+        cpu: "1"
+        memory: 4Gi
+      requests:
+        cpu: "500m"
+        memory: 2Gi
+    volumeMounts:
+    - mountPath: /usr/share/logstash/pipeline/inputs/beats-input.conf
+      name: logstash-beats-input
+      subPath: beats-input.conf
+    - mountPath: /usr/share/logstash/pipeline/outputs/logstash-kubernetes-cluster-output-pipeline.conf
+      name: logstash-kubernetes-cluster-output-pipeline
+      subPath: logstash-kubernetes-cluster-output-pipeline.conf
+    - mountPath: /usr/share/logstash/pipeline/outputs/coredns-output.conf
+      name: logstash-coredns-output
+      subPath: coredns-output.conf
+    - mountPath: /usr/share/logstash/pipeline/outputs/kube-apiserver-output.conf
+      name: logstash-kube-apiserver-output
+      subPath: kube-apiserver-output.conf
+    - mountPath: /usr/share/logstash/pipeline/outputs/oarm-application-logs.conf
+      name: oarm-application-logs
+      subPath: oarm-application-logs.conf
+  volumes:
+  - name: logstash-beats-input
+    secret:
+      secretName: logstash-beats-input
+  - name: logstash-kubernetes-cluster-output-pipeline
+    secret:
+      secretName: logstash-kubernetes-cluster-output-pipeline
+  - name: logstash-coredns-output
+    secret:
+      secretName: logstash-coredns-output
+  - name: logstash-kube-apiserver-output
+    secret:
+      secretName: logstash-kube-apiserver-output
+  - name: oarm-application-logs
+    secret:
+      secretName: oarm-application-logs
+  
+  initContainers:
+   - command:
+     - sh
+     - -c
+     - chown -R 1000:1000 /usr/share/logstash/data
+     - chmod -R 777 /usr/share/logstash/data
+     name: fix-permissions
+     image: container-registry.exmaple.com/busybox:latest
+     imagePullPolicy: IfNotPresent
+     securityContext:
+       privileged: true
+       runAsUser: 0
+pipelines:
+  - path.config: /usr/share/logstash/pipeline/inputs/beats-input.conf
+    pipeline.id: main
+  - path.config: /usr/share/logstash/pipeline/outputs/logstash-kubernetes-cluster-output-pipeline.conf         
+    pipeline.id: logstash-kubernetes-cluster-output-pipeline
+  - path.config: /usr/share/logstash/pipeline/outputs/coredns-output.conf
+    pipeline.id: coredns
+  - path.config: /usr/share/logstash/pipeline/outputs/kube-apiserver-output.conf
+    pipeline.id: kubeapiserver
+  - path.config: /usr/share/logstash/pipeline/outputs/oarm-application-logs.conf
+    pipeline.id: oarm-application-logs
+volumeClaimTemplates:
+- metadata:
+    name: logstash-data
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 8Gi
+    storageClassName: nfs-storage
+elasticsearchRefs:
+ - namespace: elastic-system
+   name: elasticsearch-eck-elasticsearch
+   clusterName: elasticsearch-eck-elasticsearch
+```
+```
+helm install -n elastic-system logstash ./eck-logstash-0.15.0.tgz  --values=/u01/oracle/elasticsearch_cluster/eck-setup/logstash.yaml
+kubectl create -f logstash-svc.yaml -n elastic-system
+````
+
+
 
 
 
