@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: kibana-svc
+  name: kibana-svc
+  namespace: elastic-system
+spec:
+  ports:
+  - name: 5601-5601
+    nodePort: 32000
+    port: 5601
+    protocol: TCP
+    targetPort: 5601
+  selector:
+    common.k8s.elastic.co/type: kibana
+  sessionAffinity: None
+  type: NodePort
