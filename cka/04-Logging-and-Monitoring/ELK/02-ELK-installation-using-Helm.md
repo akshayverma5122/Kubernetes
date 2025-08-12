@@ -280,6 +280,22 @@ elasticsearchRefs:
 helm install -n elastic-system logstash ./eck-logstash-0.15.0.tgz  --values=/u01/oracle/elasticsearch_cluster/eck-setup/logstash.yaml
 kubectl create -f logstash-svc.yaml -n elastic-system
 ````
+12. Create the filebeat secret and install the filebeat daemonset to collect the logs.
+```
+kubectl -n elastic-system create -f https://raw.githubusercontent.com/akshayverma5122/Kubernetes/refs/heads/master/cka/04-Logging-and-Monitoring/ELK/manifest/eck_filebeat_config.yaml
+kubectl -n elastic-system create -f https://raw.githubusercontent.com/akshayverma5122/Kubernetes/refs/heads/master/cka/04-Logging-and-Monitoring/ELK/manifest/eck_filebeat.yaml 
+```
+
+13. finally create the kibana service to access the dashboard.
+```
+kubectl -n elastic-system create -f https://raw.githubusercontent.com/akshayverma5122/Kubernetes/refs/heads/master/cka/04-Logging-and-Monitoring/ELK/manifest/eck_kibana_svc.yaml
+```
+14. Access the kibana dashboard.
+```
+kibana url - https://172.16.0.90:32000
+username - elastic
+password - v6nd8qx00qW5W5XG69Rs1J1l
+```
 
 
 
