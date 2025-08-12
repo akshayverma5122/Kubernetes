@@ -143,7 +143,43 @@ nodeSets:
            privileged: true
            runAsUser: 0
 ```
-
+```
+helm install -n elastic-system elasticsearch  ./eck-elasticsearch-0.15.0.tgz --values=/u01/oracle/elasticsearch_cluster/eck-setup/elasticsearch.yaml
+```
+9. customize the kibana.yml file and install kibana. 
+```
+elasticsearchRef:
+      name: elasticsearch-eck-elasticsearch
+config:
+  server:
+    basePath: /kibana
+    rewriteBasePath: true
+ingress:
+  enabled: true
+  annotations:
+      kubernetes.io/ingress.class: nginx
+      meta.helm.sh/release-name: kibana
+      meta.helm.sh/release-namespace: elastic-system
+      nginx.ingress.kubernetes.io/affinity: cookie
+      nginx.ingress.kubernetes.io/affinity-mode: persistent
+      nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+      nginx.ingress.kubernetes.io/connection-proxy-header: keep-alive
+      nginx.ingress.kubernetes.io/enable-access-log: "false"
+      nginx.ingress.kubernetes.io/proxy-body-size: 15m
+      nginx.ingress.kubernetes.io/proxy-buffer-size: 48k
+      nginx.ingress.kubernetes.io/proxy-buffering: "on"
+      nginx.ingress.kubernetes.io/session-cookie-expires: "172800"
+      nginx.ingress.kubernetes.io/session-cookie-hash: sha1
+      nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
+      nginx.ingress.kubernetes.io/session-cookie-name: kibana
+      nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+  hosts:
+    - host: ""
+      path: /kibana
+```
+```
+helm install -n elastic-system  kibana ./eck-kibana-0.15.0.tgz  --values=/u01/oracle/elasticsearch_cluster/eck-setup/kibana.yaml
+```
 
 
 
