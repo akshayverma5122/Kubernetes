@@ -6,6 +6,8 @@ Metrics Data Model
 Recording Measurements
 Logs
 OTel Collector Foundations
+collector =  Receiver > processors > exporters 
+
 OTel Collector Core Components
 OpenTelemetry in Kubernetes
 Transforming Telemetry – Pipeline Processing
