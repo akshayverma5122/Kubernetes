@@ -18,7 +18,8 @@ OTel Collector Foundations
 * overall signal flow - ingestion > Receiver > processors > exporters > backend ( like - prometheus, jaeger)
 * collector core components = Receiver, processor, exporter, service extesion - health checks, z-pages 
 * collector distribution - OTEL core collector, community provided collector - contib collector like prometheus collector, vendor build collector, Build your own collector using OCB (open collector builder)
-* collector deployment method in kubernetes - sidecar, daemonsets, deployment 
+* collector deployment method in kubernetes - sidecar, daemonsets, deployment
+* collector release page - https://github.com/open-telemetry/opentelemetry-collector-releases/releases
 * collector installation in Linux - https://opentelemetry.io/docs/collector/install/binary/linux/
 * collector installation in docker - https://opentelemetry.io/docs/collector/install/docker/
 
