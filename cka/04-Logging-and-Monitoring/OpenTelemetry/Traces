@@ -26,7 +26,7 @@ OTel Collector Foundations
 * mandatory components in collector config file - Receiver, exporters, service 
 * optional components in collector config file - processor, connector, extension 
 * extension works outside pipeline 
-* telemetrygen - to generate the test trace, metrics and logs 
+* telemetrygen - to generate the test trace, metrics and logs - https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/cmd/telemetrygen
 
 
 
