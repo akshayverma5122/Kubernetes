@@ -32,6 +32,20 @@ OTel Collector Foundations
 OTel Collector Core Components
 
 * collector as agent - collector run in each vm (APP Scope) > Team Level collector > central / multitenant collector  > backened 
+* popular receiver - otlp (grpc 4317 & http 4318), prometheus receiver, hostmetrics receiver, kubelet stats receiver, kubernetes cluster receiver, kubernetes object receiver 
+
+* kubelet stats receiver - it will collect the pod, container and host metrics. run this as daemonset to collect metrics in each node. 
+* hostmetrics receiver - it will collect the disk, cpu & RAM metrics. run this as agent in each node to collect the metrics
+* kubernetes cluster receiver - it will collect the cluster wide metrics like deployment, sts. run it as deployment with one replicas in kubernetes to avoid duplicate data. 
+* kubernetes object receiver - it will collect the object metrics like events, pod. run as deployment with one replicas. 
+* File logs receiver - tail logs from file. 
+* journald receiver - it collect from journald service 
+* syslog receiver - it collect from network device & filewall. 
+* SNMP - network devices like switches/router 
+* jaeger receiver - 
+* zipkin receiver - 
+* opencencus  receiver - 
+* reference url - https://opentelemetry.io/docs/collector/components/receiver/
 
 
 
