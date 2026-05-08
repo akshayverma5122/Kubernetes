@@ -31,6 +31,8 @@ OTel Collector Foundations
 
 OTel Collector Core Components
 
+* collector as agent - collector run in each vm (APP Scope) > Team scope > org scope 
+
 
 
 
