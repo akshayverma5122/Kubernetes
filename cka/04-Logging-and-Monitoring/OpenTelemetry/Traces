@@ -29,6 +29,9 @@ OTel Collector Foundations
 * telemetrygen - to generate the test trace, metrics and logs - https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/cmd/telemetrygen
 
 
+OTel Collector Core Components
+
+
 
 
 
