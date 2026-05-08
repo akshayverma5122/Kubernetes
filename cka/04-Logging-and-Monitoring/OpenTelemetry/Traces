@@ -11,7 +11,7 @@ OpenTelemetry in Kubernetes
 Transforming Telemetry – Pipeline Processing
 OpenTelemetry Collector: Debugging, Operations and Scaling
 
-
+===================================================================================================================================
 OTel Collector Foundations
 
 * signal flow in collector =  Receiver > processors > exporters 
@@ -28,10 +28,13 @@ OTel Collector Foundations
 * extension works outside pipeline 
 * telemetrygen - to generate the test trace, metrics and logs - https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/cmd/telemetrygen
 
-
+=========================================================================================================================================================================
 OTel Collector Core Components
+-----------------------------
 
 * collector as agent - collector run in each vm (APP Scope) > Team Level collector > central / multitenant collector  > backened 
+
+RECEIVER - 
 * popular receiver - otlp (grpc 4317 & http 4318), prometheus receiver, hostmetrics receiver, kubelet stats receiver, kubernetes cluster receiver, kubernetes object receiver 
 
 * kubelet stats receiver - it will collect the pod, container and host metrics. run this as daemonset to collect metrics in each node. 
@@ -46,6 +49,10 @@ OTel Collector Core Components
 * zipkin receiver - 
 * opencencus  receiver - 
 * reference url - https://opentelemetry.io/docs/collector/components/receiver/
+
+=======================================================================================================================================
+
+
 
 
 
