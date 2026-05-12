@@ -67,6 +67,8 @@ OpenTelemetry in Kubernetes
          helm install otel-collector open-telemetry/opentelemetry-collector  --values  otel-values.yaml
        
 
+image: otel/opentelemetry-collector-contrib
+mode: daemonset
 
 
 
