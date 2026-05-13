@@ -1,1 +1,53 @@
+OTel Collector Foundations
 
+* signal flow in collector =  Receiver > processors > exporters 
+* overall signal flow - ingestion > Receiver > processors > exporters > backend ( like - prometheus, jaeger)
+* collector core components = Receiver, processor, exporter, service extesion - health checks, z-pages 
+* collector distribution - OTEL core collector, community provided collector - contib collector like prometheus collector, vendor build collector, Build your own collector using OCB (open collector builder)
+* collector deployment method in kubernetes - sidecar, daemonsets, deployment
+* collector release page - https://github.com/open-telemetry/opentelemetry-collector-releases/releases
+* collector installation in Linux - https://opentelemetry.io/docs/collector/install/binary/linux/
+* collector installation in docker - https://opentelemetry.io/docs/collector/install/docker/
+* connector - bridge between two pipelines 
+* mandatory components in collector config file - Receiver, exporters, service 
+* optional components in collector config file - processor, connector, extension 
+* extension works outside pipeline 
+* telemetrygen - to generate the test trace, metrics and logs - https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/cmd/telemetrygen
+
+=========================================================================================================================================================================
+OTel Collector Core Components
+-----------------------------
+
+* collector as agent - collector run in each vm (APP Scope) > Team Level collector > central / multitenant collector  > backened 
+
+RECEIVER - 
+* popular receiver - otlp (grpc 4317 & http 4318), prometheus receiver, hostmetrics receiver, kubelet stats receiver, kubernetes cluster receiver, kubernetes object receiver 
+
+* kubelet stats receiver - it will collect the pod, container and host metrics. run this as daemonset to collect metrics in each node. 
+* hostmetrics receiver - it will collect the disk, cpu & RAM metrics. run this as agent in each node to collect the metrics. There is some overlap with the Kubeletstats Receiver so if you decide to use both, it may be worth it to disable these duplicate metrics.
+* kubernetes cluster receiver - it will collect the cluster wide metrics like deployment, sts. run it as deployment with one replicas in kubernetes to avoid duplicate data. 
+* kubernetes object receiver - it will collect the object metrics like events, pod. run as deployment with one replicas. 
+* File logs receiver - tail logs from file. 
+* journald receiver - it collect from journald service 
+* syslog receiver - it collect from network device & filewall. 
+* SNMP - network devices like switches/router 
+* jaeger receiver - 
+* zipkin receiver - 
+* opencencus  receiver - 
+* reference url - https://opentelemetry.io/docs/collector/components/receiver/
+
+=======================================================================================================================================
+OpenTelemetry in Kubernetes
+
+* opentelemetry kubernetes operator - it manages deployment of collector and auto instrumentation. it can be installed via helm or directly using yaml file. it manages the automatics service creation, endpoint discovery and upgrades. 
+* annotate the resource like deployment, namespace, pod and sts to inject the auto instrumentation library by operator.
+* important receiver for kubernetes - k8sattributes, kubeletstats, filelog, kubernetes cluster and object, hostmetrics, prometheus, 
+* collector deployment mode in kubernets 
+       * Daemonsets - collector on each node. handles logs, kubeletstats, hostmetrics, contaier metrics 
+       * gateway pattern - collector running as kubernetes deployment. run as centralised services. collect cluster wide telemetry - k8sobject, k8s_cluster. act as gateway endpoint for daemonset collector or sometimes directly from app pod.
+       * sidecar - run collector in same app pod
+       * statefulset - if collector want stable identity and wanted to scrap the prometheus style telemetry scraping. 
+* otel collector installation in kubernetes 
+       * using helm chart 
+         helm show values open-telemetry/opentelemetry-collector  > otel-values.yaml
+         helm install otel-collector open-telemetry/opentelemetry-collector  --values  otel-values.yaml
