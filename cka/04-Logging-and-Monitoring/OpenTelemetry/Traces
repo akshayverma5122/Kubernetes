@@ -38,7 +38,7 @@ RECEIVER -
 * popular receiver - otlp (grpc 4317 & http 4318), prometheus receiver, hostmetrics receiver, kubelet stats receiver, kubernetes cluster receiver, kubernetes object receiver 
 
 * kubelet stats receiver - it will collect the pod, container and host metrics. run this as daemonset to collect metrics in each node. 
-* hostmetrics receiver - it will collect the disk, cpu & RAM metrics. run this as agent in each node to collect the metrics
+* hostmetrics receiver - it will collect the disk, cpu & RAM metrics. run this as agent in each node to collect the metrics. There is some overlap with the Kubeletstats Receiver so if you decide to use both, it may be worth it to disable these duplicate metrics.
 * kubernetes cluster receiver - it will collect the cluster wide metrics like deployment, sts. run it as deployment with one replicas in kubernetes to avoid duplicate data. 
 * kubernetes object receiver - it will collect the object metrics like events, pod. run as deployment with one replicas. 
 * File logs receiver - tail logs from file. 
