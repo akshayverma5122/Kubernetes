@@ -5,6 +5,7 @@
 * Metrics Data Model
 * Recording Measurements
 * Logs
+* OTel Collector Foundations
 * OTel Collector Core Components
 * OpenTelemetry in Kubernetes
 * Transforming Telemetry – Pipeline Processing
