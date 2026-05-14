@@ -98,6 +98,17 @@ presets:
   kubeletMetrics:
     enabled: true
 ```
+8. use the following command to expose the collector and prometheus for testing. 
+
+```
+k port-forward pods/otel-collector-opentelemetry-collector-agent-bxhr5 8889:8889
+k port-forward pods/prometheus-my-kube-prometheus-stack-prometheus-0 9090:9090
+```
+9. check the metrcis exported by collector in the following url. check the otel collector in prometheus target.
+```
+curl http://localhost:8889/metrics
+```
+
 ### uninstallation of otel-collector 
 
 1. uninstall the otelcollector and remove its helm repo. 
