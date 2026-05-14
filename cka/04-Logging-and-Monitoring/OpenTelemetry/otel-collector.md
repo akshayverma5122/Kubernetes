@@ -46,7 +46,4 @@
        * gateway pattern - collector running as kubernetes deployment. run as centralised services. collect cluster wide telemetry - k8sobject, k8s_cluster. act as gateway endpoint for daemonset collector or sometimes directly from app pod.
        * sidecar - run collector in same app pod
        * statefulset - if collector want stable identity and wanted to scrap the prometheus style telemetry scraping. 
-* otel collector installation in kubernetes 
-       * using helm chart 
-         helm show values open-telemetry/opentelemetry-collector  > otel-values.yaml
-         helm install otel-collector open-telemetry/opentelemetry-collector  --values  otel-values.yaml
+
