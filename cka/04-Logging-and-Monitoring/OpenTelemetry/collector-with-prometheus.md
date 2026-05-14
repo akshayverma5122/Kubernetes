@@ -1,5 +1,8 @@
 ### collector as daemonset integration with prometheus backend
 
+* we should use the hostMetrics, kubernetesAttributes and kubeletMetrics when otel collector is deployed as daemonsets. 
+* we should use the kubernetesEvents, clusterMetrics when otel collector is deployed as deployment object.
+  
 1. add the prometheus helm repo and save the default configuration values. 
 
 ```
