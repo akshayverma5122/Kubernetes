@@ -53,6 +53,9 @@ helm show values open-telemetry/opentelemetry-collector  > otel-values.yaml
 
 ```
 mode: daemonset
+presets:
+    hostMetrics:
+    enabled: true
 config:
   exporters:
     prometheus/custom:
