@@ -1,4 +1,4 @@
-### collector integration with prometheus backend
+### collector as daemonset integration with prometheus backend
 
 1. add the prometheus helm repo and save the default configuration values. 
 
@@ -47,6 +47,7 @@ helm show values open-telemetry/opentelemetry-collector  > otel-values.yaml
 5. do the customization in otel-values.yaml to export the metrics to prometheus backened 
 
 ```
+mode: daemonset
 config:
   exporters:
     prometheus/custom:
@@ -77,5 +78,17 @@ ports:
 6. install the otel-collector.
 ```
 helm install otel-collector open-telemetry/opentelemetry-collector  --values  otel-values.yaml
+```
+7. enable the preset to test each of them
+```
+presets:
+  hostMetrics:
+    enabled: true
+  kubernetesAttributes:
+    enabled: true
+    extractAllPodLabels: true
+    extractAllPodAnnotations: true
+  kubeletMetrics:
+    enabled: true
 ```
 
