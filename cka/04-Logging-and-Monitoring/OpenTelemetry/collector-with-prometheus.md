@@ -29,9 +29,9 @@ kubeScheduler:
   enabled: true
 kubeProxy:
   enabled: true
-kubeStateMetrics:
+kube-state-metrics:
   enabled: false
-nodeExporter:
+prometheus-node-exporter:
   enabled: false
 prometheus:
   service:
