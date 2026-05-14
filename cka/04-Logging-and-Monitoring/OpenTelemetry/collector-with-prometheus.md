@@ -33,6 +33,8 @@ kube-state-metrics:
   enabled: false
 prometheus-node-exporter:
   enabled: false
+prometheus-pushgateway:
+  enabled: false
 prometheus:
   service:
     type: NodePort
