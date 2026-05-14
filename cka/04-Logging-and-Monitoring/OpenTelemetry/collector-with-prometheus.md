@@ -4,6 +4,7 @@
 
 ```
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm search repo kube-prometheus-stack
 helm show values prometheus-community/kube-prometheus-stack > prom-default-values.yaml
 ```
 
@@ -29,11 +30,9 @@ kubeScheduler:
   enabled: true
 kubeProxy:
   enabled: true
-kube-state-metrics:
+kubeStateMetrics:
   enabled: false
-prometheus-node-exporter:
-  enabled: false
-prometheus-pushgateway:
+nodeExporter:
   enabled: false
 prometheus:
   service:
@@ -42,7 +41,7 @@ prometheus:
 3. deploy the prometheus.
 
 ```
-helm install my-prometheus prometheus-community/prometheus --values prom-default-values.yaml
+helm install my-kube-prometheus-stack prometheus-community/kube-prometheus-stack --version 85.0.3 --values=prom-default-values.yaml
 ```
 4. add the otel-collector helm repo and save the default configuration values.
 ```
@@ -85,7 +84,7 @@ ports:
 ```
 6. install the otel-collector.
 ```
-helm install otel-collector open-telemetry/opentelemetry-collector  --values  otel-values.yaml
+helm install otel-collector open-telemetry/opentelemetry-collector  --values=otel-values.yaml
 ```
 7. enable the preset to test each of them
 ```
@@ -99,4 +98,23 @@ presets:
   kubeletMetrics:
     enabled: true
 ```
+### uninstallation of otel-collector 
 
+1. uninstall the otelcollector and remove its helm repo. 
+   ```
+   helm uninstall otel-collector
+   ```
+   ```
+   helm repo remove open-telemetry
+   ```
+2. uninstall the kube-prom-stack. delete the crds. 
+   ```
+   helm uninstall my-kube-prometheus-stack
+   ```
+   ```
+   kubectl delete crd $(kubectl get crd | awk '/monitoring.coreos.com/ {print $1}')
+   ```
+   ```
+   helm repo remove prometheus-community
+   ```
+   
