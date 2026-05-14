@@ -37,7 +37,7 @@ nodeExporter:
 3. deploy the prometheus.
 
 ```
-helm install my-prometheus prometheus-community/prometheus --version 29.6.0
+helm install my-prometheus prometheus-community/prometheus --values prom-default-values.yaml
 ```
 4. add the otel-collector helm repo and save the default configuration values.
 ```
