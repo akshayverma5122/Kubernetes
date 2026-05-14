@@ -33,6 +33,9 @@ kubeStateMetrics:
   enabled: false
 nodeExporter:
   enabled: false
+prometheus:
+  service:
+    type: NodePort
 ```
 3. deploy the prometheus.
 
