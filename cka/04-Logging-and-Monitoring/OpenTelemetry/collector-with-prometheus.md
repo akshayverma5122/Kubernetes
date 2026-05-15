@@ -111,7 +111,54 @@ k port-forward pods/prometheus-my-kube-prometheus-stack-prometheus-0 9090:9090
 ```
 curl http://localhost:8889/metrics
 ```
+### collector as daemonset integration with elasticsearch backend
 
+1. install the elasticsearch and kibana.
+2. customize the otel-collector.
+
+```
+exporters:
+    elasticsearch:
+      endpoint: https://elasticsearch-cluster-es-http.elastic-system.svc.cluster.local:9200
+      auth:
+        authenticator: basicauth
+      tls:
+       insecure_skip_verify: true
+extensions:
+     basicauth:
+      client_auth:
+         username: elastic
+         password: e090HfjXceOm4z2w296Ek0y7
+receivers:
+    filelog:
+      include:
+      - /var/log/pods/*/*/*.log
+      exclude:
+    # Exclude logs from all containers named otel-collector
+      - /var/log/pods/*/otel-collector/*.log
+      start_at: end
+      include_file_path: true
+      include_file_name: false
+      operators:
+    # parse container logs
+      - type: container
+        id: container-parser
+service:
+  extensions:
+      - health_check
+      - basicauth
+  pipelines:
+      logs:
+        exporters:
+          - debug
+          - elasticsearch
+        processors:
+          - memory_limiter
+          - batch
+        receivers:
+          - otlp
+          - filelog
+```
 ### uninstallation of otel-collector 
 
 1. uninstall the otelcollector and remove its helm repo. 
