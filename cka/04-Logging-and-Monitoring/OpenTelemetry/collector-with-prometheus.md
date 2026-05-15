@@ -113,7 +113,7 @@ curl http://localhost:8889/metrics
 ```
 ### collector as daemonset integration with elasticsearch backend
 
-1. install the elasticsearch and kibana.
+1. install the elasticsearch and kibana [02-ElasticSearch-Kibana-Logstash](cka/04-Logging-and-Monitoring/02-ElasticSearch-Kibana-Logstash.md)
 2. customize the otel-collector.
 
 ```
