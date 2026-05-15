@@ -159,6 +159,10 @@ service:
           - otlp
           - filelog
 ```
+3. apply the changes
+```
+helm upgrade  otel-collector open-telemetry/opentelemetry-collector  --values=otel-values.yaml
+```
 ### uninstallation of otel-collector 
 
 1. uninstall the otelcollector and remove its helm repo. 
