@@ -41,9 +41,9 @@
 * opentelemetry kubernetes operator - it manages deployment of collector and auto instrumentation. it can be installed via helm or directly using yaml file. it manages the automatics service creation, endpoint discovery and upgrades. 
 * annotate the resource like deployment, namespace, pod and sts to inject the auto instrumentation library by operator.
 * important receiver for kubernetes - k8sattributes, kubeletstats, filelog, kubernetes cluster and object, hostmetrics, prometheus, 
-* collector deployment mode in kubernets 
-       * Daemonsets - collector on each node. handles logs, kubeletstats, hostmetrics, contaier metrics 
-       * gateway pattern - collector running as kubernetes deployment. run as centralised services. collect cluster wide telemetry - k8sobject, k8s_cluster. act as gateway endpoint for daemonset collector or sometimes directly from app pod.
-       * sidecar - run collector in same app pod
-       * statefulset - if collector want stable identity and wanted to scrap the prometheus style telemetry scraping. 
+* collector deployment mode in kubernets - daemonsets, gateway pattern, sidecar, statefulset
+* Daemonsets - collector on each node. handles logs, kubeletstats, hostmetrics, contaier metrics 
+* gateway pattern - collector running as kubernetes deployment. run as centralised services. collect cluster wide telemetry - k8sobject, k8s_cluster. act as gateway endpoint for daemonset collector or sometimes directly from app pod.
+* sidecar - run collector in same app pod
+* statefulset - if collector want stable identity and wanted to scrap the prometheus style telemetry scraping. 
 
